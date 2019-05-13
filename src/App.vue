@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h1>Area Chart</h1>
+<!--     <h1>Area Chart</h1>
     <responsive-area-chart
       @select="onSelect"
       :data="data"
@@ -10,23 +10,31 @@
       <h3>Selected Value: {{currentValue}}</h3>
       <div>
         <label>Record Count: </label>
-        <input v-model:value="itemCount" />
+        <input @model:value="itemCount" />
       </div>
       <div>
         <label>Min Value: </label>
-        <input v-model:value="min" />
+        <input @model:value="min" />
       </div>
       <div>
         <label>Max Value: </label>
-        <input v-model:value="max" />
+        <input @model:value="max" />
       </div>
-    </div>
+      <div>
+        <label>
+          {{ "Check " + data[0] }}  
+        </label> 
+      </div>
+    </div> -->
+    <HorizontalBarChart />
   </div>
 </template>
 
 <script>
-import ResponsiveAreaChart from './components/AreaChart.vue';
-import generateData from './randomData';
+/* import ResponsiveAreaChart from './components/AreaChart.vue'; */
+/* import generateData from './randomData'; */
+import HorizontalBarChart from './components/HorizontalBarChart.vue'
+
 
 export default {
   name: 'app',
@@ -40,20 +48,21 @@ export default {
       max: 100,
     };
   },
-  mounted() {
+/*   mounted() {
     setInterval(() => {
       this.data = generateData(this.itemCount,
         parseInt(this.min, 10),
         parseInt(this.max, 10));
     }, 2000);
-  },
+  }, */
   methods: {
     onSelect(value) {
       this.currentValue = value;
     },
   },
   components: {
-    ResponsiveAreaChart,
+    /* ResponsiveAreaChart */
+    HorizontalBarChart
   },
 };
 </script>

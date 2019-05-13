@@ -1,11 +1,19 @@
 <template>
-
+<div>
+      <rect 
+       v-for="d in data"
+       x="d"
+       y="10"
+       >
+        {{ d }}
+      </rect>
+</div>
 </template>
 
 <script>
 import * as d3 from 'd3';
 export default {
-  name: 'vue-line-chart',
+  name: 'vue-bar-chart',
   data() {
     return {
       data: [99, 71, 78, 25, 36, 92],
@@ -13,8 +21,8 @@ export default {
     };
   },
   mounted() {
-    this.calculatePath();
-  },
+/*     this.calculatePath();
+ */  },
   methods: {
     getScales() {
       const x = d3.scaleTime().range([0, 430]);
@@ -27,13 +35,14 @@ export default {
     },
     calculatePath() {
       const scale = this.getScales();
-      const path = d3.line()
+/*       const path = d3.line()
         .x((d, i) => scale.x(i))
         .y(d => scale.y(d));
       this.line = path(this.data);
-    },
-  },
-};
+    }, */
+  }
+  }
+}
 </script>
 
 <style lang="sass" scoped>
