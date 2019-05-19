@@ -1,12 +1,16 @@
 <template>
 <div>
+  <svg width='960' height='500'>
       <rect 
-       v-for="d in data"
-       x="d"
-       y="10"
+        v-for="d in data"
+        x="0"
+        :y="y(d.value)"
+        :height="5"
+        :width="d.value"
        >
-        {{ d }}
+        {{ d.value }}
       </rect>
+  </svg>
 </div>
 </template>
 
@@ -16,14 +20,66 @@ export default {
   name: 'vue-bar-chart',
   data() {
     return {
-      data: [99, 71, 78, 25, 36, 92],
-      line: '',
+      data: [{
+                "name": "Apples",
+                "value": 20,
+        },
+            {
+                "name": "Bananas",
+                "value": 12,
+        },
+            {
+                "name": "Grapes",
+                "value": 19,
+        },
+            {
+                "name": "Lemons",
+                "value": 5,
+        },
+            {
+                "name": "Limes",
+                "value": 16,
+        },
+            {
+                "name": "Oranges",
+                "value": 26,
+        },
+            {
+                "name": "Pears",
+                "value": 30,
+        }],
+      margin: {
+            top: 15,
+            right: 25,
+            bottom: 15,
+            left: 60
+        },
     };
+  },
+  computed:{
+    width: function() {
+      return 960 - this.margin.left - this.margin.right
+    },
+    height: function() {
+      return 500 - this.margin.top - this.margin.bottom
+    },
+    try: function() {
+      return this.y(this.data[1].value);
+    }
   },
   mounted() {
 /*     this.calculatePath();
  */  },
   methods: {
+    y(d){
+      let y = d3.scaleOrdinal()
+                .range([this.height, 0])
+                .domain([0, d3.max(this.data, function (d) {
+                  return d.value;
+                })
+              ]);
+      return y(d);
+    }, 
     getScales() {
       const x = d3.scaleTime().range([0, 430]);
       const y = d3.scaleLinear().range([210, 0]);
