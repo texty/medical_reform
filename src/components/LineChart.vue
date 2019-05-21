@@ -1,5 +1,11 @@
 <template>
-
+  <div>
+    <svg  :width="width" :height="height">
+      <g>
+        <path class="line" :d="line" />
+      </g>
+    </svg>
+  </div>
 </template>
 
 <script>
@@ -8,29 +14,94 @@ export default {
   name: 'vue-line-chart',
   data() {
     return {
-      data: [99, 71, 78, 25, 36, 92],
-      line: '',
+      temp: [{
+                "name": "Apples",
+                "value": 20,
+                "date": "2019-01-01"
+        },
+            {
+                "name": "Bananas",
+                "value": 12,
+                "date": "2019-02-01"
+
+        },
+            {
+                "name": "Grapes",
+                "value": 19,
+                "date": "2019-03-01"
+        },
+            {
+                "name": "Lemons",
+                "value": 5,
+                "date": "2019-04-01"
+        },
+            {
+                "name": "Limes",
+                "value": 16,
+                "date": "2019-05-01"
+        },
+            {
+                "name": "Oranges",
+                "value": 26,
+                "date": "2019-06-01"
+        },
+            {
+                "name": "Pears",
+                "value": 30,
+                "date": "2019-07-01"
+        }],
+      margin: {
+        top: 15,
+        right: 25,
+        bottom: 15,
+        left: 60
+      },
+      svgParameters: {
+        width: 560,
+        height: 210
+      }
     };
   },
   mounted() {
-    this.calculatePath();
+  },
+  computed: {
+    data: function() {
+        return this.temp.sort((a,b) => {
+            return new Date(a.date) - new Date(b.date);
+        })
+    },
+    line: function() {
+      return this.calculatePath(this.data);
+    },
+    width: function() {
+      return this.svgParameters.width - this.margin.left - this.margin.right
+    },
+    height: function() {
+      return this.svgParameters.height - this.margin.top - this.margin.bottom
+    },
   },
   methods: {
     getScales() {
-      const x = d3.scaleTime().range([0, 430]);
-      const y = d3.scaleLinear().range([210, 0]);
-      d3.axisLeft().scale(x);
-      d3.axisBottom().scale(y);
-      x.domain(d3.extent(this.data, (d, i) => i));
-      y.domain([0, d3.max(this.data, d => d)]);
+    
+      var x = d3.scaleTime()
+        .range([0, this.width])
+        .domain(d3.extent(this.data, function(d) { return new Date(d.date); }));
+  
+      var y = d3.scaleLinear()
+        .range([this.height, 0])
+        .domain([0, d3.max(this.data, function(d) { return d.value; })]);
+      
       return { x, y };
     },
-    calculatePath() {
+    calculatePath(data) {
       const scale = this.getScales();
+      debugger;
+
       const path = d3.line()
-        .x((d, i) => scale.x(i))
-        .y(d => scale.y(d));
-      this.line = path(this.data);
+        .x(function(d) { return scale.x(new Date(d.date)); })
+        .y(function(d) { return scale.y(d.value); });
+      
+      return path(this.data);
     },
   },
 };
@@ -38,7 +109,7 @@ export default {
 
 <style lang="sass" scoped>
 svg
-  margin: 25px;
+  margin: 25px
 path
   fill: none
   stroke: #76BF8A

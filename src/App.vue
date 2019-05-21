@@ -1,39 +1,14 @@
 <template>
   <div id="app">
-<!--     <h1>Area Chart</h1>
-    <responsive-area-chart
-      @select="onSelect"
-      :data="data"
-      :ceil="max"
-      class="area-chart" />
-    <div class="content">
-      <h3>Selected Value: {{currentValue}}</h3>
-      <div>
-        <label>Record Count: </label>
-        <input @model:value="itemCount" />
-      </div>
-      <div>
-        <label>Min Value: </label>
-        <input @model:value="min" />
-      </div>
-      <div>
-        <label>Max Value: </label>
-        <input @model:value="max" />
-      </div>
-      <div>
-        <label>
-          {{ "Check " + data[0] }}  
-        </label> 
-      </div>
-    </div> -->
     <HorizontalBarChart />
+    <LineChart />
   </div>
 </template>
 
 <script>
-/* import ResponsiveAreaChart from './components/AreaChart.vue'; */
-/* import generateData from './randomData'; */
 import HorizontalBarChart from './components/HorizontalBarChart.vue'
+import LineChart from './components/LineChart.vue'
+
 
 
 export default {
@@ -48,20 +23,13 @@ export default {
       max: 100,
     };
   },
-/*   mounted() {
-    setInterval(() => {
-      this.data = generateData(this.itemCount,
-        parseInt(this.min, 10),
-        parseInt(this.max, 10));
-    }, 2000);
-  }, */
   methods: {
     onSelect(value) {
       this.currentValue = value;
     },
   },
   components: {
-    /* ResponsiveAreaChart */
+    LineChart,
     HorizontalBarChart
   },
 };

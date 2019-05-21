@@ -1,26 +1,36 @@
 <template>
 <div>
-  <svg width='960' height='500'>
+  <svg :width='svgParameters.width' :height='svgParameters.height'>
       <rect 
-        v-for="d in data"
-        x="0"
-        :y="y(d.value)"
-        :height="5"
-        :width="d.value"
+        v-for="(d,i) in data"
+        v-bind:key="i"
+        x="70"
+        :y="y(d.name)"
+        :height="heightBar"
+        :width="x(d.value)"
+        fill="grey"
        >
         {{ d.value }}
       </rect>
+      <text
+      v-for="d in data"
+      v-bind:key="d"
+      x="0"
+      :y="y(d.name) + 17"
+      >
+      {{ d.name }}
+      </text>
   </svg>
 </div>
 </template>
 
 <script>
-import * as d3 from 'd3';
+import * as d3 from "d3";
 export default {
   name: 'vue-bar-chart',
   data() {
     return {
-      data: [{
+      temporaryData: [{
                 "name": "Apples",
                 "value": 20,
         },
@@ -54,56 +64,56 @@ export default {
             bottom: 15,
             left: 60
         },
+      svgParameters: {
+        width: 560,
+        height: 210
+      }
     };
   },
   computed:{
+    data: function() {
+        return this.temporaryData.sort((a,b) => {
+            return a.value - b.value;
+        })
+    },
     width: function() {
-      return 960 - this.margin.left - this.margin.right
+      return this.svgParameters.width - this.margin.left - this.margin.right
     },
     height: function() {
-      return 500 - this.margin.top - this.margin.bottom
+      return this.svgParameters.height - this.margin.top - this.margin.bottom
+    },
+    heightBar: function(){
+      return this.height / this.data.length;
     },
     try: function() {
-      return this.y(this.data[1].value);
+      return this.y(this.data[1].name);
     }
   },
   mounted() {
-/*     this.calculatePath();
- */  },
+  },
   methods: {
-    y(d){
-      let y = d3.scaleOrdinal()
-                .range([this.height, 0])
-                .domain([0, d3.max(this.data, function (d) {
-                  return d.value;
-                })
-              ]);
-      return y(d);
+    y(d) {
+       let y = d3.scaleBand()
+            .domain(this.data.map(function(d) { return d.name; }))
+            .rangeRound([this.height, 0])
+            .paddingInner(0.5);
+
+        return y(d);
     }, 
-    getScales() {
-      const x = d3.scaleTime().range([0, 430]);
-      const y = d3.scaleLinear().range([210, 0]);
-      d3.axisLeft().scale(x);
-      d3.axisBottom().scale(y);
-      x.domain(d3.extent(this.data, (d, i) => i));
-      y.domain([0, d3.max(this.data, d => d)]);
-      return { x, y };
-    },
-    calculatePath() {
-      const scale = this.getScales();
-/*       const path = d3.line()
-        .x((d, i) => scale.x(i))
-        .y(d => scale.y(d));
-      this.line = path(this.data);
-    }, */
-  }
+    x(d) {
+        let x = d3.scaleLinear()
+          .domain([d3.max(this.data.map(d => d.value)), 0])
+          .range([this.width, 0]);
+
+        return x(d);
+    }
   }
 }
 </script>
 
 <style lang="sass" scoped>
 svg
-  margin: 25px;
+  margin: 25px
 path
   fill: none
   stroke: #76BF8A
