@@ -2,12 +2,15 @@
   <div id="app">
     <HorizontalBarChart />
     <LineChart />
+    <BarChart />
   </div>
 </template>
 
 <script>
 import HorizontalBarChart from './components/HorizontalBarChart.vue'
 import LineChart from './components/LineChart.vue'
+import BarChart from './components/BarChart.vue'
+
 
 
 
@@ -30,7 +33,8 @@ export default {
   },
   components: {
     LineChart,
-    HorizontalBarChart
+    HorizontalBarChart,
+    BarChart
   },
 };
 </script>
