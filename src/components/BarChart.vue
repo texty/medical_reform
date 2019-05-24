@@ -41,7 +41,7 @@ export default {
   },
   computed:{
     data: function() {
-        return Array(400).fill(0).map((d) => {
+        return Array(400).fill(0).map(() => {
             return {
                 name:"Fruit",
                 value: this.getRandomArbitrary(0,1000)
@@ -63,8 +63,7 @@ export default {
 
       let bins = d3.histogram()
         .domain(x.domain())
-        .thresholds(x.ticks(50))
-        (this.data.map(d => d.value));
+        .thresholds(x.ticks(50))(this.data.map(d => d.value));
 
       let y = d3.scaleLinear()
         .domain([0, d3.max(bins, d => d.length)]).nice()
@@ -76,7 +75,6 @@ export default {
   },
   directives: {
     axis(el, binding) {
-      debugger;
       const axis = binding.arg;
       const axisMethod = { x: "axisBottom", y: "axisLeft" }[axis];
       const methodArg = binding.value[axis];

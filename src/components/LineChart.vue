@@ -122,7 +122,6 @@ export default {
         return this.temp;
     },
     line: function() {
-      debugger;
       var calculatePath = this.calculatePath
       return this.data.map(d => calculatePath(d));
     },
@@ -169,7 +168,6 @@ export default {
         .x(function(d) { return scale.x(new Date(d.date)); })
         .y(function(d) { return scale.y(d.value); });
       
-      debugger;
       return path(data);
     },
   },

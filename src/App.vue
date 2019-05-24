@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import * as d3 from "d3";
 import HorizontalBarChart from './components/HorizontalBarChart.vue'
 import LineChart from './components/LineChart.vue'
 import BarChart from './components/BarChart.vue'
@@ -18,7 +19,7 @@ export default {
   name: 'app',
   data() {
     return {
-      data: [],
+      loadData: [],
       chartWidth: 0,
       currentValue: null,
       itemCount: 25,
@@ -26,10 +27,18 @@ export default {
       max: 100,
     };
   },
+  mounted() {
+    console.log('App loaded');
+    this.fetchData();
+  },
   methods: {
     onSelect(value) {
       this.currentValue = value;
     },
+    async fetchData() {
+      let data = await d3.json("./tweets.json");
+      this.loadData = data;
+    }
   },
   components: {
     LineChart,
