@@ -2,7 +2,13 @@
   <div>
     <svg  :width="svgParameters.width" :height="svgParameters.height">
       <g :transform="`translate(${margin.left},${margin.top})`">
-        <path class="line" :d="line" />
+        <path 
+        v-for="(d,i) in line"
+        v-bind:key="i"
+        :d="d" 
+        :stroke="color"
+        class="line" 
+        />
         <g v-axis:x="getScales()" :transform="`translate(0,${height})`"></g>
         <g v-axis:y="getScales()" :transform="`translate(0,0)`"></g>
       </g>
@@ -17,8 +23,46 @@ export default {
   name: 'vue-line-chart',
   data() {
     return {
-      temp: [{
+      color: '#76BF8A',
+      temp: [
+        [{
                 "name": "Apples",
+                "value": 20,
+                "date": "2019-01-01"
+        },
+            {
+                "name": "Apples",
+                "value": 20,
+                "date": "2019-02-01"
+
+        },
+            {
+                "name": "Apples",
+                "value": 19,
+                "date": "2019-03-01"
+        },
+            {
+                "name": "Apples",
+                "value": 51,
+                "date": "2019-04-01"
+        },
+            {
+                "name": "Apples",
+                "value": 16,
+                "date": "2019-05-01"
+        },
+            {
+                "name": "Apples",
+                "value": 26,
+                "date": "2019-06-01"
+        },
+            {
+                "name": "Apples",
+                "value": 30,
+                "date": "2019-07-01"
+        }], 
+        [{
+                "name": "Bananas",
                 "value": 20,
                 "date": "2019-01-01"
         },
@@ -29,30 +73,32 @@ export default {
 
         },
             {
-                "name": "Grapes",
+                "name": "Bananas",
                 "value": 19,
                 "date": "2019-03-01"
         },
             {
-                "name": "Lemons",
+                "name": "Bananas",
                 "value": 5,
                 "date": "2019-04-01"
         },
             {
-                "name": "Limes",
-                "value": 16,
+                "name": "Bananas",
+                "value": 88,
                 "date": "2019-05-01"
         },
             {
-                "name": "Oranges",
+                "name": "Bananas",
                 "value": 26,
                 "date": "2019-06-01"
         },
             {
-                "name": "Pears",
+                "name": "Bananas",
                 "value": 30,
                 "date": "2019-07-01"
         }],
+        
+        ],
       margin: {
         top: 25,
         right: 25,
@@ -69,12 +115,16 @@ export default {
   },
   computed: {
     data: function() {
-        return this.temp.sort((a,b) => {
+        /* let a = this.temp.sort((a,b) => {
             return new Date(a.date) - new Date(b.date);
-        })
+        }); */
+
+        return this.temp;
     },
     line: function() {
-      return this.calculatePath(this.data);
+      debugger;
+      var calculatePath = this.calculatePath
+      return this.data.map(d => calculatePath(d));
     },
     width: function() {
       return this.svgParameters.width - this.margin.left - this.margin.right
@@ -94,13 +144,22 @@ export default {
   },
   methods: {
     getScales() {
+      var values = [];
+      var dates = [];
+      this.data.forEach(d => {
+          d.forEach(dd => {
+              values.push(dd.value)
+              dates.push(new Date(dd.date))
+          })
+      })
+
       var x = d3.scaleTime()
         .range([0, this.width])
-        .domain(d3.extent(this.data, function(d) { return new Date(d.date); }));
+        .domain(d3.extent(dates));
   
       var y = d3.scaleLinear()
         .range([this.height, 0])
-        .domain([0, d3.max(this.data, function(d) { return d.value; })]);
+        .domain([0, d3.max(values)]);
       
       return { x, y };
     },
@@ -110,7 +169,8 @@ export default {
         .x(function(d) { return scale.x(new Date(d.date)); })
         .y(function(d) { return scale.y(d.value); });
       
-      return path(this.data);
+      debugger;
+      return path(data);
     },
   },
 };
@@ -121,6 +181,6 @@ svg
   /* margin: 25px */
 path
   fill: none
-  stroke: #76BF8A
+  /* stroke: #76BF8A */
   stroke-width: 3px
 </style>
