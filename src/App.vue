@@ -1,16 +1,26 @@
 <template>
   <div id="app">
-    <HorizontalBarChart :temp="data.get(oblast_names[10])" />
+    <HorizontalBarChart 
+      v-bind:temp="loadData" 
+      v-bind:oblast="selectedOblast"
+      v-bind:variable="selectedVariable" />
+    <BarChart 
+      v-bind:temp="loadData"
+      v-bind:oblast="selectedOblast"
+      v-bind:variable="selectedVariable" />
     <LineChart />
-    <BarChart />
+
   </div>
 </template>
 
 <script>
 import * as d3 from "d3";
 import HorizontalBarChart from './components/HorizontalBarChart.vue'
-import LineChart from './components/LineChart.vue'
 import BarChart from './components/BarChart.vue'
+import LineChart from './components/LineChart.vue'
+
+
+import data from './assets/visualization_data.json'
 
 
 
@@ -19,7 +29,10 @@ export default {
   name: 'app',
   data() {
     return {
-      loadData: [],
+      /* overalData: [], */
+      selectedVariable:'decl_count',
+      selectedOblast: 'Чернігівська',
+      loadData: data,
       chartWidth: 0,
       currentValue: null,
       itemCount: 25,
@@ -41,12 +54,15 @@ export default {
     }
   },
   computed: {
-    data: function() {
+    /* data: function() {
       return d3.nest().key(d => d.oblast_name).map(this.loadData)
-    },
+    }, */
     oblast_names: function() {
       return [...new Set(this.loadData.map(d => d.oblast_name))]
-    }
+    },
+/*     setData: function() {
+      this.overalData = data.get(oblast_names[4])
+    } */
   },
   components: {
     LineChart,

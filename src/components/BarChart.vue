@@ -8,7 +8,7 @@
         :x="computedScales.x(d.x0)"
         :width="Math.max(0, computedScales.x(d.x1) - computedScales.x(d.x0) - 1)"
         :y="computedScales.y(d.length)"
-        :height="computedScales.y(0) - computedScales.y(d.length)"
+        :height="computedScales.y(1) - computedScales.y(d.length)"
         fill="grey"
         :data="d.value"
        >
@@ -25,13 +25,19 @@
 import * as d3 from "d3";
 export default {
   name: 'vue-hist-chart',
+  props: {
+    temp: Array,
+    variable: String,
+    oblast: String
+  },
   data() {
     return {
+      tempVar: this.temp,
       margin: {
             top: 15,
             right: 25,
             bottom: 25,
-            left: 20
+            left: 40
         },
       svgParameters: {
         width: 500,
@@ -40,14 +46,20 @@ export default {
     };
   },
   computed:{
-    data: function() {
+/*     data: function() {
         return Array(400).fill(0).map(() => {
             return {
                 name:"Fruit",
                 value: this.getRandomArbitrary(0,1000)
             }
         })
-
+    }, */
+    data: function() {
+      var variable = this.variable;
+      var data = this.temp.map(function(d){
+          return +d[variable]
+      })
+        return data
     },
     width: function() {
       return this.svgParameters.width - this.margin.left - this.margin.right
@@ -56,17 +68,19 @@ export default {
       return this.svgParameters.height - this.margin.top - this.margin.bottom
     },
     computedScales: function() {
+      /* var variable = this.variable */
+      debugger;
+
       let x = d3.scaleLinear()
-        .domain(d3.extent(this.data.map(d => d.value))).nice()
-       /*  .domain([d3.max(this.data.map(d => d.value)), 0]).nice() */
+        .domain(d3.extent(this.data.map(d => d))).nice()
         .range([0, this.width]);
 
       let bins = d3.histogram()
         .domain(x.domain())
-        .thresholds(x.ticks(50))(this.data.map(d => d.value));
+        .thresholds(x.ticks(25))(this.data.map(d => d));
 
-      let y = d3.scaleLinear()
-        .domain([0, d3.max(bins, d => d.length)]).nice()
+      let y = d3.scaleLog()
+        .domain([1, d3.max(bins, d => d.length)]).nice()
         .range([this.height - this.margin.bottom, this.margin.top])
 
         
