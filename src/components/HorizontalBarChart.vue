@@ -3,19 +3,19 @@
   <svg :width='svgParameters.width' :height='svgParameters.height'>
     <g :transform="`translate(${margin.left},${margin.top})`">
       <rect 
-        v-for="(d,i) in data"
+        v-for="(d,i) in temp"
         v-bind:key="i"
         x="0"
         :y="y(d.name)"
         :height="heightBar/2"
-        :width="x(d.value)"
+        :width="x(d[this.selectedVariable])"
         fill="grey"
         @mouseover="hover = i"
         @mouseleave="hover = null"
         :class="{ active: hover === i }"
         
        >
-        {{ d.value }}
+        {{ d[this.selectedVariable] }}
       </rect>
       <g v-axis:x="getScales()" :transform="`translate(0,${height})`"></g>
       <g v-axis:y="getScales()" :transform="`translate(0,0)`"></g>
@@ -37,10 +37,15 @@
 import * as d3 from "d3";
 export default {
   name: 'vue-bar-chart',
+  props:{
+    temp: Array
+  },
   data() {
     return {
       hover: false,
-      temporaryData: [{
+      selectedVariable:'decl_count',
+      data: 0,
+/*       temporaryData: [{
                 "name": "Apples",
                 "value": 20,
         },
@@ -67,7 +72,7 @@ export default {
             {
                 "name": "Pears",
                 "value": 30,
-        }],
+        }], */
       margin: {
             top: 15,
             right: 25,
@@ -81,11 +86,16 @@ export default {
     };
   },
   computed:{
-    data: function() {
-        return this.temporaryData.sort((a,b) => {
-            return a.value - b.value;
+/*     data: function() {
+        this.temporaryData.forEach((d,i) => {
+          this.temporaryData[i][this.selectedVariable] = +d[this.selectedVariable]
         })
-    },
+        return this.temporaryData.sort((a,b) => {
+            return a[this.selectedVariable] - b[this.selectedVariable];
+        })
+        var a = this.temp;
+        return a
+    }, */
     width: function() {
       return this.svgParameters.width - this.margin.left - this.margin.right
     },
@@ -93,10 +103,10 @@ export default {
       return this.svgParameters.height - this.margin.top - this.margin.bottom
     },
     heightBar: function(){
-      return this.height / this.data.length;
+      return this.height / this.temp.length;
     },
     try: function() {
-      return this.y(this.data[1].name);
+      return this.y(this.temp[1].name);
     }
   },
     directives: {
@@ -108,23 +118,26 @@ export default {
       d3.select(el).call(d3[axisMethod](methodArg));
     }
   },
-  mounted() {
+  async mounted() {
+   /*  debugger;
+    this.data = await this.temp;
+    console.log('Bar loaded') */
   },
   methods: {
     getScales(){
       let y = d3.scaleBand()
-            .domain(this.data.map(function(d) { return d.name; }))
+            .domain(this.temp.map(function(d) { return d.name; }))
             .rangeRound([this.height, 0])
             .paddingInner(0.5);
       let x = d3.scaleLinear()
-          .domain([d3.max(this.data.map(d => d.value)), 0])
+          .domain([d3.max(this.temp.map(d => d[this.selectedVariable])), 0])
           .range([this.width, 0]);
 
       return { x, y }
     },
     y(d) {
        let y = d3.scaleBand()
-            .domain(this.data.map(function(d) { return d.name; }))
+            .domain(this.temp.map(function(d) { return d.name; }))
             .rangeRound([this.height, 0])
             .paddingInner(0.5);
 
@@ -132,7 +145,7 @@ export default {
     }, 
     x(d) {
         let x = d3.scaleLinear()
-          .domain([d3.max(this.data.map(d => d.value)), 0])
+          .domain([d3.max(this.temp.map(d => d[this.selectedVariable])), 0])
           .range([this.width, 0]);
 
         return x(d);

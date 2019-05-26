@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <HorizontalBarChart />
+    <HorizontalBarChart :temp="data.get(oblast_names[10])" />
     <LineChart />
     <BarChart />
   </div>
@@ -36,8 +36,16 @@ export default {
       this.currentValue = value;
     },
     async fetchData() {
-      let data = await d3.json("./tweets.json");
+      let data = await d3.csv("./visualization_data.csv");
       this.loadData = data;
+    }
+  },
+  computed: {
+    data: function() {
+      return d3.nest().key(d => d.oblast_name).map(this.loadData)
+    },
+    oblast_names: function() {
+      return [...new Set(this.loadData.map(d => d.oblast_name))]
     }
   },
   components: {
