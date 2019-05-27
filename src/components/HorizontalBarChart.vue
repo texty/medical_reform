@@ -6,7 +6,7 @@
         v-for="(d,i) in data"
         v-bind:key="i"
         x="0"
-        :y="y(d.name)"
+        :y="getScales().y(d.name)"
         :height="heightBar/2"
         :width="getScales().x(+d[variable])"
         fill="grey"
@@ -64,7 +64,6 @@ export default {
 
         return data;
 
-
     },
     width: function() {
       return this.svgParameters.width - this.margin.left - this.margin.right
@@ -107,21 +106,6 @@ export default {
           .range([1, this.width]);
 
       return { x, y }
-    },
-    y(d) {
-       let y = d3.scaleBand()
-            .domain(this.data.map(function(d) { return d.name; }))
-            .rangeRound([this.height, 0])
-            .paddingInner(0.5);
-
-        return y(d);
-    }, 
-    x(d) {
-        let x = d3.scaleLinear()
-          .domain([d3.max(this.data.map(d => d[this.selectedVariable])), 0])
-          .range([this.width, 0]);
-
-        return x(d);
     }
   }
 }
