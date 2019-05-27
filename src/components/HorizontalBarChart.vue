@@ -8,14 +8,14 @@
         x="0"
         :y="y(d.name)"
         :height="heightBar/2"
-        :width="x(d[selectedVariable])"
+        :width="getScales().x(+d[variable])"
         fill="grey"
         @mouseover="hover = i"
         @mouseleave="hover = null"
         :class="{ active: hover === i }"
         
        >
-        {{ d[selectedVariable] }}
+        {{ d[variable] }}
       </rect>
       <g v-axis:x="getScales()" :transform="`translate(0,${height})`"></g>
       <g v-axis:y="getScales()" :transform="`translate(0,0)`"></g>
@@ -51,7 +51,6 @@ export default {
   },
   computed:{
     data: function() {
-      debugger;
         var oblast = this.oblast;
         var variable = this.variable;
 
@@ -97,13 +96,15 @@ export default {
   },
   methods: {
     getScales(){
+      var variable = this.variable;
       let y = d3.scaleBand()
             .domain(this.data.map(function(d) { return d.name; }))
             .rangeRound([this.height, 0])
             .paddingInner(0.5);
-      let x = d3.scaleLinear()
-          .domain([d3.max(this.data.map(d => d[this.selectedVariable])), 0])
-          .range([this.width, 0]);
+      let x = d3.scaleLog()
+        /*   .domain([d3.max(this.data.map(d => d[this.selectedVariable])), 0]) */
+          .domain(d3.extent(this.data.map(function(d) { return +d[variable] }))).nice()
+          .range([1, this.width]);
 
       return { x, y }
     },

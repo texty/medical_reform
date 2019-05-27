@@ -1,5 +1,9 @@
 <template>
   <div id="app">
+
+    <multiselect v-model="selectedOblast" :options="oblast_names"></multiselect>
+    <multiselect v-model="selectedVariable" :options="variables"></multiselect>
+
     <HorizontalBarChart 
       v-bind:temp="loadData" 
       v-bind:oblast="selectedOblast"
@@ -15,6 +19,9 @@
 
 <script>
 import * as d3 from "d3";
+import Multiselect from 'vue-multiselect'
+
+
 import HorizontalBarChart from './components/HorizontalBarChart.vue'
 import BarChart from './components/BarChart.vue'
 import LineChart from './components/LineChart.vue'
@@ -29,7 +36,7 @@ export default {
   name: 'app',
   data() {
     return {
-      /* overalData: [], */
+      variables: ['doctors_to_people_ration', 'decl_count'],
       selectedVariable:'decl_count',
       selectedOblast: 'Чернігівська',
       loadData: data,
@@ -65,12 +72,15 @@ export default {
     } */
   },
   components: {
+    Multiselect,
     LineChart,
     HorizontalBarChart,
     BarChart
   },
 };
 </script>
+
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <style lang="sass">
 body

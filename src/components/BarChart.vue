@@ -46,14 +46,6 @@ export default {
     };
   },
   computed:{
-/*     data: function() {
-        return Array(400).fill(0).map(() => {
-            return {
-                name:"Fruit",
-                value: this.getRandomArbitrary(0,1000)
-            }
-        })
-    }, */
     data: function() {
       var variable = this.variable;
       var data = this.temp.map(function(d){
@@ -68,9 +60,6 @@ export default {
       return this.svgParameters.height - this.margin.top - this.margin.bottom
     },
     computedScales: function() {
-      /* var variable = this.variable */
-      debugger;
-
       let x = d3.scaleLinear()
         .domain(d3.extent(this.data.map(d => d))).nice()
         .range([0, this.width]);
