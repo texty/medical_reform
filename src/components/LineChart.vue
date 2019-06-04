@@ -21,6 +21,9 @@
 import * as d3 from 'd3';
 export default {
   name: 'vue-line-chart',
+  props: {
+    inputData: Array,
+  },
   data() {
     return {
       color: '#76BF8A',
@@ -115,11 +118,10 @@ export default {
   },
   computed: {
     data: function() {
-        /* let a = this.temp.sort((a,b) => {
-            return new Date(a.date) - new Date(b.date);
-        }); */
-
         return this.temp;
+    },
+    computed_number: function(){
+      return this.inputData.map(d => d);
     },
     line: function() {
       var calculatePath = this.calculatePath

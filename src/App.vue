@@ -12,7 +12,9 @@
       v-bind:temp="loadData"
       v-bind:oblast="selectedOblast"
       v-bind:variable="selectedVariable" />
-    <LineChart />
+    <LineChart 
+      v-bind:inputData="loadProcurements"
+    />
 
   </div>
 </template>
@@ -28,6 +30,7 @@ import LineChart from './components/LineChart.vue'
 
 
 import data from './assets/visualization_data.json'
+/* import procurement from './assets/procurement_with_regions.json' */
 
 
 
@@ -40,6 +43,7 @@ export default {
       selectedVariable:'decl_count',
       selectedOblast: 'Чернігівська',
       loadData: data,
+      loadProcurements: 0,
       chartWidth: 0,
       currentValue: null,
       itemCount: 25,
@@ -56,20 +60,25 @@ export default {
       this.currentValue = value;
     },
     async fetchData() {
-      let data = await d3.csv("./visualization_data.csv");
-      this.loadData = data;
+      let procurements = await d3.csv("./procurement_with_regions.csv");
+
+      this.loadProcurements = procurements;
     }
   },
   computed: {
-    /* data: function() {
-      return d3.nest().key(d => d.oblast_name).map(this.loadData)
-    }, */
     oblast_names: function() {
       return [...new Set(this.loadData.map(d => d.oblast_name))]
     },
-/*     setData: function() {
-      this.overalData = data.get(oblast_names[4])
-    } */
+/*     procurements: function() {
+      return this.loadProcurements
+    }, */
+    selectedProcurement: function() {
+      let x = this.loadProcurements.filter(d => {
+        return (d.name == "Фастівський район") &  (d.oblast_name == "Київська")
+      });
+      
+      return x
+    }
   },
   components: {
     Multiselect,
