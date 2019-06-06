@@ -1,18 +1,20 @@
 <template>
   <div>
+    
     <svg  :width="svgParameters.width" :height="svgParameters.height">
-      <g :transform="`translate(${margin.left},${margin.top})`">
+      <g 
+      v-for="(d,i) in line"
+      v-bind:key="i"
+      :transform="`translate(${margin.left},${margin.top})`">
+        <!-- <text>{{ d.name }}</text> -->
         <path 
-        v-for="(d,i) in line"
-        v-bind:key="i"
-        :d="d" 
-        :stroke="color"
+        :d="d.line" 
+        :stroke="'#76BF8A'"
         class="line" 
         />
         <g v-axis:x="getScales()" :transform="`translate(0,${height})`"></g>
         <g v-axis:y="getScales()" :transform="`translate(0,0)`"></g>
       </g>
-
     </svg>
   </div>
 </template>
@@ -26,82 +28,9 @@ export default {
   },
   data() {
     return {
-      color: '#76BF8A',
-      temp: [
-        [{
-                "name": "Apples",
-                "value": 20,
-                "date": "2019-01-01"
-        },
-            {
-                "name": "Apples",
-                "value": 20,
-                "date": "2019-02-01"
+      color: {
 
-        },
-            {
-                "name": "Apples",
-                "value": 19,
-                "date": "2019-03-01"
-        },
-            {
-                "name": "Apples",
-                "value": 51,
-                "date": "2019-04-01"
-        },
-            {
-                "name": "Apples",
-                "value": 16,
-                "date": "2019-05-01"
-        },
-            {
-                "name": "Apples",
-                "value": 26,
-                "date": "2019-06-01"
-        },
-            {
-                "name": "Apples",
-                "value": 30,
-                "date": "2019-07-01"
-        }], 
-        [{
-                "name": "Bananas",
-                "value": 20,
-                "date": "2019-01-01"
-        },
-            {
-                "name": "Bananas",
-                "value": 12,
-                "date": "2019-02-01"
-
-        },
-            {
-                "name": "Bananas",
-                "value": 19,
-                "date": "2019-03-01"
-        },
-            {
-                "name": "Bananas",
-                "value": 5,
-                "date": "2019-04-01"
-        },
-            {
-                "name": "Bananas",
-                "value": 88,
-                "date": "2019-05-01"
-        },
-            {
-                "name": "Bananas",
-                "value": 26,
-                "date": "2019-06-01"
-        },
-            {
-                "name": "Bananas",
-                "value": 30,
-                "date": "2019-07-01"
-        }],
-        
-        ],
+      },
       margin: {
         top: 25,
         right: 25,
@@ -118,14 +47,17 @@ export default {
   },
   computed: {
     data: function() {
-        return this.temp;
+        return this.inputData;
     },
     computed_number: function(){
-      return this.inputData.map(d => d);
+      let nested = d3.nest().key(d => d.id_item_short).entries(this.inputData)
+      return nested;
     },
     line: function() {
       var calculatePath = this.calculatePath
-      return this.data.map(d => calculatePath(d));
+      return this.computed_number.map(function(d) {
+        return {'name': d.key, 'line':calculatePath(d.values)}
+      });
     },
     width: function() {
       return this.svgParameters.width - this.margin.left - this.margin.right
@@ -147,11 +79,11 @@ export default {
     getScales() {
       var values = [];
       var dates = [];
-      this.data.forEach(d => {
-          d.forEach(dd => {
-              values.push(dd.value)
-              dates.push(new Date(dd.date))
-          })
+      this.computed_number.forEach(d => {
+          d.values.forEach(dd => { 
+              values.push(+dd.sum)
+              dates.push(new Date(dd.date_month))
+           }) 
       })
 
       var x = d3.scaleTime()
@@ -167,8 +99,9 @@ export default {
     calculatePath(data) {
       const scale = this.getScales();
       const path = d3.line()
-        .x(function(d) { return scale.x(new Date(d.date)); })
-        .y(function(d) { return scale.y(d.value); });
+        .x(function(d) { return scale.x(new Date(d.date_month)); })
+        .y(function(d) { return scale.y(d.sum); })
+        .curve(d3.curveMonotoneX);
       
       return path(data);
     },

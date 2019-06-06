@@ -13,7 +13,9 @@
       v-bind:oblast="selectedOblast"
       v-bind:variable="selectedVariable" />
     <LineChart 
-      v-bind:inputData="loadProcurements"
+      v-for="(d,i) in unnestedProcurements"
+      v-bind:key="i"
+      v-bind:inputData="d.values"
     />
 
   </div>
@@ -30,7 +32,7 @@ import LineChart from './components/LineChart.vue'
 
 
 import data from './assets/visualization_data.json'
-/* import procurement from './assets/procurement_with_regions.json' */
+import procurement from './assets/procurement_with_regions.json'
 
 
 
@@ -43,7 +45,7 @@ export default {
       selectedVariable:'decl_count',
       selectedOblast: 'Чернігівська',
       loadData: data,
-      loadProcurements: 0,
+      loadProcurements: procurement,
       chartWidth: 0,
       currentValue: null,
       itemCount: 25,
@@ -53,31 +55,45 @@ export default {
   },
   mounted() {
     console.log('App loaded');
-    this.fetchData();
+    /* this.fetchData(); */
   },
   methods: {
     onSelect(value) {
       this.currentValue = value;
     },
-    async fetchData() {
+/*     async fetchData() {
       let procurements = await d3.csv("./procurement_with_regions.csv");
 
       this.loadProcurements = procurements;
-    }
+    } */
   },
   computed: {
     oblast_names: function() {
       return [...new Set(this.loadData.map(d => d.oblast_name))]
     },
-/*     procurements: function() {
-      return this.loadProcurements
-    }, */
     selectedProcurement: function() {
       let x = this.loadProcurements.filter(d => {
-        return (d.name == "Фастівський район") &  (d.oblast_name == "Київська")
+        return (d.name == "Фастівський район") &
+               (d.oblast_name == "Київська") &
+               (d.hospital_edrpou == "01107935")
       });
-      
+
       return x
+    },
+    nestedProcurement: function() {
+      let nest = d3.nest()
+        .key(d => d.oblast_name)
+        .key(d => d.name)
+        .key(d => d.hospital_name)
+        .entries(this.loadProcurements)
+
+      return nest;
+    },
+    unnestedProcurements: function() {
+      var a = [];
+      this.nestedProcurement.map(d => d.values).forEach(d => d.forEach(dd => a.push(dd.values[0])))
+      return a;
+  
     }
   },
   components: {
