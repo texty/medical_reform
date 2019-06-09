@@ -17,6 +17,7 @@
     "vue": "^2.6.10",
     "vue-multiselect": "^2.1.6",
     "vue-simple-suggest": "^1.9.5",
+    "vue-simple-tooltip": "^1.0.12",
     "vuex": "^3.0.1"
   },
   "devDependencies": {

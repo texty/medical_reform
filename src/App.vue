@@ -8,15 +8,17 @@
       v-bind:temp="loadData" 
       v-bind:oblast="selectedOblast"
       v-bind:variable="selectedVariable" />
+    <LineChart 
+      class='line'
+      v-for="(d,i) in selectedProcurement.values"
+      v-bind:key="i"
+      v-bind:inputData="d.values"
+      v-bind:name="d.key"
+    />
     <BarChart 
       v-bind:temp="loadData"
       v-bind:oblast="selectedOblast"
       v-bind:variable="selectedVariable" />
-    <LineChart 
-      v-for="(d,i) in unnestedProcurements"
-      v-bind:key="i"
-      v-bind:inputData="d.values"
-    />
 
   </div>
 </template>
@@ -71,30 +73,37 @@ export default {
     oblast_names: function() {
       return [...new Set(this.loadData.map(d => d.oblast_name))]
     },
-    selectedProcurement: function() {
+    /* selectedProcurement: function() {
       let x = this.loadProcurements.filter(d => {
         return (d.name == "Фастівський район") &
-               (d.oblast_name == "Київська") &
-               (d.hospital_edrpou == "01107935")
+               (d.oblast_name == "Київська")
       });
 
       return x
-    },
+    }, */
     nestedProcurement: function() {
       let nest = d3.nest()
         .key(d => d.oblast_name)
-        .key(d => d.name)
-        .key(d => d.hospital_name)
+        .key(d => d.hospital_edrpou)
+        .key(d => d.id_item_short)
         .entries(this.loadProcurements)
 
       return nest;
     },
-    unnestedProcurements: function() {
+    selectedProcurement: function() {
+      let selectedOblast = this.selectedOblast
+      let selected = this.nestedProcurement.filter(function(d) {
+          return d.key == selectedOblast
+      })
+
+      return selected[0]
+    }
+/*     unnestedProcurements: function() {
       var a = [];
-      this.nestedProcurement.map(d => d.values).forEach(d => d.forEach(dd => a.push(dd.values[0])))
+      this.nestedProcurement.map(d => d.values).forEach(d => d.forEach(dd => a.push(dd)))
       return a;
   
-    }
+    } */
   },
   components: {
     Multiselect,
@@ -129,4 +138,7 @@ label
 
 .area-chart
   height: 300px
+
+div.line
+  display: inline-block
 </style>
