@@ -8,12 +8,26 @@
       v-bind:temp="loadData" 
       v-bind:oblast="selectedOblast"
       v-bind:variable="selectedVariable" />
+
+    <LineChart 
+      class='line'
+      v-bind:inputData="totalProcurements.values"
+      v-bind:name="totalProcurements.key"
+      :svgParameters="{width: 650,height: 350}"
+    />
+
+
+    <multiselect v-model="selectedOblast" :options="oblast_names"></multiselect>
+
+ 
     <LineChart 
       class='line'
       v-for="(d,i) in selectedProcurement.values"
       v-bind:key="i"
       v-bind:inputData="d.values"
       v-bind:name="d.key"
+      :svgParameters="{width: 300,height: 100}"
+
     />
     <BarChart 
       v-bind:temp="loadData"
@@ -73,14 +87,28 @@ export default {
     oblast_names: function() {
       return [...new Set(this.loadData.map(d => d.oblast_name))]
     },
-    /* selectedProcurement: function() {
-      let x = this.loadProcurements.filter(d => {
-        return (d.name == "Фастівський район") &
-               (d.oblast_name == "Київська")
-      });
+    totalProcurements: function() {
+      debugger; 
+      let total = d3.nest().key(d => d.id_item_short).key(d => d.date_month).rollup(function(leaves) { 
+        return leaves.map(d => d.sum).reduce((a, b) => a + b);
+       }).entries(this.loadProcurements)
+       .map(function(group) {
+        return {
+          key: group.key,
+          values: group.values.map(d => {
+              return {
+                date_month: d.key,
+                sum: d.value
+              }
+          }),
+        }
+      })
+    
 
-      return x
-    }, */
+      return { 'key': 'Україна',
+        'values': total
+       }
+    },
     nestedProcurement: function() {
       let nest = d3.nest()
         .key(d => d.oblast_name)

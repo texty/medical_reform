@@ -14,7 +14,7 @@
         />
         <g v-axis:x="getScales()" :transform="`translate(0,${height})`"></g>
         <g v-axis:y="getScales()" :transform="`translate(0,0)`"></g>
-        <text>{{ name }}}</text>
+        <text>{{ name }}</text>
       </g>
     </svg>
   </div>
@@ -28,7 +28,8 @@ export default {
   name: 'vue-line-chart',
   props: {
     inputData: Array,
-    name,
+    name: String,
+    svgParameters: Object
   },
   data() {
     return {
@@ -46,10 +47,10 @@ export default {
         bottom: 25,
         left: 100
       },
-      svgParameters: {
+     /*  svgParameters: {
         width: 300,
         height: 100
-      },
+      }, */
       colors: {
         "type:30": 'red',
         "type:331": 'green',
@@ -70,42 +71,35 @@ export default {
       /* let nested = d3.nest().key(d => d.id_item_short).entries(this.inputData) */
 
       nested.forEach(d => {
-
         var dates = d.values.map(d => d.date_month)
-        var first = "2016-07-01"
+        let allDates = ["2016-07-01", "2016-08-01", "2016-09-01", "2016-10-01",
+                    "2016-11-01", "2016-12-01", "2017-01-01", "2017-02-01",
+                    "2017-03-01", "2017-04-01", "2017-05-01", "2017-06-01",
+                    "2017-07-01", "2017-08-01", "2017-09-01", "2017-10-01", 
+                    "2017-11-01", "2017-12-01", "2018-01-01", "2018-02-01", 
+                    "2018-03-01", "2018-04-01", "2018-05-01", "2018-06-01", 
+                    "2018-07-01", "2018-09-01", "2018-10-01", "2018-11-01", 
+                    "2018-12-01"];
 
-        if (!dates.includes(first)) {
-        d.values.push(
+        let dateDifference = allDates.filter(x => !dates.includes(x));
+
+
+        dateDifference.forEach(dd => {
+            d.values.push(
           {
-          date_month: "2016-07-01",
+          date_month: dd,
           hospital_edrpou: d.values[0].hospital_edrpou,
           id_item_short: d.values[0].id_item_short,
           name: d.values[0].name,
           oblast_name: d.values[0].oblast_name,
           sum:0,
           }
-        )}
+        )
+        })
         
-      })
 
-      nested.forEach(d => {
-
-        var dates = d.values.map(d => d.date_month)
-        var first = "2019-05-01"
-
-        if (!dates.includes(first)) {
-        d.values.push(
-          {
-          date_month: "2019-05-01",
-          hospital_edrpou: d.values[0].hospital_edrpou,
-          id_item_short: d.values[0].id_item_short,
-          name: d.values[0].name,
-          oblast_name: d.values[0].oblast_name,
-          sum:0,
-          }
-        )}
         
-      })
+      });
 
       nested.forEach(elem => {
         elem.values.sort(function(a,b){
@@ -132,7 +126,6 @@ export default {
   },
   directives: {
     axis(el, binding) {
-      debugger;
       const axis = binding.arg;
       const axisMethod = { x: "axisBottom", y: "axisLeft" }[axis];
       const methodArg = binding.value[axis];
