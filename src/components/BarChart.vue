@@ -13,6 +13,7 @@
         :data="d.value"
        >
       </rect>
+      <text></text>
       <g v-axis:x="computedScales" :transform="`translate(0,${height - margin.bottom})`"></g>
       <g v-axis:y="computedScales" :transform="`translate(0,0)`"></g>
 
@@ -66,9 +67,9 @@ export default {
 
       let bins = d3.histogram()
         .domain(x.domain())
-        .thresholds(x.ticks(25))(this.data.map(d => d));
+        .thresholds(x.ticks(40))(this.data.map(d => d));
 
-      let y = d3.scaleLog()
+      let y = d3.scaleLinear()
         .domain([1, d3.max(bins, d => d.length)]).nice()
         .range([this.height - this.margin.bottom, this.margin.top])
 
@@ -82,7 +83,9 @@ export default {
       const axisMethod = { x: "axisBottom", y: "axisLeft" }[axis];
       const methodArg = binding.value[axis];
 
-      d3.select(el).call(d3[axisMethod](methodArg));
+      const axisFinal = d3[axisMethod](methodArg)
+
+      d3.select(el).call(axisFinal.ticks(3));
     }
   },
   mounted() {

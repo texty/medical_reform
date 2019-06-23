@@ -1,38 +1,51 @@
 <template>
   <div id="app">
 
-    <multiselect v-model="selectedOblast" :options="oblast_names"></multiselect>
-    <multiselect v-model="selectedVariable" :options="variables"></multiselect>
+   <!--  <multiselect v-model="selectedOblast" :options="oblast_names"></multiselect> -->
 
     <HorizontalBarChart 
       v-bind:temp="loadData" 
-      v-bind:oblast="selectedOblast"
       v-bind:variable="selectedVariable" />
 
+    <multiselect v-model="selectedOblast" :options="oblast_names"></multiselect>
+
+
+    <ParallelPlot
+      class='line'
+      v-for="(d,i) in selectedProcurement"
+      v-bind:key="i"
+      :name="d.key"
+      :inputData="d.values"
+      :svgParameters="{width: 450,height: 150}"
+    />
+    
+<!-- 
     <LineChart 
       class='line'
       v-bind:inputData="totalProcurements.values"
       v-bind:name="totalProcurements.key"
       :svgParameters="{width: 650,height: 350}"
-    />
-
-
-    <multiselect v-model="selectedOblast" :options="oblast_names"></multiselect>
+    /> -->
 
  
-    <LineChart 
+<!--     <LineChart 
       class='line'
       v-for="(d,i) in selectedProcurement.values"
       v-bind:key="i"
       v-bind:inputData="d.values"
       v-bind:name="d.key"
       :svgParameters="{width: 300,height: 100}"
+    /> -->
 
-    />
     <BarChart 
-      v-bind:temp="loadData"
+      v-bind:temp="payments"
       v-bind:oblast="selectedOblast"
-      v-bind:variable="selectedVariable" />
+      v-bind:variable="'decl_count'" />
+          <BarChart 
+      v-bind:temp="payments"
+      v-bind:oblast="selectedOblast"
+      v-bind:variable="'money_per_month'" />
+
 
   </div>
 </template>
@@ -45,10 +58,16 @@ import Multiselect from 'vue-multiselect'
 import HorizontalBarChart from './components/HorizontalBarChart.vue'
 import BarChart from './components/BarChart.vue'
 import LineChart from './components/LineChart.vue'
+import ParallelPlot from './components/ParallelPlot.vue'
 
 
-import data from './assets/visualization_data.json'
+import data from './assets/rajon_stats.json'
 import procurement from './assets/procurement_with_regions.json'
+import payments from './assets/payments_to_hospitals.json'
+import doctorPayments from './assets/payments_to_doctors.json'
+import procuramentPivot from './assets/procurements_pivot_with_regions.json'
+
+
 
 
 
@@ -58,10 +77,13 @@ export default {
   data() {
     return {
       variables: ['doctors_to_people_ration', 'decl_count'],
-      selectedVariable:'decl_count',
+      selectedVariable:'declarations_ratio',
       selectedOblast: 'Чернігівська',
+      selectedProcurementTypes: ['type:45', 'type:30', 'type:44', 'type:48', 'type:331'],
       loadData: data,
-      loadProcurements: procurement,
+      loadProcurements: procuramentPivot,
+      loadProcurementPivot: procuramentPivot,
+      payments: doctorPayments,
       chartWidth: 0,
       currentValue: null,
       itemCount: 25,
@@ -85,10 +107,9 @@ export default {
   },
   computed: {
     oblast_names: function() {
-      return [...new Set(this.loadData.map(d => d.oblast_name))]
+      return [...new Set(this.loadData.map(d => d.oblast))]
     },
     totalProcurements: function() {
-      debugger; 
       let total = d3.nest().key(d => d.id_item_short).key(d => d.date_month).rollup(function(leaves) { 
         return leaves.map(d => d.sum).reduce((a, b) => a + b);
        }).entries(this.loadProcurements)
@@ -112,19 +133,25 @@ export default {
     nestedProcurement: function() {
       let nest = d3.nest()
         .key(d => d.oblast_name)
-        .key(d => d.hospital_edrpou)
         .key(d => d.id_item_short)
+ /*        .key(d => d.hospital_name) */
         .entries(this.loadProcurements)
 
       return nest;
     },
     selectedProcurement: function() {
       let selectedOblast = this.selectedOblast
-      let selected = this.nestedProcurement.filter(function(d) {
+      let selectedProcurementTypes = this.selectedProcurementTypes
+      let selectedOblastData = this.nestedProcurement.filter(function(d) {
           return d.key == selectedOblast
-      })
+      })[0];
 
-      return selected[0]
+
+      let selectedProcurementType = selectedOblastData.values.filter(function(d) {
+          return  selectedProcurementTypes.includes(d.key)
+      });
+
+      return selectedProcurementType
     }
 /*     unnestedProcurements: function() {
       var a = [];
@@ -137,7 +164,8 @@ export default {
     Multiselect,
     LineChart,
     HorizontalBarChart,
-    BarChart
+    BarChart,
+    ParallelPlot,
   },
 };
 </script>

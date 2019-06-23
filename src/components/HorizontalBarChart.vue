@@ -1,24 +1,54 @@
 <template>
-<div>
+
+<div class="holder" :width='svgParameters.width' :height='svgParameters.height' >
+  <div class="selectorOblast">
+    <h3>Оберіть область: </h3>
+    <multiselect v-model="oblast" :options="oblast_names"></multiselect>
+  </div>
   <svg :width='svgParameters.width' :height='svgParameters.height'>
     <g :transform="`translate(${margin.left},${margin.top})`">
       <rect 
         v-for="(d,i) in data"
         v-bind:key="i"
         x="0"
-        :y="getScales().y(d.name)"
-        :height="heightBar/2"
+        :y="getScales().y(d.rajon_grouped) + 5"
+        :height="heightOfbar"
         :width="getScales().x(+d[variable])"
-        fill="grey"
-        @mouseover="hover = i"
-        @mouseleave="hover = null"
+        fill="green"
         :class="{ active: hover === i }"
-        
        >
         {{ d[variable] }}
       </rect>
-      <g v-axis:x="getScales()" :transform="`translate(0,${height})`"></g>
-      <g v-axis:y="getScales()" :transform="`translate(0,0)`"></g>
+      <text
+      v-for="(d,i) in data"
+      v-bind:key="i"
+      :x="getScales().x(+d[variable]) + 10"
+      :y="getScales().y(d.rajon_grouped) + 10"
+      :width="1"
+      fill="grey"
+      > {{ Math.round(d[variable]) + '%' }} </text>
+
+      <text
+      v-for="(d,i) in data"
+      v-bind:key="i"
+      :x="0"
+      :y="getScales().y(d.rajon_grouped) - 1"
+      :width="2"
+      fill="black"
+      > {{  d.rajon_grouped }} </text>
+
+      <circle
+        v-for="(d,i) in data"
+        v-bind:key="i"
+        :cx="getScales().x(+d[variable])"
+        :cy="getScales().y(d.rajon_grouped) + 7"
+        :r="6" 
+        fill="blue">
+           
+      </circle>
+
+      <!-- <g v-axis:x="getScales()" :transform="`translate(0,${height})`"></g> -->
+      <!-- <g v-axis:y="getScales()" :transform="`translate(0,0)`"></g> -->
     </g>
   </svg>
 </div>
@@ -26,36 +56,41 @@
 
 <script>
 import * as d3 from "d3";
+import Multiselect from 'vue-multiselect'
+
+
 export default {
   name: 'vue-bar-chart',
   props:{
     temp: Array,
     variable: String,
-    oblast: String
+
   },
   data() {
     return {
+      oblast: 'Київська',
       hover: false,
       selectedVariable:'decl_count',
+      heightOfbar: 5,
       margin: {
             top: 15,
             right: 25,
             bottom: 25,
-            left: 140
-        },
-      svgParameters: {
-        width: 560,
-        height: 700
-      }
+            left: 0
+        }
     };
+  },
+  components: {
+    Multiselect
   },
   computed:{
     data: function() {
+      debugger;
         var oblast = this.oblast;
         var variable = this.variable;
 
         var data = this.temp.filter(function(d) {
-          return (d.oblast_name == oblast)
+          return (d.oblast == oblast)
         });
 
         data = data.sort(function(a,b) {
@@ -64,6 +99,15 @@ export default {
 
         return data;
 
+    },
+    oblast_names: function() {
+      return [...new Set(this.temp.map(d => d.oblast))]
+    },
+    svgParameters: function() {
+      return {
+        width: 900,
+        height: 35 * this.data.length
+      }
     },
     width: function() {
       return this.svgParameters.width - this.margin.left - this.margin.right
@@ -74,9 +118,14 @@ export default {
     heightBar: function(){
       return this.height / this.data.length;
     },
-    try: function() {
-      return this.y(this.data[1].name);
-    }
+/*     try: function() {
+      debugger;
+      let getScales = this.getScales;
+      let variable = this.variable;
+      return this.data.map(function(d){
+        return getScales().x(+d[variable]/+d['total_populatiom'])
+      })
+    } */
   },
     directives: {
     axis(el, binding) {
@@ -97,12 +146,12 @@ export default {
     getScales(){
       var variable = this.variable;
       let y = d3.scaleBand()
-            .domain(this.data.map(function(d) { return d.name; }))
+            .domain(this.data.map(function(d) { return d.rajon_grouped; }))
             .rangeRound([this.height, 0])
             .paddingInner(0.5);
-      let x = d3.scaleLog()
-        /*   .domain([d3.max(this.data.map(d => d[this.selectedVariable])), 0]) */
-          .domain(d3.extent(this.data.map(function(d) { return +d[variable] }))).nice()
+
+      let x = d3.scaleLinear()
+          .domain([0, 120])
           .range([1, this.width]);
 
       return { x, y }
@@ -112,8 +161,32 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+
+div.holder
+  width: 75%
+  margin: 0 auto
+
+
+div.selectorOblast
+  display: flex
+
+div.selectorOblast h3
+  margin: 0px 25px
+
+div.multiselect
+  margin: 0px 25px
+  width: 30%
+
 svg
   margin: 25px
+  display: inline-block
+
+path.domain
+  display: none
+
+tick
+  line
+    display: none
 path
   fill: none
   stroke: #76BF8A
@@ -121,4 +194,6 @@ path
 
 rect.active
   fill: green
+
+
 </style>
