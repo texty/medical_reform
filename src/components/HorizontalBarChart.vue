@@ -6,7 +6,8 @@
     <multiselect v-model="oblast" :options="oblast_names"></multiselect>
   </div>
   <svg :width='svgParameters.width' :height='svgParameters.height'>
-    <g :transform="`translate(${margin.left},${margin.top})`">
+    <g 
+    :transform="`translate(${margin.left},${margin.top})`">
       <rect 
         v-for="(d,i) in data"
         v-bind:key="i"
@@ -21,7 +22,7 @@
       </rect>
       <text
       v-for="(d,i) in data"
-      v-bind:key="i"
+      v-bind:key="i+1"
       :x="getScales().x(+d[variable]) + 10"
       :y="getScales().y(d.rajon_grouped) + 10"
       :width="1"
@@ -30,7 +31,7 @@
 
       <text
       v-for="(d,i) in data"
-      v-bind:key="i"
+      v-bind:key="i+'a'"
       :x="0"
       :y="getScales().y(d.rajon_grouped) - 1"
       :width="2"
@@ -39,7 +40,7 @@
 
       <circle
         v-for="(d,i) in data"
-        v-bind:key="i"
+        v-bind:key="i+'b'"
         :cx="getScales().x(+d[variable])"
         :cy="getScales().y(d.rajon_grouped) + 7"
         :r="6" 

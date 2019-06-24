@@ -14,12 +14,12 @@
         class="line" 
         >
         </path>
-        <g v-axis:y="getScales()" :transform="`translate(130)`"></g>
-        <g v-axis:y="getScales()" :transform="`translate(263)`"></g>
+        <g v-axis:y="getScales()" :transform="`translate(${getScales().x(2017)})`"></g>
+        <g v-axis:y="getScales()" :transform="`translate(${getScales().x(2019)})`"></g>
 
 <!--         <g v-axis:x="getScales()" :transform="`translate(0,${height})`"></g>
  -->    
-        <text>{{ procuramentTypes[name] }}</text>
+        <text>{{ name }}</text>
       </g>
     </svg>
   </div>
@@ -27,7 +27,7 @@
 
 <script>
 import * as d3 from 'd3';
-import tooltip from 'vue-simple-tooltip';
+
 
 export default {
   name: 'parallel-plot-chart',
@@ -39,7 +39,7 @@ export default {
   data() {
     return {
       tooltip:'fuck',
-      dimensions: ['2017', '2018'],
+      dimensions: ['2017', '2019'],
       procuramentTypes: {
         'type:331': 'Медичне обладнання',
         'type:45': ' Будівельні роботи та поточний ремонт',
@@ -59,7 +59,8 @@ export default {
         "type:44": 'blue',
         "type:45": 'yellow',
         "type:48": 'black'
-      }
+      },
+
     };
   },
   mounted() {
@@ -68,7 +69,7 @@ export default {
     line: function() {
       var calculatePath = this.calculatePath
       let lines = this.inputData.map(function(d) {
-        return {'name': d.hospital_name, 'line':calculatePath(d)}
+        return {'name': d.key, 'line':calculatePath(d.value)}
       });
       return lines;
     },
@@ -86,15 +87,14 @@ export default {
       const methodArg = binding.value[axis];
 
 
-      const axisStart = d3[axisMethod](methodArg[2018])
+      const axisStart = d3[axisMethod](methodArg)
       
-      d3.select(el).call(axisStart.ticks(3));
+      d3.select(el).call(axisStart.ticks(3).tickFormat(d3.format(".0s")));
     },
-    directives: {tooltip}
+    /* tooltip */
   },
   methods: {
     getScales() {
-
       var values = [];
       var dates = [];
       let dimensions = this.dimensions;
@@ -106,22 +106,35 @@ export default {
            }) 
       }) */
         // For each dimension, I build a linear scale. I store all in a y object
-        var y = {};
+        /* var y = {}; */
         let inputData = this.inputData;
         let svgParameters = this.svgParameters;
         let width = this.width;
         let height = this.height;
 
-        dimensions.forEach(function(name) {
+        /* dimensions.forEach(function(name) {
 
         let domain = d3.extent(inputData, function(d) { 
-              return +d[name]; 
+              return d.value[name]+0.001;
         })
 
         y[name] = d3.scaleLog()
-            .domain([1, domain[1]] )
-            .range([height, 1])
-        });
+            .domain(domain)
+            .range([height, 0])
+        }); */
+
+        let domain_2017 = d3.extent(inputData, function(d) { 
+              return d.value[2017]+0.001;
+        })
+
+        let domain_2019 = d3.extent(inputData, function(d) { 
+              return d.value[2019]+0.001;
+        })
+
+
+        let y = d3.scaleLog()
+            .domain([1, domain_2019[1]])
+            .range([height, 0])
 
 
         let x = d3.scalePoint()
@@ -136,7 +149,7 @@ export default {
       const scale = this.getScales();
       const dimensions = this.dimensions;
       
-      return d3.line()(dimensions.map(function(p) { return [scale.x(p), scale.y[p](1 + data[p])]; }));
+      return d3.line()(dimensions.map(function(p) { return [scale.x(p), scale.y(data[p])]; }));
     },
   },
 };

@@ -7,8 +7,17 @@
       v-bind:temp="loadData" 
       v-bind:variable="selectedVariable" />
 
-    <multiselect v-model="selectedOblast" :options="oblast_names"></multiselect>
 
+    <div>
+      <label class="typo__label">Tagging</label>
+      <multiselect v-model="selectedProcurementTypes" tag-placeholder="Add this as new tag" 
+      placeholder="Search a tag" label="name" track-by="code" 
+      :options="allProcurement" 
+      :multiple="true" 
+      :taggable="false" 
+      @tag="addTag"></multiselect>
+      <!-- <pre class="language-json"><code>{{ selectedProcurementTypes  }}</code></pre> -->
+    </div>
 
     <ParallelPlot
       class='line'
@@ -16,8 +25,11 @@
       v-bind:key="i"
       :name="d.key"
       :inputData="d.values"
-      :svgParameters="{width: 450,height: 150}"
+      :svgParameters="{width: 300,height: 150}"
     />
+
+
+    <Table/>
     
 <!-- 
     <LineChart 
@@ -59,6 +71,8 @@ import HorizontalBarChart from './components/HorizontalBarChart.vue'
 import BarChart from './components/BarChart.vue'
 import LineChart from './components/LineChart.vue'
 import ParallelPlot from './components/ParallelPlot.vue'
+import Table from './components/Table.vue'
+
 
 
 import data from './assets/rajon_stats.json'
@@ -79,7 +93,9 @@ export default {
       variables: ['doctors_to_people_ration', 'decl_count'],
       selectedVariable:'declarations_ratio',
       selectedOblast: 'Чернігівська',
-      selectedProcurementTypes: ['type:45', 'type:30', 'type:44', 'type:48', 'type:331'],
+      selectedProcurementTypes: [{'name': 'Ремонти', 'code': 'type:45'}, 
+      {'name':'Щось там', 'code':'type:30'},
+       {'name':'Будівництво', 'code':'type:44'}],
       loadData: data,
       loadProcurements: procuramentPivot,
       loadProcurementPivot: procuramentPivot,
@@ -99,6 +115,15 @@ export default {
     onSelect(value) {
       this.currentValue = value;
     },
+    addTag(newTag) {
+      debugger;
+      const tag = {
+        name: newTag,
+      }
+
+      this.allProcurement.push(tag)
+      this.selectedProcurementTypes.push(tag)
+    }
 /*     async fetchData() {
       let procurements = await d3.csv("./procurement_with_regions.csv");
 
@@ -132,26 +157,44 @@ export default {
     },
     nestedProcurement: function() {
       let nest = d3.nest()
-        .key(d => d.oblast_name)
         .key(d => d.id_item_short)
- /*        .key(d => d.hospital_name) */
-        .entries(this.loadProcurements)
+        .key(d => d.oblast)
+        .rollup(function(leaves) { 
+          return {
+            2017: d3.sum(leaves, function(d){ return d[2017] }),
+            2019: d3.sum(leaves, function(d){ return d[2019] })
+           }; 
+        })
+        .entries(this.loadProcurementPivot.filter(d => d.oblast != null))
 
       return nest;
     },
     selectedProcurement: function() {
+      debugger;
       let selectedOblast = this.selectedOblast
       let selectedProcurementTypes = this.selectedProcurementTypes
-      let selectedOblastData = this.nestedProcurement.filter(function(d) {
-          return d.key == selectedOblast
-      })[0];
+      let data = this.nestedProcurement.filter(function(d) {
+        return d.values.length > 10
+      })
 
-
-      let selectedProcurementType = selectedOblastData.values.filter(function(d) {
-          return  selectedProcurementTypes.includes(d.key)
+      let selectedData = data.filter(function(d) {
+      return ['type:48', 'type:51',
+                        'type:35','type:38',
+                        'type:70', 'type:42',
+                        'type:39', 'type:30'].includes(d.key);
       });
 
-      return selectedProcurementType
+
+      /* let selectedProcurementType = selectedOblastData.values.filter(function(d) {
+          return  selectedProcurementTypes.includes(d.key)
+      }); */
+
+      return selectedData
+    },
+    allProcurement: function() {
+      return this.nestedProcurement.map((d) => {
+          return {'name': d.key};
+        })
     }
 /*     unnestedProcurements: function() {
       var a = [];
@@ -166,6 +209,7 @@ export default {
     HorizontalBarChart,
     BarChart,
     ParallelPlot,
+    Table
   },
 };
 </script>
