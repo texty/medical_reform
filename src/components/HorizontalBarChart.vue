@@ -1,6 +1,6 @@
 <template>
 
-<div class="holder" :width='svgParameters.width' :height='svgParameters.height' >
+<div class="horizontalPlot" :width='svgParameters.width' :height='svgParameters.height' >
   <div class="selectorOblast">
     <h3>Оберіть область: </h3>
     <multiselect v-model="oblast" :options="oblast_names"></multiselect>
@@ -13,9 +13,9 @@
         v-bind:key="i"
         x="0"
         :y="getScales().y(d.rajon_grouped) + 5"
-        :height="heightOfbar"
+        :height="heightOfbar/2"
         :width="getScales().x(+d[variable])"
-        fill="green"
+        fill="white"
         :class="{ active: hover === i }"
        >
         {{ d[variable] }}
@@ -26,7 +26,7 @@
       :x="getScales().x(+d[variable]) + 10"
       :y="getScales().y(d.rajon_grouped) + 10"
       :width="1"
-      fill="grey"
+      fill="white"
       > {{ Math.round(d[variable]) + '%' }} </text>
 
       <text
@@ -35,7 +35,7 @@
       :x="0"
       :y="getScales().y(d.rajon_grouped) - 1"
       :width="2"
-      fill="black"
+      fill="white"
       > {{  d.rajon_grouped }} </text>
 
       <circle
@@ -44,7 +44,7 @@
         :cx="getScales().x(+d[variable])"
         :cy="getScales().y(d.rajon_grouped) + 7"
         :r="6" 
-        fill="blue">
+        fill="white">
            
       </circle>
 
@@ -163,9 +163,9 @@ export default {
 
 <style lang="sass" scoped>
 
-div.holder
+/* div.holder
   width: 75%
-  margin: 0 auto
+  margin: 0 auto */
 
 
 div.selectorOblast

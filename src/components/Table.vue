@@ -47,7 +47,7 @@
     <b-table
       show-empty
       stacked="md"
-      :items="items"
+      :items="rows"
       :fields="fields"
       :current-page="currentPage"
       :per-page="perPage"
@@ -57,13 +57,13 @@
       :sort-direction="sortDirection"
       @filtered="onFiltered"
     >
-      <template slot="name" slot-scope="row">
+     <!--  <template slot="name" slot-scope="row">
         {{ row.value.first }} {{ row.value.last }}
       </template>
 
       <template slot="isActive" slot-scope="row">
         {{ row.value ? 'Yes :)' : 'No :(' }}
-      </template>
+      </template> -->
 
       <template slot="actions" slot-scope="row">
         <b-button size="sm" @click="info(row.item, row.index, $event.target)" class="mr-1">
@@ -103,42 +103,20 @@
 
 <script>
   export default {
+    props: {
+      rows: Array,
+    },
     data() {
       return {
-        items: [
-          { isActive: true, age: 40, name: { first: 'Dickerson', last: 'Macdonald' } },
-          { isActive: false, age: 21, name: { first: 'Larsen', last: 'Shaw' } },
-          {
-            isActive: false,
-            age: 9,
-            name: { first: 'Mini', last: 'Navarro' },
-            /* _rowVariant: 'success' */
-          },
-          { isActive: false, age: 89, gender: "male", name: { first: 'Geneva', last: 'Wilson' } },
-          { isActive: true, age: 38, name: { first: 'Jami', last: 'Carney' } },
-          { isActive: false, age: 27, name: { first: 'Essie', last: 'Dunlap' } },
-          { isActive: true, age: 40, name: { first: 'Thor', last: 'Macdonald' } },
-          {
-            isActive: true,
-            age: 87,
-            name: { first: 'Larsen', last: 'Shaw' },
-         /*    _cellVariants: { age: 'danger', isActive: 'warning' } */
-          },
-          { isActive: false, age: 26, gender: "male", name: { first: 'Mitzi', last: 'Navarro' } },
-          { isActive: false, age: 22, gender: "male", name: { first: 'Genevieve', last: 'Wilson' } },
-          { isActive: true, age: 38, gender: "male", name: { first: 'John', last: 'Carney' } },
-          { isActive: false, age: 29, gender: "male", name: { first: 'Dick', last: 'Dunlap' } }
-        ],
         fields: [
-          { key: 'name', label: 'Person Full name', sortable: true, sortDirection: 'desc' },
-          { key: 'age', label: 'Person age', sortable: true, class: 'text-center' },
-          { key: 'isActive', label: 'is Active' },
-          {key: 'gender', label: 'Стать'}
-         /*  { key: 'actions', label: 'Actions' } */
+          { key: 'hospital_name', label: 'Назва лікарні', sortable: true, sortDirection: 'desc' },
+          { key: 'id_item_short', label: 'Код', sortable: true, class: 'text-center' },
+          { key: 'overal_title', label: 'Назва' },
+          {key: 'sum', label: 'Вартість'}
         ],
         totalRows: 1,
         currentPage: 1,
-        perPage: 5,
+        perPage: 10,
         pageOptions: [5, 10, 15],
         sortBy: null,
         sortDesc: false,

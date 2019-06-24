@@ -8,7 +8,7 @@
       v-bind:variable="selectedVariable" />
 
 
-    <div>
+   <!--  <div>
       <label class="typo__label">Tagging</label>
       <multiselect v-model="selectedProcurementTypes" tag-placeholder="Add this as new tag" 
       placeholder="Search a tag" label="name" track-by="code" 
@@ -16,20 +16,41 @@
       :multiple="true" 
       :taggable="false" 
       @tag="addTag"></multiselect>
-      <!-- <pre class="language-json"><code>{{ selectedProcurementTypes  }}</code></pre> -->
-    </div>
+      <pre class="language-json"><code>{{ selectedProcurementTypes  }}</code></pre>
+    </div> -->
 
-    <ParallelPlot
-      class='line'
-      v-for="(d,i) in selectedProcurement"
-      v-bind:key="i"
-      :name="d.key"
-      :inputData="d.values"
-      :svgParameters="{width: 300,height: 150}"
-    />
+    <p>
+      fhfhfh
+    </p>
+
+    <p>
+      fhfhfh
+    </p>
+    <p>
+      fhfhfh
+    </p>
+    <p>
+      fhfhfh
+    </p>
+    <p>
+      fhfhfh
+    </p>
 
 
-    <Table/>
+    <div class="parallelPlot">      
+      <ParallelPlot
+        class='line'
+        v-for="(d,i) in selectedProcurement"
+        v-bind:key="i"
+        :name="d.key"
+        :inputData="d.values"
+        :svgParameters="{width: 300,height: 150}"
+      />    
+    </div>  
+
+
+
+    <Table :rows="tableData" />
     
 <!-- 
     <LineChart 
@@ -53,7 +74,8 @@
       v-bind:temp="payments"
       v-bind:oblast="selectedOblast"
       v-bind:variable="'decl_count'" />
-          <BarChart 
+    
+    <BarChart 
       v-bind:temp="payments"
       v-bind:oblast="selectedOblast"
       v-bind:variable="'money_per_month'" />
@@ -80,6 +102,7 @@ import procurement from './assets/procurement_with_regions.json'
 import payments from './assets/payments_to_hospitals.json'
 import doctorPayments from './assets/payments_to_doctors.json'
 import procuramentPivot from './assets/procurements_pivot_with_regions.json'
+import tableData from './assets/top_100_per_category.json'
 
 
 
@@ -100,6 +123,7 @@ export default {
       loadProcurements: procuramentPivot,
       loadProcurementPivot: procuramentPivot,
       payments: doctorPayments,
+      tableData: tableData,
       chartWidth: 0,
       currentValue: null,
       itemCount: 25,
@@ -182,6 +206,8 @@ export default {
                         'type:35','type:38',
                         'type:70', 'type:42',
                         'type:39', 'type:30'].includes(d.key);
+
+      /* return d.key */
       });
 
 
@@ -219,6 +245,16 @@ export default {
 <style lang="sass">
 body
   margin: 0
+
+path
+  stroke-color: white
+
+div.horizontalPlot
+  background-color: #009666
+  color: white
+
+div.parallelPlot
+  background-color: #009666
 
 #app
   font-family: 'Avenir', Helvetica, Arial, sans-serif

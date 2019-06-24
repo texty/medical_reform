@@ -1,6 +1,5 @@
 <template>
   <div>
-    
     <svg :width="svgParameters.width" :height="svgParameters.height">
 
       <g :transform="`translate(${margin.left},${margin.top})`">
@@ -10,7 +9,7 @@
         v-bind:key="i"  
         v-tooltip:right="d.name"
         :d="d.line" 
-        :stroke="'grey'"
+        :stroke="d.growth"
         class="line" 
         >
         </path>
@@ -67,9 +66,19 @@ export default {
   },
   computed: {
     line: function() {
+      debugger; 
+
       var calculatePath = this.calculatePath
       let lines = this.inputData.map(function(d) {
-        return {'name': d.key, 'line':calculatePath(d.value)}
+
+
+        return {
+          'name': d.key, 
+          'line':calculatePath(d.value),
+          'growth': (100 - (d.value[2017]/d.value[2019]  * 100)) > 25 
+            ? 'green' 
+            : 'red'
+         }
       });
       return lines;
     },
@@ -158,8 +167,8 @@ export default {
 <style lang="sass" scoped>
 path
   fill: none
-  stroke: #76BF8A
   stroke-width: 0.5px
+
 </style>
 
 

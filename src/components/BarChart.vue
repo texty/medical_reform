@@ -13,7 +13,7 @@
         :data="d.value"
        >
       </rect>
-      <text></text>
+      <text> {{ `${names[variable]}` }}</text>
       <g v-axis:x="computedScales" :transform="`translate(0,${height - margin.bottom})`"></g>
       <g v-axis:y="computedScales" :transform="`translate(0,0)`"></g>
 
@@ -33,6 +33,10 @@ export default {
   },
   data() {
     return {
+      names: {
+               decl_count: "Кількість декларацій на одного лікаря",
+               money_per_month: 'Виплати одному лікарю на місяць' 
+             },
       tempVar: this.temp,
       margin: {
             top: 15,
