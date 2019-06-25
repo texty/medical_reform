@@ -9,7 +9,7 @@
         :width="Math.max(0, computedScales.x(d.x1) - computedScales.x(d.x0) - 1)"
         :y="computedScales.y(d.length)"
         :height="computedScales.y(1) - computedScales.y(d.length)"
-        fill="grey"
+        fill="white"
         :data="d.value"
        >
       </rect>
@@ -45,7 +45,7 @@ export default {
             left: 40
         },
       svgParameters: {
-        width: 500,
+        width: 450,
         height: 300
       }
     };

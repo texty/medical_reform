@@ -1,10 +1,19 @@
 <template>
 
 <div class="horizontalPlot" :width='svgParameters.width' :height='svgParameters.height' >
+
+
   <div class="selectorOblast">
-    <h3>Оберіть область: </h3>
-    <multiselect v-model="oblast" :options="oblast_names"></multiselect>
+    <h4><b>Кількість підписаних декларацій</b></h4>
+    <div>
+      <h5><b>Оберіть область:</b></h5>
+      <multiselect v-model="oblast" :options="oblast_names"></multiselect>
+    </div>
   </div>
+
+
+
+<div class="plot">
   <svg :width='svgParameters.width' :height='svgParameters.height'>
     <g 
     :transform="`translate(${margin.left},${margin.top})`">
@@ -52,6 +61,7 @@
       <!-- <g v-axis:y="getScales()" :transform="`translate(0,0)`"></g> -->
     </g>
   </svg>
+  </div>
 </div>
 </template>
 
@@ -168,15 +178,18 @@ export default {
   margin: 0 auto */
 
 
-div.selectorOblast
+div.selectorOblast div
   display: flex
 
-div.selectorOblast h3
-  margin: 0px 25px
+div.selectorOblast 
+  h4
+    margin: 0.5em 25px
+  h5 
+    margin: 0px 25px
 
 div.multiselect
   margin: 0px 25px
-  width: 30%
+  width: auto
 
 svg
   margin: 25px

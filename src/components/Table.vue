@@ -1,50 +1,37 @@
 <template>
   <b-container fluid>
     <!-- User Interface controls -->
-    <b-row>
-      <b-col md="6" class="my-1">
-        <b-form-group label-cols-sm="3" label="Фільтр" class="mb-0">
-          <b-input-group>
-            <b-form-input v-model="filter" placeholder="Пошук"></b-form-input>
-            <b-input-group-append>
-              <b-button :disabled="!filter" @click="filter = ''">Очистити </b-button>
-            </b-input-group-append>
-          </b-input-group>
-        </b-form-group>
-      </b-col>
 
-   <!--    <b-col md="6" class="my-1">
-        <b-form-group label-cols-sm="3" label="Sort" class="mb-0">
-          <b-input-group>
-            <b-form-select v-model="sortBy" :options="sortOptions">
-              <option slot="first" :value="null">-- none --</option>
-            </b-form-select>
-            <b-form-select v-model="sortDesc" :disabled="!sortBy" slot="append">
-              <option :value="false">Asc</option> <option :value="true">Desc</option>
-            </b-form-select>
-          </b-input-group>
-        </b-form-group>
-      </b-col> -->
-<!-- 
-      <b-col md="6" class="my-1">
-        <b-form-group label-cols-sm="3" label="Sort direction" class="mb-0">
-          <b-form-select v-model="sortDirection">
-            <option value="asc">Asc</option>
-            <option value="desc">Desc</option>
-            <option value="last">Last</option>
-          </b-form-select>
-        </b-form-group>
-      </b-col> -->
+    <div class="tableNavigation">
+        <b-row>
+        <b-col md="6" class="my-1">
+          <!-- <b-form-group label-cols-sm="3" label="" class="mb-0"> -->
+            <b-input-group>
+              <b-form-input v-model="filter" placeholder="Пошук"></b-form-input>
+              <b-input-group-append>
+                <b-button :disabled="!filter" @click="filter = ''">Очистити </b-button>
+              </b-input-group-append>
+            </b-input-group>
+         <!--  </b-form-group> -->
+        </b-col>
 
-      <!-- <b-col md="6" class="my-1">
-        <b-form-group label-cols-sm="3" label="Відображати рядків" class="mb-0">
-          <b-form-select v-model="perPage" :options="pageOptions"></b-form-select>
-        </b-form-group>
-      </b-col> -->
-    </b-row>
+        <b-row>
+          <b-col md="6" class="my-1">
+            <b-pagination
+              v-model="currentPage"
+              :total-rows="totalRows"
+              :per-page="perPage"
+              class="my-0"
+            ></b-pagination>
+          </b-col>
+        </b-row>
+      </b-row>
+    </div>
+
 
     <!-- Main table element -->
     <b-table
+    class="mainTable"
       show-empty
       stacked="md"
       :items="rows"
@@ -83,16 +70,6 @@
       </template>
     </b-table>
 
-    <b-row>
-      <b-col md="6" class="my-1">
-        <b-pagination
-          v-model="currentPage"
-          :total-rows="totalRows"
-          :per-page="perPage"
-          class="my-0"
-        ></b-pagination>
-      </b-col>
-    </b-row>
 
     <!-- Info modal -->
     <b-modal :id="infoModal.id" :title="infoModal.title" ok-only @hide="resetInfoModal">
@@ -109,10 +86,10 @@
     data() {
       return {
         fields: [
-          { key: 'hospital_name', label: 'Назва лікарні', sortable: true, sortDirection: 'desc' },
+          { key: 'hospital_name', label: 'Назва лікарні',  },
           { key: 'id_item_short', label: 'Код', sortable: true, class: 'text-center' },
           { key: 'overal_title', label: 'Назва' },
-          {key: 'sum', label: 'Вартість'}
+          {key: 'sum', label: 'Вартість', sortable: true}
         ],
         totalRows: 1,
         currentPage: 1,
@@ -161,3 +138,13 @@
     }
   }
 </script>
+
+<style lang="sass">
+  .mainTable
+    background-color: #009666
+
+  div.tableNavigation
+    padding-left: 1em
+    padding-bottom: 0.5em
+
+</style>

@@ -1,24 +1,11 @@
 <template>
   <div id="app">
 
-   <!--  <multiselect v-model="selectedOblast" :options="oblast_names"></multiselect> -->
 
     <HorizontalBarChart 
       v-bind:temp="loadData" 
       v-bind:variable="selectedVariable" />
 
-
-   <!--  <div>
-      <label class="typo__label">Tagging</label>
-      <multiselect v-model="selectedProcurementTypes" tag-placeholder="Add this as new tag" 
-      placeholder="Search a tag" label="name" track-by="code" 
-      :options="allProcurement" 
-      :multiple="true" 
-      :taggable="false" 
-      @tag="addTag"></multiselect>
-      <pre class="language-json"><code>{{ selectedProcurementTypes  }}</code></pre>
-    </div> -->
-
     <p>
       fhfhfh
     </p>
@@ -36,40 +23,64 @@
       fhfhfh
     </p>
 
+    <div class="procurements">
+        <h4><b>Порівняння закупівель лікарень за 2017-2019 роки</b></h4>
 
-    <div class="parallelPlot">      
+      <div class="parallelPlot">  
       <ParallelPlot
         class='line'
         v-for="(d,i) in selectedProcurement"
         v-bind:key="i"
         :name="d.key"
         :inputData="d.values"
-        :svgParameters="{width: 300,height: 150}"
+        :svgParameters="{width: 300,height: 120}"
       />    
-    </div>  
+      </div> 
+
+    </div> 
+
+        <p>
+      fhfhfh
+    </p>
+
+    <p>
+      fhfhfh
+    </p>
+    <p>
+      fhfhfh
+    </p>
+    <p>
+      fhfhfh
+    </p>
+    <p>
+      fhfhfh
+    </p>
 
 
-
-    <Table :rows="tableData" />
+    <div class="tableAndName">
+        <h4><b>Таблиця закупівель</b></h4>
+        <Table class="tableContainer" :rows="tableData" />
+    </div>
     
-<!-- 
-    <LineChart 
-      class='line'
-      v-bind:inputData="totalProcurements.values"
-      v-bind:name="totalProcurements.key"
-      :svgParameters="{width: 650,height: 350}"
-    /> -->
+        <p>
+      fhfhfh
+    </p>
 
- 
-<!--     <LineChart 
-      class='line'
-      v-for="(d,i) in selectedProcurement.values"
-      v-bind:key="i"
-      v-bind:inputData="d.values"
-      v-bind:name="d.key"
-      :svgParameters="{width: 300,height: 100}"
-    /> -->
+    <p>
+      fhfhfh
+    </p>
+    <p>
+      fhfhfh
+    </p>
+    <p>
+      fhfhfh
+    </p>
+    <p>
+      fhfhfh
+    </p>
 
+
+    <div class="finalBars">
     <BarChart 
       v-bind:temp="payments"
       v-bind:oblast="selectedOblast"
@@ -79,6 +90,8 @@
       v-bind:temp="payments"
       v-bind:oblast="selectedOblast"
       v-bind:variable="'money_per_month'" />
+
+    </div>
 
 
   </div>
@@ -202,7 +215,7 @@ export default {
       })
 
       let selectedData = data.filter(function(d) {
-      return ['type:48', 'type:51',
+      return ['type:48', 'type:51', 'type:44',
                         'type:35','type:38',
                         'type:70', 'type:42',
                         'type:39', 'type:30'].includes(d.key);
@@ -246,22 +259,74 @@ export default {
 body
   margin: 0
 
+div.selectorOblast
+  background-color: white
+  padding-top: 1em
+  padding-bottom: 1em
+
+  h5
+    display: flex
+    align-items: center
+    justify-content: center
+
 path
   stroke-color: white
 
-div.horizontalPlot
-  background-color: #009666
+
+div.tableAndName  h4
+    padding-left: 1rem
+    /* padding-bottom: 16px */
+
+div.tableContainer.container-fluid
+  padding: 0
+  margin: 0
   color: white
 
-div.parallelPlot
+
+
+  .table
+    color: white
+
+div.tableNavigation .row
+  color: black
+
+  legend
+    font-weight: bold
+    padding-left: 1em
+  
+  input
+    width: auto
+
+  .page-item.active .page-link
+    background-color: #009666
+    border-color: #009666
+  
+  a
+    color: black
+
+
+div.plot
   background-color: #009666
+
+  .table
+    color: white
+
+div.procurements
+  div.parallelPlot
+    background-color: #009666
+    display: grid
+    grid-template-columns: 1fr 1fr 1fr
+    padding: 2em 0
+  
+  h4
+    padding: 0.5em 0.5em
 
 #app
   font-family: 'Avenir', Helvetica, Arial, sans-serif
   -webkit-font-smoothing: antialiased
   -moz-osx-font-smoothing: grayscale
   color: #2c3e50
-  margin-top: 60px
+  /* margin-top: 60px */
 </style>
 
 <style lang="sass" scoped>
@@ -277,4 +342,14 @@ label
 
 div.line
   display: inline-block
+
+
+div.finalBars
+  background-color: #009666
+  display: grid
+  grid-template-columns: 1fr 1fr
+  color: white
+  fill: white
+
+
 </style>

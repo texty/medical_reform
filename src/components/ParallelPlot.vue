@@ -14,11 +14,16 @@
         >
         </path>
         <g v-axis:y="getScales()" :transform="`translate(${getScales().x(2017)})`"></g>
-        <g v-axis:y="getScales()" :transform="`translate(${getScales().x(2019)})`"></g>
+        <g v-axis:z="getScales()" :transform="`translate(${getScales().x(2019)})`"></g>
 
 <!--         <g v-axis:x="getScales()" :transform="`translate(0,${height})`"></g>
  -->    
-        <text>{{ name }}</text>
+        <text :fill="'white'" :transform="`translate(${90}, -10)`">{{ name }}</text>
+
+        <text class="yearLabel" :fill="'white'" :transform="`translate(${getScales().x(2019)}, 84)`">{{ '2019' }} </text>
+        <text class="yearLabel" :fill="'white'" :transform="`translate(${getScales().x(2017) - 27}, 84)`">{{ '2017' }} </text>
+
+
       </g>
     </svg>
   </div>
@@ -47,9 +52,9 @@ export default {
         "type:44": "Конструкції та конструкційні матеріали; допоміжна будівельна продукція"
       },
       margin: {
-        top: 15,
-        right: 25,
-        bottom: 25,
+        top: 30,
+        right: 30,
+        bottom: 30,
         left: 30
       },
       colors: {
@@ -66,7 +71,6 @@ export default {
   },
   computed: {
     line: function() {
-      debugger; 
 
       var calculatePath = this.calculatePath
       let lines = this.inputData.map(function(d) {
@@ -76,8 +80,8 @@ export default {
           'name': d.key, 
           'line':calculatePath(d.value),
           'growth': (100 - (d.value[2017]/d.value[2019]  * 100)) > 25 
-            ? 'green' 
-            : 'red'
+            ? 'white' 
+            : 'black'
          }
       });
       return lines;
@@ -90,15 +94,20 @@ export default {
     },
   },
   directives: {
-    axis(el, binding) {
+    axis(el, binding, i) {
       const axis = binding.arg;
-      const axisMethod = { x: "axisBottom", y: "axisLeft" }[axis];
+      const axisMethod = { x: "axisBottom", y: "axisLeft", z: 'axisRight' }[axis];
       const methodArg = binding.value[axis];
+
+      debugger;
+
+      let numberOfTicks = axis == 'z' ? 0 : 3;
 
 
       const axisStart = d3[axisMethod](methodArg)
       
-      d3.select(el).call(axisStart.ticks(3).tickFormat(d3.format(".0s")));
+      d3.select(el).attr("class", "axisWhite").call(axisStart.ticks(numberOfTicks).tickFormat(d3.format("d")));
+      
     },
     /* tooltip */
   },
@@ -141,8 +150,14 @@ export default {
         })
 
 
+
         let y = d3.scaleLog()
-            .domain([1, domain_2019[1]])
+            .domain([1, d3.max(domain_2017.concat(domain_2019))])
+            .range([height, 0])
+
+
+        let z = y = d3.scaleLog()
+            .domain([1, d3.max(domain_2017.concat(domain_2019))])
             .range([height, 0])
 
 
@@ -152,7 +167,7 @@ export default {
           .domain(dimensions);
 
       
-      return { x, y };
+      return { x, y, z };
     },
     calculatePath(data) {
       const scale = this.getScales();
@@ -168,6 +183,17 @@ export default {
 path
   fill: none
   stroke-width: 0.5px
+  color: white
+
+.axisWhite
+  color: white
+
+text.yearLabel
+  font-size: 10px 
+
+
+/* path.line
+  stroke: white */
 
 </style>
 
