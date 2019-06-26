@@ -1,6 +1,6 @@
 <template>
 <div>
-  <svg :width='svgParameters.width' :height='svgParameters.height'>
+  <svg :width='svgWidth' :height='svgHeigh'>
     <g :transform="`translate(${margin.left},${margin.top})`">
       <rect 
         v-for="(d,i) in computedScales.bins"
@@ -17,6 +17,10 @@
       <g v-axis:x="computedScales" :transform="`translate(0,${height - margin.bottom})`"></g>
       <g v-axis:y="computedScales" :transform="`translate(0,0)`"></g>
 
+      <text class="yearLabel"  :fill="'white'" :transform="`translate(5, ${height + 5})`"> {{ labels[variable] }} </text>
+      <text class="yearLabel" :fill="'white'" :transform="`translate(5, ${25})`">{{ 'Кількість лікарів' }} </text>
+
+
     </g>
   </svg>
 </div>
@@ -24,6 +28,8 @@
 
 <script>
 import * as d3 from "d3";
+import wrapper from 'vue-svg-textwrap';
+
 export default {
   name: 'vue-hist-chart',
   props: {
@@ -33,10 +39,16 @@ export default {
   },
   data() {
     return {
+      svgWidth: 0,
+      svgHeigh: 300,
       names: {
-               decl_count: "Кількість декларацій на одного лікаря",
-               money_per_month: 'Виплати одному лікарю на місяць' 
+              decl_count: "Кількість декларацій на одного лікаря",
+              money_per_month: 'Виплати одному лікарю на місяць' 
              },
+      labels: {
+              decl_count: "Кількість пацієнтів на одного лікаря",
+              money_per_month: 'Виплати кожному лікарю, грн. в місяць' 
+      },
       tempVar: this.temp,
       margin: {
             top: 15,
@@ -89,10 +101,13 @@ export default {
 
       const axisFinal = d3[axisMethod](methodArg)
 
-      d3.select(el).call(axisFinal.ticks(3));
-    }
+      d3.select(el).call(axisFinal.ticks(4));
+    },
+    wrapper
   },
   mounted() {
+    const svgBcr = document.querySelector("div.finalBars svg").getBoundingClientRect(); 
+    this.svgWidth = svgBcr.width/2;
   },
   methods: {
     getRandomArbitrary(min, max) {
@@ -104,9 +119,16 @@ export default {
 
 <style lang="sass" scoped>
 svg
+  display: block
   margin: 25px
+  margin-right: 0
+  width: 100%
 path
   fill: none
   stroke: #76BF8A
   stroke-width: 3px
+
+
+text.yearLabel
+  font-size: 9px
 </style>

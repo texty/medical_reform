@@ -44,12 +44,14 @@
       :sort-direction="sortDirection"
       @filtered="onFiltered"
     >
-     <!--  <template slot="name" slot-scope="row">
-        {{ row.value.first }} {{ row.value.last }}
-      </template>
+<!--       <template slot="id_item_short" slot-scope="row">
+        {{ 
+          getCPV.get(row.id_item_short)[0].description 
+        }} 
+      </template> -->
 
-      <template slot="isActive" slot-scope="row">
-        {{ row.value ? 'Yes :)' : 'No :(' }}
+<!--       <template slot="id_item_short" slot-scope="row">
+        {{ getCPV.get(row.id_item_short)[0].description }}
       </template> -->
 
       <template slot="actions" slot-scope="row">
@@ -82,14 +84,15 @@
   export default {
     props: {
       rows: Array,
+      cpv: Array
     },
     data() {
       return {
         fields: [
           { key: 'hospital_name', label: 'Назва лікарні',  },
-          { key: 'id_item_short', label: 'Код', sortable: true, class: 'text-center' },
-          { key: 'overal_title', label: 'Назва' },
-          {key: 'sum', label: 'Вартість', sortable: true}
+          { key: 'id_item_short', label: 'Код', sortable: true, direction: 'desc', class: 'text-center' },
+          { key: 'overal_title',  label: 'Назва' },
+          {key: 'sum', label: 'Вартість', sortable: true, direction: 'desc',}
         ],
         totalRows: 1,
         currentPage: 1,
@@ -107,6 +110,17 @@
       }
     },
     computed: {
+    getCPV: function() {
+      let a = d3.nest().key(d => d.id_item_short).map(this.cpv);
+      return a
+    },
+    names: function() {
+      let getCPV = this.getCPV;
+      debugger;
+      return this.rows.map(d => {
+        return getCPV.get(d.id_item_short)[0].description
+      })
+    },
       sortOptions() {
         // Create an options list from our fields
         return this.fields
@@ -118,7 +132,7 @@
     },
     mounted() {
       // Set the initial number of items
-      this.totalRows = this.items.length
+      this.totalRows = this.rows.length
     },
     methods: {
       info(item, index, button) {
@@ -141,7 +155,7 @@
 
 <style lang="sass">
   .mainTable
-    background-color: #009666
+    background-color: #00a88c
 
   div.tableNavigation
     padding-left: 1em

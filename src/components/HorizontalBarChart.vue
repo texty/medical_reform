@@ -193,6 +193,7 @@ div.multiselect
 
 svg
   margin: 25px
+  margin-right: 0
   display: inline-block
 
 path.domain

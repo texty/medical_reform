@@ -1,6 +1,6 @@
 <template>
   <div>
-    <svg :width="svgParameters.width" :height="svgParameters.height">
+    <svg :width="svgHeigh" :height="svgHeigh">
 
       <g :transform="`translate(${margin.left},${margin.top})`">
 
@@ -18,10 +18,10 @@
 
 <!--         <g v-axis:x="getScales()" :transform="`translate(0,${height})`"></g>
  -->    
-        <text :fill="'white'" :transform="`translate(${90}, -10)`">{{ name }}</text>
+        <text :fill="'white'" x="15%" y="-5%" >{{ procuramentTypes[name] }}</text>
 
-        <text class="yearLabel" :fill="'white'" :transform="`translate(${getScales().x(2019)}, 84)`">{{ '2019' }} </text>
-        <text class="yearLabel" :fill="'white'" :transform="`translate(${getScales().x(2017) - 27}, 84)`">{{ '2017' }} </text>
+        <text class="yearLabel" :fill="'white'" :transform="`translate(${getScales().x(2019)}, ${height + 20})`">{{ '2019' }} </text>
+        <text class="yearLabel" :fill="'white'" :transform="`translate(${getScales().x(2017) - 25}, ${height + 20})`">{{ '2017' }} </text>
 
 
       </g>
@@ -31,6 +31,7 @@
 
 <script>
 import * as d3 from 'd3';
+import wrapper from 'vue-svg-textwrap';
 
 
 export default {
@@ -38,15 +39,27 @@ export default {
   props: {
     inputData: Array,
     name: String,
-    svgParameters: Object
+    svgParameters: Object,
+    
   },
   data() {
     return {
+      svgWidth: 0,
+      svgHeigh: 200,
       tooltip:'fuck',
       dimensions: ['2017', '2019'],
       procuramentTypes: {
+        'type:48': 'Програмне забезпечення', 
+        'type:51': 'Встановлення обладнання',
+        'type:44': 'Будівельні матеріали',
+        'type:35': 'Протипожежне обладнання',
+        'type:38': 'Лабораторне обладнання',
+        'type:70': "Оренда нерухомості",
+        'type:42': "Промислова техніка",
+        'type:39': "Меблі та офісне приладдя",
+        'type:30': "Комп'ютнерна техніка",
         'type:331': 'Медичне обладнання',
-        'type:45': ' Будівельні роботи та поточний ремонт',
+        'type:45': 'Будівельні роботи і ремонт',
         'type:48': 'Програмне забезпечення',
         'type:30': "Офісна та комп'ютерна техніка",
         "type:44": "Конструкції та конструкційні матеріали; допоміжна будівельна продукція"
@@ -54,7 +67,7 @@ export default {
       margin: {
         top: 30,
         right: 30,
-        bottom: 30,
+        bottom: 0,
         left: 30
       },
       colors: {
@@ -68,6 +81,9 @@ export default {
     };
   },
   mounted() {
+    const svgBcr = document.querySelector("div.parallelPlot svg").getBoundingClientRect(); 
+    /* this.svgHeigh = svgBcr.height; */
+    this.svgWidth = svgBcr.width;
   },
   computed: {
     line: function() {
@@ -87,10 +103,10 @@ export default {
       return lines;
     },
     width: function() {
-      return this.svgParameters.width - this.margin.left - this.margin.right
+      return this.svgWidth - this.margin.left - this.margin.right
     },
     height: function() {
-      return this.svgParameters.height - this.margin.top - this.margin.bottom
+      return this.svgHeigh - this.margin.top - this.margin.bottom
     },
   },
   directives: {
@@ -99,7 +115,6 @@ export default {
       const axisMethod = { x: "axisBottom", y: "axisLeft", z: 'axisRight' }[axis];
       const methodArg = binding.value[axis];
 
-      debugger;
 
       let numberOfTicks = axis == 'z' ? 0 : 3;
 
@@ -110,6 +125,7 @@ export default {
       
     },
     /* tooltip */
+    wrapper
   },
   methods: {
     getScales() {
@@ -180,10 +196,20 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+
+svg 
+  display: block
+  width: 100%
+  height: 18em
+
 path
   fill: none
   stroke-width: 0.5px
   color: white
+
+
+div.line
+  padding-bottom: 1em
 
 .axisWhite
   color: white

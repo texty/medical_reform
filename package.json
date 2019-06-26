@@ -21,6 +21,7 @@
     "vue-simple-dropdown": "^1.0.0",
     "vue-simple-suggest": "^1.9.5",
     "vue-simple-tooltip": "^1.0.12",
+    "vue-svg-textwrap": "0.0.21",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
