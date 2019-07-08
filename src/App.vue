@@ -84,9 +84,19 @@
 
     <div class="procurements">
         <h4><b>Порівняння закупівель лікарень за 2017-2019 роки в різних областях</b></h4>
-        <p><i>Графіка інтерактивна, наведіть мишкою на лінію, щоб побачити назву області</i></p>
+        
+        <div>
+          <p><i>Графіка інтерактивна, наведіть мишкою на лінію, щоб побачити назву області</i></p>
+         <multiselect v-model="selectedOblast" :options="oblast_names"></multiselect>
+        </div>
+       
+      <div class="parallelPlot"> 
 
-      <div class="parallelPlot">  
+<!--       <div class="parallelPlotSelect">
+      <p>Виберіть область</p>
+      <multiselect v-model="selectedOblast" :options="oblast_names"></multiselect>
+      </div> -->
+    
       <ParallelPlot
         class='line'
         v-for="(d,i) in selectedProcurement"
@@ -94,6 +104,7 @@
         :name="d.key"
         :inputData="d.values"
         :svgParameters="{width: '100%',height: '100%'}"
+        :selectedOblast="selectedOblast"
       />    
       </div> 
 
@@ -261,10 +272,10 @@ export default {
       let selectedData = data.filter(function(d) {
       return ['type:48', 'type:51', 'type:45',
                         'type:35','type:38',
-                        'type:70', 'type:42',
+                        /* 'type:70' */, 'type:42',
                         'type:39', 'type:30'].includes(d.key);
 
-      /* return d.key */
+      return d.key
       });
 
 
@@ -300,6 +311,10 @@ export default {
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <style lang="sass">
+
+/* * 
+  border: 1px solid #f00 */
+
 body
   margin: 0
 
@@ -315,7 +330,7 @@ div.header
   line-height: 1.5
   font-size: 1.15em
   a
-    color: #00a88c
+    color: #4555bd
   ul
     margin: 2em 25% 0 25%
     line-height: 1.5
@@ -352,6 +367,7 @@ div.tableContainer.container-fluid
 
 div.tableNavigation .row
   color: black
+  width: 100%
 
   legend
     font-weight: bold
@@ -361,24 +377,24 @@ div.tableNavigation .row
     width: auto
 
   .page-item.active .page-link
-    background-color: #00a88c
-    border-color: #00a88c
+    background-color: #4555bd
+    border-color: #4555bd
   
   a
     color: black
 
 
 div.plot
-  background-color: #00a88c
+  background-color: #4555bd
 
   .table
     color: white
 
 div.procurements
   div.parallelPlot
-    background-color: #00a88c
+    background-color: #4555bd
     display: grid
-    grid-template-columns: 1fr 1fr 1fr
+    grid-template-columns: 1fr 1fr 1fr 1fr
     padding: 2em 0
 
   p 
@@ -411,9 +427,9 @@ div.line
 
 
 div.finalBars
-  background-color: #00a88c
+  background-color: #4555bd
   display: grid
-  grid-template-columns: 1fr 1fr
+  grid-template-columns: 1fr
   color: white
   fill: white
 

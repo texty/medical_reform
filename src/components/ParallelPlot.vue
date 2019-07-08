@@ -1,29 +1,38 @@
 <template>
   <div>
-    <svg :width="svgHeigh" :height="svgHeigh">
+    <svg :width="svgWidth" :height="svgHeigh">
+   <!--  <defs>
+      <filter id="fade-out">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="16" result="blur-source"/>
+      
+        <feComponentTransfer result="fader">
+          <feFuncA type="gamma" exponent=".5" amplitude="2"/>
+        </feComponentTransfer>
+            
+        <feComposite operator="in" in="fader" in2="SourceGraphic"/>    
+      </filter>
+    </defs> -->
 
-      <g :transform="`translate(${margin.left},${margin.top})`">
 
+      <text :x='svgWidth/2' text-anchor="middle" :fill="'white'" y="5%" >{{ procuramentTypes[name] }}</text>
+      <g :transform="`translate(${(svgWidth-width)/2},35)`">
         <path 
         v-for="(d,i) in line"
         v-bind:key="i"  
-        v-tooltip:right="d.name"
         :d="d.line" 
-        :stroke="d.growth"
-        class="line" 
+        :stroke="d.name == selectedOblast ? '#ff61ef' : d.growth"
+        v-bind:class="{'line': d.name != selectedOblast, 'toggle': d.name == selectedOblast}"
+        :opacity="d.name == selectedOblast ? 1 : 0.8"
         >
         </path>
         <g v-axis:y="getScales()" :transform="`translate(${getScales().x(2017)})`"></g>
         <g v-axis:z="getScales()" :transform="`translate(${getScales().x(2019)})`"></g>
 
-<!--         <g v-axis:x="getScales()" :transform="`translate(0,${height})`"></g>
- -->    
-        <text :fill="'white'" x="15%" y="-5%" >{{ procuramentTypes[name] }}</text>
-
-        <text class="yearLabel" :fill="'white'" :transform="`translate(${getScales().x(2019)}, ${height + 20})`">{{ '2019' }} </text>
-        <text class="yearLabel" :fill="'white'" :transform="`translate(${getScales().x(2017) - 25}, ${height + 20})`">{{ '2017' }} </text>
-
-
+  
+        <text class="yearLabel" :fill="'white'" :transform="`translate(${getScales().x(2019)},
+           ${height + 20})`">{{ '2019' }} </text>
+        <text class="yearLabel" :fill="'white'" :transform="`translate(${getScales().x(2017) - 25},
+         ${height + 20})`">{{ '2017' }} </text>
       </g>
     </svg>
   </div>
@@ -34,18 +43,20 @@ import * as d3 from 'd3';
 import wrapper from 'vue-svg-textwrap';
 
 
+
 export default {
   name: 'parallel-plot-chart',
   props: {
     inputData: Array,
     name: String,
     svgParameters: Object,
+    selectedOblast: String
     
   },
   data() {
     return {
       svgWidth: 0,
-      svgHeigh: 200,
+      svgHeigh: 250,
       tooltip:'fuck',
       dimensions: ['2017', '2019'],
       procuramentTypes: {
@@ -65,10 +76,10 @@ export default {
         "type:44": "Конструкції та конструкційні матеріали; допоміжна будівельна продукція"
       },
       margin: {
-        top: 30,
+        top: 50,
         right: 30,
         bottom: 0,
-        left: 30
+        left: 90
       },
       colors: {
         "type:30": 'red',
@@ -80,18 +91,16 @@ export default {
 
     };
   },
-  mounted() {
-    const svgBcr = document.querySelector("div.parallelPlot svg").getBoundingClientRect(); 
-    /* this.svgHeigh = svgBcr.height; */
+  mounted() {  
+    debugger; 
+
+    const svgBcr = document.querySelector("div.parallelPlot div.line").getBoundingClientRect(); 
     this.svgWidth = svgBcr.width;
   },
   computed: {
     line: function() {
-
       var calculatePath = this.calculatePath
       let lines = this.inputData.map(function(d) {
-
-
         return {
           'name': d.key, 
           'line':calculatePath(d.value),
@@ -117,14 +126,11 @@ export default {
 
 
       let numberOfTicks = axis == 'z' ? 0 : 3;
-
-
       const axisStart = d3[axisMethod](methodArg)
       
       d3.select(el).attr("class", "axisWhite").call(axisStart.ticks(numberOfTicks).tickFormat(d3.format("d")));
       
     },
-    /* tooltip */
     wrapper
   },
   methods: {
@@ -132,7 +138,6 @@ export default {
       var values = [];
       var dates = [];
       let dimensions = this.dimensions;
-
     /*   this.computed_number.forEach(d => {
           d.values.forEach(dd => { 
               values.push(+dd.sum)
@@ -165,23 +170,18 @@ export default {
               return d.value[2019]+0.001;
         })
 
-
-
         let y = d3.scaleLog()
             .domain([1, d3.max(domain_2017.concat(domain_2019))])
             .range([height, 0])
-
 
         let z = y = d3.scaleLog()
             .domain([1, d3.max(domain_2017.concat(domain_2019))])
             .range([height, 0])
 
-
         let x = d3.scalePoint()
           .range([0, width])
-          .padding(1)
+          .padding(0.01)
           .domain(dimensions);
-
       
       return { x, y, z };
     },
@@ -196,30 +196,33 @@ export default {
 </script>
 
 <style lang="sass" scoped>
-
 svg 
   display: block
-  width: 100%
-  height: 18em
+  /* width: 100% */
+  height: 17em
 
 path
   fill: none
-  stroke-width: 0.5px
+  stroke-width: 1px
   color: white
 
+path.line
+  filter: blur(2px)
+
+path.toggle
+  stroke-width: 5px
 
 div.line
   padding-bottom: 1em
+
+.toggled
+  stroke-width: 5px
 
 .axisWhite
   color: white
 
 text.yearLabel
   font-size: 10px 
-
-
-/* path.line
-  stroke: white */
 
 </style>
 

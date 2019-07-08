@@ -120,7 +120,7 @@ export default {
 <style lang="sass" scoped>
 svg
   display: block
-  margin: 25px
+  /* margin: 25px */
   margin-right: 0
   width: 100%
 path

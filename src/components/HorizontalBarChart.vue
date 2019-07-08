@@ -96,7 +96,6 @@ export default {
   },
   computed:{
     data: function() {
-      debugger;
         var oblast = this.oblast;
         var variable = this.variable;
 

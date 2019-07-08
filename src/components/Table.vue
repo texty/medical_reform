@@ -34,7 +34,7 @@
     class="mainTable"
       show-empty
       stacked="md"
-      :items="rows"
+      :items="names"
       :fields="fields"
       :current-page="currentPage"
       :per-page="perPage"
@@ -50,9 +50,9 @@
         }} 
       </template> -->
 
-<!--       <template slot="id_item_short" slot-scope="row">
-        {{ getCPV.get(row.id_item_short)[0].description }}
-      </template> -->
+      <template slot="id_item_short" slot-scope="row">
+        {{ `${getCPV['$' + row.id_item_short][0].description}` }}
+      </template>
 
       <template slot="actions" slot-scope="row">
         <b-button size="sm" @click="info(row.item, row.index, $event.target)" class="mr-1">
@@ -90,7 +90,7 @@
       return {
         fields: [
           { key: 'hospital_name', label: 'Назва лікарні',  },
-          { key: 'id_item_short', label: 'Код', sortable: true, direction: 'desc', class: 'text-center' },
+          { key: 'description', label: 'Опис', sortable: true, direction: 'desc', class: 'text-center' },
           { key: 'overal_title',  label: 'Назва' },
           {key: 'sum', label: 'Вартість', sortable: true, direction: 'desc',}
         ],
@@ -118,7 +118,12 @@
       let getCPV = this.getCPV;
       debugger;
       return this.rows.map(d => {
-        return getCPV.get(d.id_item_short)[0].description
+        return {
+        'hospital_name': d.hospital_name, 
+        'overal_title': d.overal_title,
+        'sum': d.sum,
+        'description': getCPV.get(d.id_item_short)[0].description
+        }
       })
     },
       sortOptions() {
@@ -155,7 +160,7 @@
 
 <style lang="sass">
   .mainTable
-    background-color: #00a88c
+    background-color: #4555bd
 
   div.tableNavigation
     padding-left: 1em
