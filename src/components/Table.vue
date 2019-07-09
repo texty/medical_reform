@@ -116,7 +116,6 @@
     },
     names: function() {
       let getCPV = this.getCPV;
-      debugger;
       return this.rows.map(d => {
         return {
         'hospital_name': d.hospital_name, 
@@ -165,5 +164,9 @@
   div.tableNavigation
     padding-left: 1em
     padding-bottom: 0.5em
+
+    div.row
+      div.row
+        width: auto
 
 </style>

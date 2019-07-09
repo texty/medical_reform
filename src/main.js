@@ -5,6 +5,8 @@ import './plugins/bootstrap-vue'
 import BootstrapVue from 'bootstrap-vue'
 import App from './App.vue'
 import store from './store'
+import SvgTransition from 'vue-svg-transition';
+
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -17,3 +19,4 @@ new Vue({
 }).$mount('#app')
 
 Vue.use(BootstrapVue)
+Vue.use(SvgTransition);

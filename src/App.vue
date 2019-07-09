@@ -1,6 +1,11 @@
 <template>
   <div id="app">
 
+  <Scrollama 
+      :offset="0.9"
+      @step-enter="({ element }) => (currStep.push(element.dataset.stepNo))"
+  >
+
     <div class="header">
       
     </div>
@@ -55,7 +60,12 @@
 
     <HorizontalBarChart 
       v-bind:temp="loadData" 
-      v-bind:variable="selectedVariable" />
+      v-bind:variable="selectedVariable" 
+      class="step"
+      :class="{ active: 1 == currStep }"
+      data-step-no="1"
+      v-bind:to-draw="currStep.includes('1')"
+      />
 
     <p class="text">
       Перш за все, ми вирішили порахувати скільки людей підписали декларації в масштабах країни. Для цього ми розрахували який відсоток від населення районів і міст України підписали декларації у лікарнях, що знаходяться на їх території.  Середній показник по країні склав 70% тих хто підписав декларації. Варто врахувати, що люди інколи звертаються до лікарів не у своєму районі, особливо якщо живуть поряд з великими містами.
@@ -82,10 +92,13 @@
     </p>
 
 
-    <div class="procurements">
+    <div class="procurements step"
+      data-step-no="2"
+      :class="{ active: 2 == currStep }"
+    >
         <h4><b>Порівняння закупівель лікарень за 2017-2019 роки в різних областях</b></h4>
         
-        <div>
+        <div class="parallelPlotOblast">
           <p><i>Графіка інтерактивна, наведіть мишкою на лінію, щоб побачити назву області</i></p>
          <multiselect v-model="selectedOblast" :options="oblast_names"></multiselect>
         </div>
@@ -132,18 +145,27 @@
     </p>
 
 
-    <div class="finalBars">
+    <div class="finalBars step"
+      data-step-no="2"
+      v-bind:to-draw="currStep.includes('2')"
+    >
     <BarChart 
+      data-step-no="2"
+      v-bind:to-draw="currStep.includes('2')"
       v-bind:temp="payments"
       v-bind:oblast="selectedOblast"
       v-bind:variable="'decl_count'" />
     
     <BarChart 
+      data-step-no="3"
+      v-bind:to-draw="currStep.includes('3')"
       v-bind:temp="payments"
       v-bind:oblast="selectedOblast"
       v-bind:variable="'money_per_month'" />
 
     </div>
+
+  </Scrollama>
 
 
   </div>
@@ -152,6 +174,8 @@
 <script>
 import * as d3 from "d3";
 import Multiselect from 'vue-multiselect'
+import 'intersection-observer' // for cross-browser support
+import Scrollama from 'vue-scrollama'
 
 
 import HorizontalBarChart from './components/HorizontalBarChart.vue'
@@ -197,6 +221,7 @@ export default {
       itemCount: 25,
       min: 10,
       max: 100,
+      currStep: [],
     };
   },
   mounted() {
@@ -208,13 +233,16 @@ export default {
       this.currentValue = value;
     },
     addTag(newTag) {
-      debugger;
       const tag = {
         name: newTag,
       }
 
       this.allProcurement.push(tag)
       this.selectedProcurementTypes.push(tag)
+    },
+    stepEnterHandler ({element, index, direction}) {
+      // handle the step-event as required here
+      console.log(element, index, direction)
     }
 /*     async fetchData() {
       let procurements = await d3.csv("./procurement_with_regions.csv");
@@ -262,7 +290,6 @@ export default {
       return nest;
     },
     selectedProcurement: function() {
-      debugger;
       let selectedOblast = this.selectedOblast
       let selectedProcurementTypes = this.selectedProcurementTypes
       let data = this.nestedProcurement.filter(function(d) {
@@ -303,7 +330,8 @@ export default {
     HorizontalBarChart,
     BarChart,
     ParallelPlot,
-    Table
+    Table,
+    Scrollama
   },
 };
 </script>
@@ -312,9 +340,10 @@ export default {
 
 <style lang="sass">
 
-/* * 
-  border: 1px solid #f00 */
-
+* 
+  /* border: 1px solid #f00 */
+/*   transition: all 3s
+ */
 body
   margin: 0
 
@@ -349,6 +378,18 @@ div.selectorOblast
 
 path
   stroke-color: white
+
+div.parallelPlotOblast
+    display: flex
+
+    p
+      margin-left: 3.35em
+
+    div.multiselect
+      width: auto
+      height: auto
+      margin-left: 1em
+
 
 
 div.tableAndName  h4
@@ -401,7 +442,7 @@ div.procurements
     padding: 0.5em 0em 0.5em 0.5em
   
   h4
-    padding: 0.5em 0.5em
+    padding: 0.5em 2.7em
 
 #app
   font-family: 'Avenir', Helvetica, Arial, sans-serif

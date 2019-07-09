@@ -1,7 +1,7 @@
 <template>
 <div>
   <svg :width='svgWidth' :height='svgHeigh'>
-    <g :transform="`translate(${margin.left},${margin.top})`">
+    <g :transform="`translate(${(svgWidth-width)/2},${margin.top})`">
       <rect 
         v-for="(d,i) in computedScales.bins"
         v-bind:key="i"
@@ -35,12 +35,15 @@ export default {
   props: {
     temp: Array,
     variable: String,
-    oblast: String
+    oblast: String,
+    toDraw: Boolean
   },
   data() {
     return {
       svgWidth: 0,
-      svgHeigh: 300,
+      toDrawT:true,
+      svgHeigh: 400,
+      tempData: JSON.parse(JSON.stringify(this.temp)),
       names: {
               decl_count: "Кількість декларацій на одного лікаря",
               money_per_month: 'Виплати одному лікарю на місяць' 
@@ -51,10 +54,10 @@ export default {
       },
       tempVar: this.temp,
       margin: {
-            top: 15,
-            right: 25,
-            bottom: 25,
-            left: 40
+            top: 50,
+            right: 250,
+            bottom: 50,
+            left: 250
         },
       svgParameters: {
         width: 450,
@@ -62,19 +65,33 @@ export default {
       }
     };
   },
+  watch: {
+    toDrawT: function(oldValue){
+    var amount = this.tempData.length;
+	
+    for(var i = 0; i < amount; i++)
+    {
+        var element = this.tempData[i];
+        TweenLite.to(element, 3, {money_per_month: this.temp[i]['money_per_month'],
+         decl_count: this.temp[i]['decl_count']});
+    }
+
+    /* this.AnimateLoad(); */
+    }
+  },
   computed:{
     data: function() {
       var variable = this.variable;
-      var data = this.temp.map(function(d){
+      var data = this.tempData.map(function(d){
           return +d[variable]
       })
         return data
     },
     width: function() {
-      return this.svgParameters.width - this.margin.left - this.margin.right
+      return this.svgWidth - this.margin.left - this.margin.right
     },
     height: function() {
-      return this.svgParameters.height - this.margin.top - this.margin.bottom
+      return this.svgHeigh - this.margin.top - this.margin.bottom
     },
     computedScales: function() {
       let x = d3.scaleLinear()
@@ -106,8 +123,16 @@ export default {
     wrapper
   },
   mounted() {
-    const svgBcr = document.querySelector("div.finalBars svg").getBoundingClientRect(); 
-    this.svgWidth = svgBcr.width/2;
+    let amount = this.tempData.length;
+
+    for(var i = 0; i < amount; i++)
+    {
+        var element = this.tempData[i];
+        TweenLite.to(element, 0.1, {money_per_month: 0, decl_count: 0});
+    } 
+
+    const svgBcr = document.querySelector("div.finalBars").getBoundingClientRect(); 
+    this.svgWidth = svgBcr.width;
   },
   methods: {
     getRandomArbitrary(min, max) {

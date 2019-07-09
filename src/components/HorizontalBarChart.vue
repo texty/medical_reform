@@ -14,7 +14,8 @@
 
 
 <div class="plot">
-  <svg :width='svgParameters.width' :height='svgParameters.height'>
+  <svg :width='svgParameters.width' :height='svgParameters.height' ref="transition" trigger="none">
+
     <g 
     :transform="`translate(${margin.left},${margin.top})`">
       <rect 
@@ -23,15 +24,14 @@
         x="0"
         :y="getScales().y(d.rajon_grouped) + 5"
         :height="heightOfbar/2"
-        :width="getScales().x(+d[variable])"
+        :width="drawIfTrue(getScales().x(+d[variable]))"
         fill="white"
         :class="{ active: hover === i }"
        >
-        {{ d[variable] }}
       </rect>
       <text
       v-for="(d,i) in data"
-      v-bind:key="i+1"
+      v-bind:key="i+'c'"
       :x="getScales().x(+d[variable]) + 10"
       :y="getScales().y(d.rajon_grouped) + 10"
       :width="1"
@@ -68,6 +68,10 @@
 <script>
 import * as d3 from "d3";
 import Multiselect from 'vue-multiselect'
+import { TweenLite } from 'gsap'
+import { selectAll } from "d3-selection";
+import { transition } from "d3-transition";
+
 
 
 export default {
@@ -75,14 +79,16 @@ export default {
   props:{
     temp: Array,
     variable: String,
+    toDraw: Boolean,
 
   },
   data() {
     return {
       oblast: 'Київська',
       hover: false,
-      selectedVariable:'decl_count',
       heightOfbar: 5,
+      checker: false,
+      tempData: JSON.parse(JSON.stringify(this.temp)),
       margin: {
             top: 15,
             right: 25,
@@ -94,21 +100,39 @@ export default {
   components: {
     Multiselect
   },
+  watch: {
+    toDraw: function(oldValue){
+    var amount = this.tempData.length;
+	
+    for(var i = 0; i < amount; i++)
+    {
+        var element = this.tempData[i];
+        TweenLite.to(element, 3, {declarations_ratio: this.temp[i]['declarations_ratio']});
+    }
+
+    /* this.AnimateLoad(); */
+    }
+  },
   computed:{
-    data: function() {
-        var oblast = this.oblast;
-        var variable = this.variable;
+    data: function(){
+      var oblast = this.oblast;
+      var variable = this.variable;
+      return this.tempData.filter(function(d) {
+        return (d.oblast == oblast)
+      }).sort(function(a,b) {
+          return a[variable] - b[variable];
+      })
+    },
+    drawData: function(){
+      let data = this.data;
+      let getScales = this.getScales()
+      let variable = this.variable;
 
-        var data = this.temp.filter(function(d) {
-          return (d.oblast == oblast)
-        });
+      let out = this.data.map(d => {
+        return {'height': getScales.y(d.rajon_grouped), 'width': getScales.x(d[variable])}
+      });
 
-        data = data.sort(function(a,b) {
-            return a[variable] - b[variable];
-        })
-
-        return data;
-
+      return out
     },
     oblast_names: function() {
       return [...new Set(this.temp.map(d => d.oblast))]
@@ -129,7 +153,6 @@ export default {
       return this.height / this.data.length;
     },
 /*     try: function() {
-      debugger;
       let getScales = this.getScales;
       let variable = this.variable;
       return this.data.map(function(d){
@@ -150,9 +173,40 @@ export default {
 
   },
   mounted() {
+    let amount = this.tempData.length;
+
+    for(var i = 0; i < amount; i++)
+    {
+        var element = this.tempData[i];
+        TweenLite.to(element, 0.1, {declarations_ratio: 0});
+    } 
 
   },
   methods: {
+    AnimateLoad(){
+      let checker = this.checker;
+
+      let a = selectAll("rect")
+        .data(this.data)
+        .transition()
+       /*  .delay((d, i) => {
+          return i * 150;
+        }) */
+        .duration(1000)
+        .attr("y", d => {
+          return this.getScales().y(d.rajon_grouped) + 5
+        })
+        .attr("width", d => {
+          return this.getScales().x(+d[this.variable])
+        })
+        .on("end", d => {
+            checker = true
+        });
+
+        console.log('yesss')
+
+        return a
+    },
     getScales(){
       var variable = this.variable;
       let y = d3.scaleBand()
@@ -165,7 +219,20 @@ export default {
           .range([1, this.width]);
 
       return { x, y }
-    }
+    },
+    drawIfTrue(x) {
+      if (true) {
+        /* TweenLite.to(this.$data, 7, {heightOfbar: 70}) */
+        /* d3.selectAll('rect').transition(); */
+        return x
+      }
+      else {
+        return 0
+      }
+    },
+    /*  experiment: function () {
+       return 1 + 2
+    } */
   }
 }
 </script>

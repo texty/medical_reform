@@ -92,8 +92,6 @@ export default {
     };
   },
   mounted() {  
-    debugger; 
-
     const svgBcr = document.querySelector("div.parallelPlot div.line").getBoundingClientRect(); 
     this.svgWidth = svgBcr.width;
   },
