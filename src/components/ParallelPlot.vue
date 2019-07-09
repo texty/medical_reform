@@ -126,7 +126,7 @@ export default {
       let numberOfTicks = axis == 'z' ? 0 : 3;
       const axisStart = d3[axisMethod](methodArg)
       
-      d3.select(el).attr("class", "axisWhite").call(axisStart.ticks(numberOfTicks).tickFormat(d3.format("d")));
+      d3.select(el).attr("class", "axisWhite").call(axisStart.ticks(numberOfTicks).tickFormat(d3.format(",")));
       
     },
     wrapper

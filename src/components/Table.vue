@@ -90,8 +90,8 @@
       return {
         fields: [
           { key: 'hospital_name', label: 'Назва лікарні',  },
-          { key: 'description', label: 'Опис', sortable: true, direction: 'desc', class: 'text-center' },
-          { key: 'overal_title',  label: 'Назва' },
+          { key: 'description', label: 'Категорія', sortable: true, direction: 'desc', class: 'text-center' },
+          { key: 'overal_title',  label: 'Опис' },
           {key: 'sum', label: 'Вартість', sortable: true, direction: 'desc',}
         ],
         totalRows: 1,

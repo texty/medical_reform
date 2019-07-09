@@ -47,11 +47,11 @@ export default {
       svgWidth: 0,
       toDrawT:true,
       hover:false,
-      svgHeigh: 400,
+      svgHeigh: 350,
       tempData: JSON.parse(JSON.stringify(this.temp)),
       names: {
               decl_count: "Кількість декларацій на одного лікаря",
-              money_per_month: 'Виплати одному лікарю на місяць' 
+              money_per_month: 'Виплати одному лікарю в місяць' 
              },
       labels: {
               decl_count: "Кількість пацієнтів на одного лікаря",
@@ -60,9 +60,9 @@ export default {
       tempVar: this.temp,
       margin: {
             top: 50,
-            right: 250,
+            right: 300,
             bottom: 50,
-            left: 250
+            left: 300
         },
       svgParameters: {
         width: 450,
