@@ -475,4 +475,7 @@ div.finalBars
   fill: white
 
 
+rect.bar:hover
+  fill: 'red'
+
 </style>

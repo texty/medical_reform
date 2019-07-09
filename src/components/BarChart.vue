@@ -3,13 +3,16 @@
   <svg :width='svgWidth' :height='svgHeigh'>
     <g :transform="`translate(${(svgWidth-width)/2},${margin.top})`">
       <rect 
+        :class="'bar'"
+        @mouseover.native="hover = true"
+        @mouseleave.native="hover = false"
         v-for="(d,i) in computedScales.bins"
         v-bind:key="i"
+        v-tooltip:right="d.x0"
         :x="computedScales.x(d.x0)"
         :width="Math.max(0, computedScales.x(d.x1) - computedScales.x(d.x0) - 1)"
         :y="computedScales.y(d.length)"
         :height="computedScales.y(1) - computedScales.y(d.length)"
-        fill="white"
         :data="d.value"
        >
       </rect>
@@ -29,6 +32,7 @@
 <script>
 import * as d3 from "d3";
 import wrapper from 'vue-svg-textwrap';
+import tooltip from 'vue-simple-tooltip'
 
 export default {
   name: 'vue-hist-chart',
@@ -42,6 +46,7 @@ export default {
     return {
       svgWidth: 0,
       toDrawT:true,
+      hover:false,
       svgHeigh: 400,
       tempData: JSON.parse(JSON.stringify(this.temp)),
       names: {
@@ -66,7 +71,7 @@ export default {
     };
   },
   watch: {
-    toDrawT: function(oldValue){
+/*     toDraw: function(oldValue){
     var amount = this.tempData.length;
 	
     for(var i = 0; i < amount; i++)
@@ -76,8 +81,7 @@ export default {
          decl_count: this.temp[i]['decl_count']});
     }
 
-    /* this.AnimateLoad(); */
-    }
+    } */
   },
   computed:{
     data: function() {
@@ -120,16 +124,16 @@ export default {
 
       d3.select(el).call(axisFinal.ticks(4));
     },
-    wrapper
+    tooltip
   },
   mounted() {
-    let amount = this.tempData.length;
+    /* let amount = this.tempData.length;
 
     for(var i = 0; i < amount; i++)
     {
         var element = this.tempData[i];
         TweenLite.to(element, 0.1, {money_per_month: 0, decl_count: 0});
-    } 
+    }  */
 
     const svgBcr = document.querySelector("div.finalBars").getBoundingClientRect(); 
     this.svgWidth = svgBcr.width;
@@ -152,6 +156,12 @@ path
   fill: none
   stroke: #76BF8A
   stroke-width: 3px
+
+rect.bar
+  fill: #FFFFFF
+
+rect.bar:hover
+  fill: #ff61ef
 
 
 text.yearLabel
