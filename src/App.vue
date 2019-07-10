@@ -182,7 +182,7 @@
         
         <div class="parallelPlotOblast">
           <p><i>Графіка інтерактивна, ви можете обирати область зі списку</i></p>
-         <multiselect v-model="selectedOblast" :options="oblast_names"></multiselect>
+         <multiselect :hide-selected="true" deselect-label="" placeholder="Виберіть область" select-label="" :allow-empty="false" v-model="selectedOblast" :options="oblast_names"></multiselect>
         </div>
        
       <div class="parallelPlot"> 
@@ -251,7 +251,7 @@ import procurement from './assets/procurement_with_regions.json'
 import payments from './assets/payments_to_hospitals.json'
 import doctorPayments from './assets/payments_to_doctors.json'
 import procuramentPivot from './assets/procurements_pivot_with_regions.json'
-import tableData from './assets/top_100_per_category.json'
+import tableData from './assets/table_data.json'
 import cpv from './assets/cpv.json'
 
 
@@ -537,5 +537,8 @@ div.finalBars
 
 rect.bar:hover
   fill: 'red'
+
+div.resize-observer
+  display: none
 
 </style>

@@ -7,7 +7,7 @@
     <h4><b>Кількість підписаних декларацій</b></h4>
     <div>
       <h5><b>Оберіть область:</b></h5>
-      <multiselect v-model="oblast" :options="oblast_names"></multiselect>
+      <multiselect :hide-selected="true" placeholder="Виберіть область" deselect-label="" select-label="" :allow-empty="false" v-model="oblast" :options="oblast_names"></multiselect>
     </div>
   </div>
 
