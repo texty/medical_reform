@@ -5,8 +5,8 @@
 
   <div class="selectorOblast">
     <h4><b>Кількість підписаних декларацій</b></h4>
-    <div>
-      <h5><b>Оберіть область:</b></h5>
+    <div class="oblast">
+      <h5>Оберіть область:</h5>
       <multiselect :hide-selected="true" placeholder="Виберіть область" deselect-label="" select-label="" :allow-empty="false" v-model="oblast" :options="oblast_names"></multiselect>
     </div>
   </div>
@@ -17,7 +17,7 @@
   <svg :width='svgParameters.width' :height='svgParameters.height' ref="transition" trigger="none">
 
     <g 
-    :transform="`translate(${margin.left},${margin.top})`">
+    :transform="`translate(${(svgParameters.width-width)/2 - 25},${margin.top})`">
       <rect 
         v-for="(d,i) in data"
         v-bind:key="i"
@@ -25,7 +25,7 @@
         :y="getScales().y(d.rajon_grouped) + 5"
         :height="heightOfbar/2"
         :width="drawIfTrue(getScales().x(+d[variable]))"
-        fill="white"
+        :fill="i == data.length-1 ? '#ff61ef'  : 'white'"
         :class="{ active: hover === i }"
        >
       </rect>
@@ -53,7 +53,7 @@
         :cx="getScales().x(+d[variable])"
         :cy="getScales().y(d.rajon_grouped) + 7"
         :r="6" 
-        fill="white">
+        :fill="i + 'b' == data.length-1 + 'b' ? '#ff61ef'  : 'white'">
            
       </circle>
 
@@ -89,11 +89,12 @@ export default {
       heightOfbar: 5,
       checker: false,
       tempData: JSON.parse(JSON.stringify(this.temp)),
+      mountedWidth: 0,
       margin: {
             top: 15,
             right: 25,
             bottom: 25,
-            left: 0
+            left: -15
         }
     };
   },
@@ -139,12 +140,12 @@ export default {
     },
     svgParameters: function() {
       return {
-        width: 900,
+        width: this.mountedWidth,
         height: 35 * this.data.length
       }
     },
     width: function() {
-      return this.svgParameters.width - this.margin.left - this.margin.right
+      return this.svgParameters.width/2 - this.margin.left - this.margin.right
     },
     height: function() {
       return this.svgParameters.height - this.margin.top - this.margin.bottom
@@ -173,6 +174,9 @@ export default {
 
   },
   mounted() {
+    const svgBcr = document.querySelector("div.horizontalPlot").getBoundingClientRect(); 
+    this.mountedWidth = svgBcr.width;
+
     let amount = this.tempData.length;
 
     for(var i = 0; i < amount; i++)
@@ -243,9 +247,23 @@ export default {
   width: 75%
   margin: 0 auto */
 
+div.selectorOblast
+  h4
+    text-align: center
+
 
 div.selectorOblast div
   display: flex
+  justify-content: center
+
+  
+
+
+
+
+div.plot
+  padding-top: 1.5em
+  padding-bottom: 1.5em
 
 div.selectorOblast 
   h4
@@ -258,7 +276,7 @@ div.multiselect
   width: auto
 
 svg
-  margin: 25px
+  /* margin: 25px */
   margin-right: 0
   display: inline-block
 

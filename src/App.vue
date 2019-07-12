@@ -1,10 +1,6 @@
 <template>
   <div id="app">
 
-  <Scrollama 
-      :offset="0.9"
-      @step-enter="({ element }) => (currStep.push(element.dataset.stepNo))"
-  >
 
     <div class="header">
       
@@ -88,6 +84,10 @@
       Насамперед ми вирішили порахувати, скільки людей підписали декларації в масштабах країни. Для цього ми розрахували відсоток людей від населення районів і міст України, які підписали декларації у лікарнях на своїй території проживання.  Середній показник тих, хто підписав декларації, становить 70% по країні. Варто врахувати, що люди іноді звертаються до лікарів не в своєму районі, особливо якщо живуть поряд із великими містами. Ви можете вибрати область і досліджувати графік самостійно.
     </p>
 
+  <Scrollama 
+      :offset="0.9"
+      @step-enter="({ element }) => (currStep.push(element.dataset.stepNo))"
+  >
      <HorizontalBarChart 
       v-bind:temp="loadData" 
       v-bind:variable="selectedVariable" 
@@ -96,6 +96,8 @@
       data-step-no="1"
       v-bind:to-draw="currStep.includes('1')"
       />
+
+  </Scrollama>
 
     <p class="text">
         Найменша кількість підписаних декларацій — на півдні країни, в середньому — 65%. Саме на півдні знаходиться половина районів, де декларацію підписали менше 50% населення. 
@@ -219,13 +221,15 @@
       Таким чином, ми бачимо, що лікарні справді почали більше вкладати грошей у розвиток. Ви можете скористатися таблицею внизу, щоб самостійно перевірити, що купують лікарні. <b>Введіть в поле пошуку назву лікарні або товару, який вас цікавить. У таблиці є 100 найбільших закупівель у кожній категорії. Категорії бувають дуже різними, наприклад, медичне обладнання, послуги з будівництва, меблі, комп’ютерна техніка та інші</b>.
     </p>
 
+  
+
     <div class="tableAndName">
         <h4><b>Таблиця закупівель</b></h4>
-        <Table :cpv="codesCPV" class="tableContainer" :rows="tableData" />
+        <Table :fixed="true" :small="true" :cpv="codesCPV" class="tableContainer table-fit" :rows="tableData" />
     </div>
 
 
-  </Scrollama>
+  
 
 
   </div>
@@ -311,6 +315,9 @@ export default {
     } */
   },
   computed: {
+    tableData: function(){
+      this.tableData
+    },
     oblast_names: function() {
       return [...new Set(this.loadData.map(d => d.oblast))]
     },
@@ -398,6 +405,11 @@ export default {
 
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
+
+<style src="vue-scrollama/dist/vue-scrollama.css">
+</style>
+
+
 <style lang="sass">
 
 * 
@@ -453,8 +465,11 @@ div.parallelPlotOblast
 
 
 div.tableAndName  h4
-    padding-left: 1rem
+    text-align: center
+    padding: 1em
     /* padding-bottom: 16px */
+
+    
 
 div.tableContainer.container-fluid
   padding: 0
@@ -487,6 +502,7 @@ div.tableNavigation .row
 
 div.plot
   background-color: #4555bd
+  text-aligh: center
 
   .table
     color: white
@@ -538,7 +554,18 @@ div.finalBars
 rect.bar:hover
   fill: 'red'
 
-div.resize-observer
+.resize-observer
   display: none
+  height: 0
+
+table
+  text-align: center
+
+
+.tableNavigation div.navigationRow
+    display: flex
+    justify-content: center
+
+
 
 </style>

@@ -3,8 +3,8 @@
     <!-- User Interface controls -->
 
     <div class="tableNavigation">
-        <b-row>
-        <b-col md="6" class="my-1">
+        <b-row class="navigationRow">
+        <b-col md="4" class="my-1">
           <!-- <b-form-group label-cols-sm="3" label="" class="mb-0"> -->
             <b-input-group>
               <b-form-input v-model="filter" placeholder="Пошук"></b-form-input>
@@ -30,6 +30,7 @@
 
 
     <!-- Main table element -->
+    <div class="background">
     <b-table
     class="mainTable"
       show-empty
@@ -43,12 +44,14 @@
       :sort-desc.sync="sortDesc"
       :sort-direction="sortDirection"
       @filtered="onFiltered"
+      empty-filtered-text="Таких даних у нас немає"
+      :fixed="true" 
     >
-<!--       <template slot="id_item_short" slot-scope="row">
+      <template slot="sum" slot-scope="row">
         {{ 
-          getCPV.get(row.id_item_short)[0].description 
+          formatNumber().format(row.value)
         }} 
-      </template> -->
+      </template>
 
       <template slot="id_item_short" slot-scope="row">
         {{ `${getCPV['$' + row.id_item_short][0].description}` }}
@@ -71,6 +74,7 @@
         </b-card>
       </template>
     </b-table>
+    </div>
 
 
     <!-- Info modal -->
@@ -81,6 +85,9 @@
 </template>
 
 <script>
+import * as d3 from "d3";
+
+
   export default {
     props: {
       rows: Array,
@@ -90,9 +97,9 @@
       return {
         fields: [
           { key: 'hospital_name', label: 'Назва лікарні',  },
-          { key: 'description', label: 'Категорія', sortable: true, direction: 'desc', class: 'text-center' },
-          { key: 'overal_title',  label: 'Опис' },
-          {key: 'sum', label: 'Вартість', sortable: true, direction: 'desc',}
+/*           { key: 'description', label: 'Категорія', sortable: true, direction: 'desc', class: 'text-center' },
+ */          { key: 'overal_title',  label: 'Опис' },
+          {key: 'sum', label: 'Вартість, грн.', sortable: true, direction: 'desc',}
         ],
         totalRows: 1,
         currentPage: 1,
@@ -152,6 +159,10 @@
         // Trigger pagination to update the number of buttons/pages due to filtering
         this.totalRows = filteredItems.length
         this.currentPage = 1
+      },
+      formatNumber(){
+        let format = d3.format(',');
+        return {format}
       }
     }
   }
@@ -161,6 +172,9 @@
   .mainTable
     background-color: #4555bd
 
+  .background
+    background-color: #4555bd
+
   div.tableNavigation
     padding-left: 1em
     padding-bottom: 0.5em
@@ -168,5 +182,13 @@
     div.row
       div.row
         width: auto
+
+  .mainTable
+    padding: auto
+    text-align: center
+
+  .tableNavigation div.navigationRow
+    display: flex
+    justify-content: center
 
 </style>

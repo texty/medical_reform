@@ -1,17 +1,14 @@
 <template>
   <div>
     <svg :width="svgWidth" :height="svgHeigh">
-   <!--  <defs>
-      <filter id="fade-out">
-        <feGaussianBlur in="SourceGraphic" stdDeviation="16" result="blur-source"/>
-      
-        <feComponentTransfer result="fader">
-          <feFuncA type="gamma" exponent=".5" amplitude="2"/>
-        </feComponentTransfer>
-            
-        <feComposite operator="in" in="fader" in2="SourceGraphic"/>    
+     <!-- definitions -->
+  <defs>
+      <!-- identify the filter-->
+      <filter id="blurFilter">
+          <!-- filter processes -->
+          <feGaussianBlur in="SourceGraphic" stdDeviation="2"/><!-- stdDeviation is amount of blur -->
       </filter>
-    </defs> -->
+  </defs> 
 
 
       <text :x='svgWidth/2' text-anchor="middle" :fill="'white'" y="5%" >{{ procuramentTypes[name] }}</text>
@@ -206,6 +203,11 @@ path
 
 path.line
   filter: blur(2px)
+  -moz-filter:blur(2px)
+  -o-filter:blur(2px)
+  -webkit-filter:blur(2px)
+  backdrop-filter: blur(2px)
+  -webkit-filter: url(#blurFilter)
 
 path.toggle
   stroke-width: 5px

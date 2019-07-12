@@ -1,14 +1,16 @@
 <template>
 <div>
   <svg :width='svgWidth' :height='svgHeigh'>
-    <g :transform="`translate(${(svgWidth-width)/2},${margin.top})`">
+    <g :transform="`translate(${(svgWidth-width)/2 + 20},${margin.top})`">
       <rect 
         :class="'bar'"
         @mouseover.native="hover = true"
         @mouseleave.native="hover = false"
         v-for="(d,i) in computedScales.bins"
         v-bind:key="i"
-        v-tooltip:right="d.x0"
+        v-tooltip:right="variable == 'decl_count' 
+          ? formatNumber().format(d.x0) + ' лікарів підписали ' + formatNumber().format(d.x1) + ' декларації' 
+          : formatNumber().format(d.x0 )+ ' лікарів отримують ' + formatNumber().format(d.x1) + ' гривень в місяць'"
         :x="computedScales.x(d.x0)"
         :width="Math.max(0, computedScales.x(d.x1) - computedScales.x(d.x0) - 1)"
         :y="computedScales.y(d.length)"
@@ -60,9 +62,9 @@ export default {
       tempVar: this.temp,
       margin: {
             top: 50,
-            right: 300,
+            right: 10,
             bottom: 50,
-            left: 300
+            left: 15
         },
       svgParameters: {
         width: 450,
@@ -92,7 +94,7 @@ export default {
         return data
     },
     width: function() {
-      return this.svgWidth - this.margin.left - this.margin.right
+      return this.svgWidth/2 - this.margin.left - this.margin.right
     },
     height: function() {
       return this.svgHeigh - this.margin.top - this.margin.bottom
@@ -141,7 +143,11 @@ export default {
   methods: {
     getRandomArbitrary(min, max) {
         return Math.random() * (max - min) + min;
-    }
+    },
+    formatNumber(){
+        let format = d3.format(',');
+        return {format}
+      }
   }
 }
 </script>
@@ -151,7 +157,8 @@ svg
   display: block
   /* margin: 25px */
   margin-right: 0
-  width: 100%
+  width: auto
+
 path
   fill: none
   stroke: #76BF8A
