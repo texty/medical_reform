@@ -315,9 +315,9 @@ export default {
     } */
   },
   computed: {
-    tableData: function(){
+    /* tableData: function(){
       this.tableData
-    },
+    }, */
     oblast_names: function() {
       return [...new Set(this.loadData.map(d => d.oblast))]
     },

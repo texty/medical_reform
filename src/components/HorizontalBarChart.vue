@@ -19,7 +19,7 @@
     <g 
     :transform="`translate(${(svgParameters.width-width)/2 - 25},${margin.top})`">
       <rect 
-        v-for="(d,i) in data"
+        v-for="(d,i) in staticData"
         v-bind:key="i"
         x="0"
         :y="getScales().y(d.rajon_grouped) + 5"
@@ -30,7 +30,7 @@
        >
       </rect>
       <text
-      v-for="(d,i) in data"
+      v-for="(d,i) in staticData"
       v-bind:key="i+'c'"
       :x="getScales().x(+d[variable]) + 10"
       :y="getScales().y(d.rajon_grouped) + 10"
@@ -39,7 +39,7 @@
       > {{ Math.round(d[variable]) + '%' }} </text>
 
       <text
-      v-for="(d,i) in data"
+      v-for="(d,i) in staticData"
       v-bind:key="i+'a'"
       :x="0"
       :y="getScales().y(d.rajon_grouped) - 1"
@@ -48,7 +48,7 @@
       > {{  d.rajon_grouped }} </text>
 
       <circle
-        v-for="(d,i) in data"
+        v-for="(d,i) in staticData"
         v-bind:key="i+'b'"
         :cx="getScales().x(+d[variable])"
         :cy="getScales().y(d.rajon_grouped) + 7"
@@ -89,6 +89,7 @@ export default {
       heightOfbar: 5,
       checker: false,
       tempData: JSON.parse(JSON.stringify(this.temp)),
+      staticData:[{'rajon_grouped': '', 'declarations_ratio': 0}],
       mountedWidth: 0,
       margin: {
             top: 15,
@@ -104,14 +105,55 @@ export default {
   watch: {
     toDraw: function(oldValue){
     var amount = this.tempData.length;
-	
-    for(var i = 0; i < amount; i++)
-    {
-        var element = this.tempData[i];
-        TweenLite.to(element, 3, {declarations_ratio: this.temp[i]['declarations_ratio']});
-    }
 
-    /* this.AnimateLoad(); */
+      for(var i = 0; i < amount; i++)
+        {
+            var element = this.tempData[i];
+            TweenLite.to(element, 3, {declarations_ratio: this.temp[i]['declarations_ratio']});
+        }
+    },
+    oblast: function(newValue, oldValue){
+
+      function everythingToZero(data){
+        for(var i = 0; i < data.length; i++)
+          {
+              var element = data[i];
+              TweenLite.to(element, 10, {declarations_ratio: 0});
+          }
+        console.log('everythingToZero +')
+      }
+
+      function renewData(newData){
+        let temp = [];
+        for(var i = 0; i < newData.length; i++)
+        {
+            temp.push({'rajon_grouped': '', 'declarations_ratio': 0});
+        }
+        return temp
+
+      }
+
+      function everythingToNewValue(dataToChang, newData){
+        for(var i = 0; i < dataToChang.length; i++)
+          {
+              var element = dataToChang[i];
+              TweenLite.to(element, 3, 
+                {
+                  declarations_ratio: newData[i]['declarations_ratio'],
+                  rajon_grouped: newData[i]['rajon_grouped']
+                }
+               );
+          }
+
+        console.log('everythingToNewValue +')
+      }
+
+
+      everythingToZero(this.staticData);
+      this.staticData = renewData(this.data);
+      everythingToNewValue(this.staticData, this.data);
+
+
     }
   },
   computed:{
@@ -174,6 +216,8 @@ export default {
 
   },
   mounted() {
+    this.oblast = 'Львівська';
+
     const svgBcr = document.querySelector("div.horizontalPlot").getBoundingClientRect(); 
     this.mountedWidth = svgBcr.width;
 
