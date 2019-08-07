@@ -144,7 +144,7 @@ import 'vue-slider-component/theme/antd.css';
         filters: {       
           hospital_name: '',
           overal_title: '',
-          sum: [0, 600000000]
+          sum: [0, 100000000]
           },
       }
     },
@@ -153,9 +153,6 @@ import 'vue-slider-component/theme/antd.css';
     },
     computed: {
     maxSumValue() {
-/*       console.log(rows)
-      console.log('computed rows max')
-      console.log(d3.max(this.rows.map(d => d.sum))) */
       return d3.max(this.rows.map(d => d.sum))
     },
     filtered() {
@@ -211,7 +208,8 @@ import 'vue-slider-component/theme/antd.css';
     mounted() {
       // Set the initial number of items
       this.totalRows = this.rows.length
-      this.filters.sum[1] = this.maxSumValue 
+      this.filters.sum[1] = this.maxSumValue
+
     },
     methods: {
       info(item, index, button) {
