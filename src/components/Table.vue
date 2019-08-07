@@ -60,13 +60,30 @@
 
       <template slot="top-row">
         <td >
+          <input v-model="filters['hospital_edrpou']">
+        </td>
+      </template>
+
+      <template slot="top-row">
+        <td >
           <input v-model="filters['overal_title']">
         </td>
       </template>
 
       <template slot="top-row">
         <td >
-          <vue-slider v-model="filters['sum']" :min="0" :max="maxSumValue" :enable-cross="false" />
+          <input v-model="filters['oblast_name']">
+        </td>
+      </template>
+
+      <template slot="top-row">
+        <td >
+          <vue-slider 
+            v-model="filters['sum']" 
+            :min="0" :max="maxSumValue" 
+            :enable-cross="false" 
+            :tooltip-formatter="formaterTooltip"
+          />
         </td>
       </template>
             
@@ -124,14 +141,16 @@ import 'vue-slider-component/theme/antd.css';
       return {
         fields: [
           { key: 'hospital_name', label: 'Назва лікарні',  },
-/*        { key: 'description', label: 'Категорія', sortable: true, direction: 'desc', class: 'text-center' },
- */       { key: 'overal_title',  label: 'Опис' },
+          { key: 'hospital_edrpou', label: 'Код ЄДРПОУ лікарні', class: 'text-center' },
+          { key: 'overal_title',  label: 'Опис' },
+          { key: 'oblast_name',  label: 'Область' },
           {key: 'sum', label: 'Вартість, грн.', sortable: true, direction: 'desc',}
         ],
         totalRows: 1,
         currentPage: 1,
         perPage: 10,
         pageOptions: [5, 10, 15],
+        formaterTooltip: v => `${d3.format(',')(v)}, грн`, 
         sortBy: null,
         sortDesc: false,
         sortDirection: 'asc',
@@ -143,7 +162,9 @@ import 'vue-slider-component/theme/antd.css';
         },
         filters: {       
           hospital_name: '',
+          hospital_edrpou: '',
           overal_title: '',
+          oblast_name: '', 
           sum: [0, 100000000]
           },
       }
@@ -167,7 +188,9 @@ import 'vue-slider-component/theme/antd.css';
       });
 
 
-      filtered = filtered.filter(e => (e.sum > this.filters.sum[0]) & (e.sum < this.filters.sum[1]));        
+      filtered = filtered
+        .filter(e => (e.sum >= this.filters.sum[0]) & (e.sum <= this.filters.sum[1]))
+        .sort((a, b) => Number(b.sum) - Number(a.sum));
 
       /* here we changed number of pages in pagination according to number of elements filtered */
       this.onFiltered(filtered)
@@ -189,8 +212,10 @@ import 'vue-slider-component/theme/antd.css';
       let getCPV = this.getCPV;
       return this.rows.map(d => {
         return {
-        'hospital_name': d.hospital_name, 
+        'hospital_name': d.hospital_name,
+        'hospital_edrpou': d.hospital_edrpou, 
         'overal_title': d.overal_title,
+        'oblast_name': d.oblast_name,
         'sum': d.sum,
         'description': getCPV.get(d.id_item_short)[0].description
         }
@@ -251,7 +276,7 @@ import 'vue-slider-component/theme/antd.css';
 
   .mainTable
     padding: auto
-    text-align: center
+    /* text-align: center */
 
   .tableNavigation div.navigationRow
     display: flex

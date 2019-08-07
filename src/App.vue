@@ -258,7 +258,7 @@ import procurement from './assets/procurement_with_regions.json'
 import payments from './assets/payments_to_hospitals.json'
 import doctorPayments from './assets/payments_to_doctors.json'
 import procuramentPivot from './assets/procurements_pivot_with_regions.json'
-import tableData from './assets/table_data.json'
+import tableData from './assets/top_100_per_category.json'
 import cpv from './assets/cpv.json'
 
 
