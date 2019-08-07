@@ -4,16 +4,14 @@
 
     <div class="tableNavigation">
         <b-row class="navigationRow">
-        <b-col md="4" class="my-1">
-          <!-- <b-form-group label-cols-sm="3" label="" class="mb-0"> -->
+        <!-- <b-col md="4" class="my-1">
             <b-input-group>
               <b-form-input v-model="filter" placeholder="Пошук"></b-form-input>
               <b-input-group-append>
                 <b-button :disabled="!filter" @click="filter = ''">Очистити </b-button>
               </b-input-group-append>
             </b-input-group>
-         <!--  </b-form-group> -->
-        </b-col>
+        </b-col> -->
 
         <b-row>
           <b-col md="6" class="my-1">
@@ -35,7 +33,7 @@
     class="mainTable"
       show-empty
       stacked="md"
-      :items="names"
+      :items="filtered"
       :fields="fields"
       :current-page="currentPage"
       :per-page="perPage"
@@ -47,6 +45,33 @@
       empty-filtered-text="Таких даних у нас немає"
       :fixed="true" 
     >
+
+ <!--      <template slot="top-row" slot-scope="{ fields }">
+        <td v-for="field in fields" :key="field.key">
+          <input v-model="filters[field.key]" :placeholder="field.label">
+        </td>
+      </template> -->
+      
+      <template slot="top-row">
+        <td >
+          <input v-model="filters['hospital_name']">
+        </td>
+      </template>
+
+      <template slot="top-row">
+        <td >
+          <input v-model="filters['overal_title']">
+        </td>
+      </template>
+
+      <template slot="top-row">
+        <td >
+          <vue-slider v-model="filters['sum']" :min="0" :max="maxSumValue" :enable-cross="false" />
+        </td>
+      </template>
+            
+      
+
       <template slot="sum" slot-scope="row">
         {{ 
           formatNumber().format(row.value)
@@ -86,6 +111,8 @@
 
 <script>
 import * as d3 from "d3";
+import VueSlider from 'vue-slider-component';
+import 'vue-slider-component/theme/antd.css';
 
 
   export default {
@@ -97,8 +124,8 @@ import * as d3 from "d3";
       return {
         fields: [
           { key: 'hospital_name', label: 'Назва лікарні',  },
-/*           { key: 'description', label: 'Категорія', sortable: true, direction: 'desc', class: 'text-center' },
- */          { key: 'overal_title',  label: 'Опис' },
+/*        { key: 'description', label: 'Категорія', sortable: true, direction: 'desc', class: 'text-center' },
+ */       { key: 'overal_title',  label: 'Опис' },
           {key: 'sum', label: 'Вартість, грн.', sortable: true, direction: 'desc',}
         ],
         totalRows: 1,
@@ -113,10 +140,50 @@ import * as d3 from "d3";
           id: 'info-modal',
           title: '',
           content: ''
-        }
+        },
+        filters: {       
+          hospital_name: '',
+          overal_title: '',
+          sum: [0, 600000000]
+          },
       }
     },
+    components: {
+      VueSlider
+    },
     computed: {
+    maxSumValue() {
+/*       console.log(rows)
+      console.log('computed rows max')
+      console.log(d3.max(this.rows.map(d => d.sum))) */
+      return d3.max(this.rows.map(d => d.sum))
+    },
+    filtered() {
+
+
+      let filtered = this.names.filter(item => {
+        var keys = Object.keys(this.filters)
+        keys = keys.filter(e => e !== 'sum');
+        return keys.every(key => 
+          String(item[key]).includes(this.filters[key])
+        );
+      });
+
+
+      filtered = filtered.filter(e => (e.sum > this.filters.sum[0]) & (e.sum < this.filters.sum[1]));        
+
+      /* here we changed number of pages in pagination according to number of elements filtered */
+      this.onFiltered(filtered)
+
+      return filtered.length > 0
+        ? filtered
+        : [
+            Object.keys(this.names[0]).reduce(function(obj, value) {
+              obj[value] = '';
+              return obj;
+            }, {})
+          ];
+    },  
     getCPV: function() {
       let a = d3.nest().key(d => d.id_item_short).map(this.cpv);
       return a
@@ -144,6 +211,7 @@ import * as d3 from "d3";
     mounted() {
       // Set the initial number of items
       this.totalRows = this.rows.length
+      this.filters.sum[1] = this.maxSumValue 
     },
     methods: {
       info(item, index, button) {

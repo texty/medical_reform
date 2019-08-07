@@ -27,6 +27,7 @@
     "vue-simple-dropdown": "^1.0.0",
     "vue-simple-suggest": "^1.9.5",
     "vue-simple-tooltip": "^1.0.12",
+    "vue-slider-component": "^3.0.34",
     "vue-svg-textwrap": "0.0.21",
     "vue-svg-transition": "^0.2.1",
     "vuex": "^3.0.1"

@@ -225,7 +225,10 @@
 
     <div class="tableAndName">
         <h4><b>Таблиця закупівель</b></h4>
-        <Table :fixed="true" :small="true" :cpv="codesCPV" class="tableContainer table-fit" :rows="tableData" />
+        <Table :fixed="true" :small="true" 
+          :cpv="codesCPV" 
+          class="tableContainer table-fit"
+          :rows="tableData" />
     </div>
 
 
@@ -412,6 +415,8 @@ export default {
 
 <style lang="sass">
 
+
+
 * 
   /* border: 1px solid #f00 */
 /*   transition: all 3s
@@ -561,6 +566,10 @@ rect.bar:hover
 table
   text-align: center
 
+
+@media (min-width: 960px)
+  table tr th:nth-child(1)
+    width: 30%
 
 .tableNavigation div.navigationRow
     display: flex

@@ -42,7 +42,7 @@
       v-for="(d,i) in staticData"
       v-bind:key="i+'a'"
       :x="0"
-      :y="getScales().y(d.rajon_grouped) - 1"
+      :y="getScales().y(d.rajon_grouped) - 5"
       :width="2"
       fill="white"
       > {{  d.rajon_grouped }} </text>
