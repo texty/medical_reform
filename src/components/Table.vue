@@ -43,12 +43,6 @@
         empty-filtered-text="Таких даних у нас немає"
         :fixed="true"
       >
-        <!--      <template slot="top-row" slot-scope="{ fields }">
-        <td v-for="field in fields" :key="field.key">
-          <input v-model="filters[field.key]" :placeholder="field.label">
-        </td>
-        </template>-->
-
         <template slot="top-row">
           <td>
             <input v-model="filters['hospital_name']" />
@@ -91,15 +85,19 @@
           }}
         </template>
 
-        <template
-          slot="overal_title"
-          slot-scope="row"
-        >{{ `${ row.value.substring(0,40) + "..." }` }}</template>
+        <template slot="overal_title" slot-scope="row">
+          <div v-tooltip:right="row.value">{{ `${ row.value.substring(0,40) + "..." }` }}</div>
+        </template>
 
         <template
           slot="hospital_name"
           slot-scope="row"
-        >{{ `${ row.value.substring(0,40) + "..." }` }}</template>
+          v-tooltip:right="row.value"
+          v-b-tooltip.hover
+          :title="row.value"
+        >
+          <div v-tooltip:right="row.value">{{ `${ row.value.substring(0,40) + "..." }` }}</div>
+        </template>
 
         <template slot="actions" slot-scope="row">
           <b-button
@@ -133,6 +131,8 @@
 <script>
 import * as d3 from "d3";
 import VueSlider from "vue-slider-component";
+import tooltip from "vue-simple-tooltip";
+
 /* import 'vue-slider-component/theme/antd.css'; */
 
 export default {
@@ -159,7 +159,7 @@ export default {
       ],
       totalRows: 1,
       currentPage: 1,
-      perPage: 5,
+      perPage: 10,
       pageOptions: [5, 10, 15],
       formaterTooltip: v => `${d3.format(",")(v)}, грн`,
       sortBy: null,
@@ -265,6 +265,9 @@ export default {
       let format = d3.format(",");
       return { format };
     }
+  },
+  directives: {
+    tooltip
   }
 };
 </script>
