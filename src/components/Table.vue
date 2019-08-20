@@ -25,7 +25,6 @@
         </b-row>
       </b-row>
     </div>
-
     <!-- Main table element -->
     <div class="background">
       <b-table
@@ -93,9 +92,14 @@
         </template>
 
         <template
-          slot="id_item_short"
+          slot="overal_title"
           slot-scope="row"
-        >{{ `${getCPV['$' + row.id_item_short][0].description}` }}</template>
+        >{{ `${ row.value.substring(0,40) + "..." }` }}</template>
+
+        <template
+          slot="hospital_name"
+          slot-scope="row"
+        >{{ `${ row.value.substring(0,40) + "..." }` }}</template>
 
         <template slot="actions" slot-scope="row">
           <b-button
@@ -155,7 +159,7 @@ export default {
       ],
       totalRows: 1,
       currentPage: 1,
-      perPage: 10,
+      perPage: 5,
       pageOptions: [5, 10, 15],
       formaterTooltip: v => `${d3.format(",")(v)}, грн`,
       sortBy: null,
@@ -172,7 +176,7 @@ export default {
         hospital_edrpou: "",
         overal_title: "",
         oblast_name: "",
-        sum: [0, 1000000]
+        sum: [0, 20000000]
       }
     };
   },
