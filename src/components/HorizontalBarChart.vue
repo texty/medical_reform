@@ -120,7 +120,7 @@ export default {
       function everythingToZero(data) {
         for (var i = 0; i < data.length; i++) {
           var element = data[i];
-          TweenLite.to(element, 10, { declarations_ratio: 0 });
+          TweenLite.to(element, 3, { declarations_ratio: 0 });
         }
         console.log("everythingToZero +");
       }
@@ -224,10 +224,10 @@ export default {
 
     let amount = this.tempData.length;
 
-    for (var i = 0; i < amount; i++) {
+  /*   for (var i = 0; i < amount; i++) {
       var element = this.tempData[i];
-      TweenLite.to(element, 0.1, { declarations_ratio: 0 });
-    }
+      TweenLite.to(element, 3, { declarations_ratio: 0 });
+    } */
   },
   methods: {
     AnimateLoad() {
