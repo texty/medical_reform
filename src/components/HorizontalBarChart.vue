@@ -15,7 +15,7 @@
           v-model="oblast"
           :options="oblast_names"
         ></multiselect>
-      </div>
+      </div>g
     </div>
 
     <div class="plot">
