@@ -34,7 +34,7 @@
       <b>На графіку нижче ви можете вибрати область і досліджувати статистику по регіонах самостійно.</b>
     </p>
 
-    <Scrollama :offset="0.9" @step-enter="({ element }) => (currStep.push(element.dataset.stepNo))">
+    <Scrollama :offset="0.5" @step-enter="({ element }) => (currStep.push(element.dataset.stepNo))">
       <HorizontalBarChart
         v-bind:temp="loadData"
         v-bind:variable="selectedVariable"

@@ -109,12 +109,18 @@ export default {
     toDraw: function(oldValue) {
       var amount = this.tempData.length;
 
-      for (var i = 0; i < amount; i++) {
+      this.oblast = 'Львівська'
+
+
+      TweenLite.to(this.staticData, 3, this.data)
+      
+
+      /* for (var i = 0; i < amount; i++) {
         var element = this.tempData[i];
         TweenLite.to(element, 3, {
           declarations_ratio: this.temp[i]["declarations_ratio"]
         });
-      }
+      } */
     },
     oblast: function(newValue, oldValue) {
       function everythingToZero(data) {
@@ -215,19 +221,37 @@ export default {
   },
   created() {},
   mounted() {
-    this.oblast = "Львівська";
+    /* this.oblast = "Львівська"; */
+    /* this.staticData = this.data */
+
+/* 
+    function renewData(newData) {
+        let temp = [];
+        for (var i = 0; i < newData.length; i++) {
+          temp.push({ rajon_grouped: "", declarations_ratio: 0 });
+        }
+        return temp;
+      } */
+
+    /* this.staticData = renewData(this.data) */
 
     const svgBcr = document
       .querySelector("div.horizontalPlot")
       .getBoundingClientRect();
     this.mountedWidth = svgBcr.width;
 
-    let amount = this.tempData.length;
+
+  /*   TweenLite.to(this.staticData, 1, {'declarations_ratio': 0})
+    TweenLite.killTweensOf(this.staticData) */
+
+    
+
+    /* let amount = this.tempData.length;
 
     for (var i = 0; i < amount; i++) {
       var element = this.tempData[i];
       TweenLite.to(element, 0.1, { declarations_ratio: 0 });
-    }
+    } */
   },
   methods: {
     AnimateLoad() {
