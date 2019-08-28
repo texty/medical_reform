@@ -1,4 +1,4 @@
-<template>
+<template v-model="oblastModel">
   <b-container fluid>
     <!-- User Interface controls -->
 
@@ -170,6 +170,8 @@ export default {
   props: {
     rows: Array,
     hospitals: Array,
+    oblast: String
+
   },
   data() {
     return {
@@ -198,6 +200,7 @@ export default {
       sortBy: null,
       sortDesc: false,
       sortDirection: "asc",
+      oblastModel:"",
       filter: null,
       infoModal: {
         id: "info-modal",
@@ -205,11 +208,12 @@ export default {
         content: ""
       },
       filters: {
-        division_address: "",
         doctor_full_name: "",
-        doctor_speciality: "",
-        owner_proprety_type: "",
-        total_decl_count: [0, 3000]
+        le_transfer: "",
+        total_decl_count: [0, 3000],
+        division_settlement: "",
+        da_area: this.$attrs.oblastModel,
+        division_address: "",
       }
     };
   },
@@ -268,6 +272,9 @@ export default {
           return { text: f.label, value: f.key };
         });
     }
+  },
+  watch: {
+    oblast() {this.filters.da_area = this.oblast}
   },
   mounted() {
     // Set the initial number of items

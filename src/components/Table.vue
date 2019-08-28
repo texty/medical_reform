@@ -1,4 +1,4 @@
-<template>
+<template  v-model="oblastModel">
   <b-container fluid>
     <!-- User Interface controls -->
 
@@ -27,7 +27,7 @@
     </div>
     <!-- Main table element -->
     <div class="background">
-      <b-table
+      <b-table  
         class="mainTable"
         show-empty
         stacked="md"
@@ -143,6 +143,7 @@ export default {
     rows: Array,
     cpv: Array,
     hospitals: Array,
+    oblast: String 
   },
   data() {
     return {
@@ -170,6 +171,7 @@ export default {
       sortDesc: false,
       sortDirection: "asc",
       filter: null,
+      oblastModel: "",
       infoModal: {
         id: "info-modal",
         title: "",
@@ -179,7 +181,7 @@ export default {
         hospital_name: "",
         hospital_edrpou: "",
         overal_title: "",
-        oblast_name: "",
+        oblast_name: this.$attrs.oblastModel,
         sum: [0, 20000000]
       }
     };
@@ -250,6 +252,9 @@ export default {
     this.totalRows = this.rows.length;
     this.filters.sum[1] = this.maxSumValue;
   },
+  watch: {
+    oblast() {this.filters.oblast_name = this.oblast}
+  },
   methods: {
     info(item, index, button) {
       this.infoModal.title = `Row index: ${index}`;
@@ -273,7 +278,7 @@ export default {
   directives: {
     tooltip
   }
-};
+}
 </script>
 
 <style lang="scss">

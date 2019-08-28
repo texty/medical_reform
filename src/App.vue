@@ -92,6 +92,9 @@
         class="tableContainer table-fit"
         :rows="doctorsNames"
         :hospitals="hospitalNames"
+        :oblast="selectedOblast"
+        :oblastModel="selectedOblast"
+
       />
       </div>
 
@@ -160,6 +163,8 @@
         class="tableContainer table-fit"
         :rows="tableData"
         :hospitals="hospitalNames"
+        :oblast="selectedOblast"
+        :oblastModel="selectedOblast"
       />
     </div>
 
@@ -180,6 +185,7 @@ import * as d3 from "d3";
 import Multiselect from "vue-multiselect";
 import "intersection-observer"; // for cross-browser support
 import Scrollama from "vue-scrollama";
+import jsonp from "jsonp";
 
 
 import HorizontalBarChart from "./components/HorizontalBarChart.vue";
@@ -206,7 +212,7 @@ export default {
     return {
       variables: ["doctors_to_people_ration", "decl_count"],
       selectedVariable: "declarations_ratio",
-      selectedOblast: "Чернігівська",
+      selectedOblast: "",
       selectedProcurementTypes: [
         { name: "Ремонти", code: "type:45" },
         { name: "Щось там", code: "type:30" },
@@ -226,13 +232,25 @@ export default {
       min: 10,
       max: 100,
       currStep: [],
-      oblastNames: [{"Misto Kyyiv": "Київська"}, {"": "Чернігівська"}]
+      oblastByIP: "",
+      oblastNames: [{name:"Misto Kyyiv", data: "Київська"}, {name:"", data:"Чернігівська"}]
     };
   },
   mounted() {
-    this.axios.get("http://gd.geobytes.com/GetCityDetails").then((response) => {
+    /* this.axios.get("http://gd.geobytes.com/GetCityDetails").then((response) => {
       console.log(response)
-    })
+    }) */
+
+    const that = this;
+    
+    jsonp("http://gd.geobytes.com/GetCityDetails", {}, function(err, d){
+      console.log(d.geobytesregion)
+      that.oblastByIP = d.geobytesregion
+      console.log("end of api")
+
+      let obl = {"Misto Kyyiv": "Київ"}
+      that.selectedOblast = obl[that.oblastByIP]
+    });
   },
   methods: {
     onSelect(value) {
@@ -256,14 +274,21 @@ export default {
       this.loadProcurements = procurements;
     } */
   },
+/*   watch: {
+     oblastByIP: function() {
+      let obl = {"Misto Kyyiv": "Київ"}
+      that.selectedOblast = obl[that.oblastByIP]
+    },
+  }, */
   computed: {
-    set_oblast: function() {
+ /*    set_oblast: function() {
+      var oblastByIP = this.oblastByIP
       var val = this.oblastNames.find(function(element) {
-            return element['Misto Kyyiv'] == "Київська";
+            return element.name == oblastByIP;
       })[0];
 
-      return Object.values(val)[0]
-    },
+      return val.data
+    }, */
     oblast_names: function() {
       return [...new Set(this.loadData.map(d => d.oblast))];
     },
