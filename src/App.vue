@@ -181,6 +181,7 @@ import Multiselect from "vue-multiselect";
 import "intersection-observer"; // for cross-browser support
 import Scrollama from "vue-scrollama";
 
+
 import HorizontalBarChart from "./components/HorizontalBarChart.vue";
 import BarChart from "./components/BarChart.vue";
 import LineChart from "./components/LineChart.vue";
@@ -224,12 +225,14 @@ export default {
       itemCount: 25,
       min: 10,
       max: 100,
-      currStep: []
+      currStep: [],
+      oblastNames: [{"Misto Kyyiv": "Київська"}, {"": "Чернігівська"}]
     };
   },
   mounted() {
-    console.log("App loaded");
-    /* this.fetchData(); */
+    this.axios.get("http://gd.geobytes.com/GetCityDetails").then((response) => {
+      console.log(response)
+    })
   },
   methods: {
     onSelect(value) {
@@ -254,9 +257,13 @@ export default {
     } */
   },
   computed: {
-    /* tableData: function(){
-      this.tableData
-    }, */
+    set_oblast: function() {
+      var val = this.oblastNames.find(function(element) {
+            return element['Misto Kyyiv'] == "Київська";
+      })[0];
+
+      return Object.values(val)[0]
+    },
     oblast_names: function() {
       return [...new Set(this.loadData.map(d => d.oblast))];
     },

@@ -6,6 +6,8 @@ import BootstrapVue from 'bootstrap-vue'
 import App from './App.vue'
 import store from './store'
 import SvgTransition from 'vue-svg-transition';
+import axios from 'axios'
+import VueAxios from 'vue-axios'
 
 
 import 'bootstrap/dist/css/bootstrap.css'
@@ -20,3 +22,5 @@ new Vue({
 
 Vue.use(BootstrapVue)
 Vue.use(SvgTransition);
+Vue.use(VueAxios, axios)
+
