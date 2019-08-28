@@ -34,7 +34,7 @@
       <b>На графіку нижче ви можете вибрати область і досліджувати статистику по регіонах самостійно.</b>
     </p>
 
-    <Scrollama :offset="0.5" @step-enter="({ element }) => (currStep.push(element.dataset.stepNo))">
+    <Scrollama :offset="0.9" @step-enter="({ element }) => (currStep.push(element.dataset.stepNo))">
       <HorizontalBarChart
         v-bind:temp="loadData"
         v-bind:variable="selectedVariable"
@@ -82,6 +82,18 @@
         v-bind:variable="'money_per_month'"
       />
     </div>
+    <div class="tableAndName chart">
+      <h4>
+        <b>Виборіть свого лікаря</b>
+      </h4>
+      <DoctorsTable
+        :fixed="true"
+        :small="true"
+        class="tableContainer table-fit"
+        :rows="doctorsNames"
+        :hospitals="hospitalNames"
+      />
+      </div>
 
     <h3 class="text">
       <b>3. Лікарні вкладають гроші у свій розвиток</b>
@@ -147,6 +159,7 @@
         :cpv="codesCPV"
         class="tableContainer table-fit"
         :rows="tableData"
+        :hospitals="hospitalNames"
       />
     </div>
 
@@ -173,6 +186,7 @@ import BarChart from "./components/BarChart.vue";
 import LineChart from "./components/LineChart.vue";
 import ParallelPlot from "./components/ParallelPlot.vue";
 import Table from "./components/Table.vue";
+import DoctorsTable from "./components/DoctorsTable.vue";
 
 import data from "./assets/rajon_stats.json";
 import procurement from "./assets/procurement_with_regions.json";
@@ -181,6 +195,9 @@ import doctorPayments from "./assets/payments_to_doctors.json";
 import procuramentPivot from "./assets/procurements_pivot_with_regions.json";
 import tableData from "./assets/top_100_per_category.json";
 import cpv from "./assets/cpv.json";
+import doctorsNames from './assets/doctors_for_table.json'
+import hospitalNames from './assets/hospital_names.json'
+
 
 export default {
   name: "app",
@@ -200,6 +217,8 @@ export default {
       payments: doctorPayments,
       tableData: tableData,
       codesCPV: cpv,
+      doctorsNames: doctorsNames,
+      hospitalNames: hospitalNames,
       chartWidth: 0,
       currentValue: null,
       itemCount: 25,
@@ -331,7 +350,8 @@ export default {
     BarChart,
     ParallelPlot,
     Table,
-    Scrollama
+    Scrollama,
+    DoctorsTable
   }
 };
 </script>

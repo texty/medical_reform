@@ -15,7 +15,7 @@
           v-model="oblast"
           :options="oblast_names"
         ></multiselect>
-      </div>g
+      </div>
     </div>
 
     <div class="plot">
@@ -25,7 +25,7 @@
         ref="transition"
         trigger="none"
       >
-        <g :transform="`translate(${(svgParameters.width-width)/2 - 25},${margin.top})`">
+        <g :transform="`translate(${(svgParameters.width-width)/2},${margin.top})`">
           <rect
             v-for="(d,i) in staticData"
             v-bind:key="i"

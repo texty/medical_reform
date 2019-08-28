@@ -44,39 +44,42 @@
         :fixed="true"
       >
         <template slot="top-row">
-          <td>
-            <input v-model="filters['hospital_name']" />
+          <td role="cell" data-label="Назва лікарні" aria-colindex="1">
+            <div class="inputColumnName"><input v-model="filters['hospital_name']" /></div>
           </td>
         </template>
 
         <template slot="top-row">
-          <td>
-            <input v-model="filters['hospital_edrpou']" />
+          <td role="cell" data-label="Код ЄДРПОУ" aria-colindex="1">
+            <div class="inputColumnName"><input v-model="filters['hospital_edrpou']" /></div>
           </td>
         </template>
 
         <template slot="top-row">
-          <td>
-            <input v-model="filters['overal_title']" />
+          <td role="cell" data-label="Опис" aria-colindex="1">
+            <div class="inputColumnName"><input v-model="filters['overal_title']" /></div>
           </td>
         </template>
 
         <template slot="top-row">
-          <td>
-            <input v-model="filters['oblast_name']" />
+          <td role="cell" data-label="Область" aria-colindex="1">
+            <div class="inputColumnName"><input v-model="filters['oblast_name']" /></div>
           </td>
         </template>
 
         <template slot="top-row">
-          <td>
-            <vue-slider
-              v-model="filters['sum']"
-              :min="0"
-              :max="maxSumValue"
-              :enable-cross="false"
-              :tooltip-formatter="formaterTooltip"
-            />
+          
+          <td role="cell" data-label="	Вартість, грн." aria-colindex="1">
+            <div class="inputColumnName">
+              <vue-slider
+                v-model="filters['sum']"
+                :min="0"
+                :max="maxSumValue"
+                :enable-cross="false"
+                :tooltip-formatter="formaterTooltip"
+            /></div>
           </td>
+          
         </template>
 
         <template slot="sum" slot-scope="row">
@@ -86,7 +89,7 @@
         </template>
 
         <template slot="overal_title" slot-scope="row">
-          <div v-tooltip:right="row.value">{{ `${ row.value.substring(0,40) + "..." }` }}</div>
+          <div v-tooltip:right="row.value">{{ `${ row.value.substring(0,30) + "..." }` }}</div>
         </template>
 
         <template
@@ -96,7 +99,7 @@
           v-b-tooltip.hover
           :title="row.value"
         >
-          <div v-tooltip:right="row.value">{{ `${ row.value.substring(0,40) + "..." }` }}</div>
+          <div v-tooltip:right="row.value">{{ `${ row.value.substring(0,30) + "..." }` }}</div>
         </template>
 
         <template slot="actions" slot-scope="row">
@@ -138,7 +141,8 @@ import tooltip from "vue-simple-tooltip";
 export default {
   props: {
     rows: Array,
-    cpv: Array
+    cpv: Array,
+    hospitals: Array,
   },
   data() {
     return {
@@ -191,7 +195,7 @@ export default {
       let filtered = this.names.filter(item => {
         var keys = Object.keys(this.filters);
         keys = keys.filter(e => e !== "sum");
-        return keys.every(key => String(item[key]).includes(this.filters[key]));
+        return keys.every(key => String(item[key]).toUpperCase().includes(this.filters[key].toUpperCase()));
       });
 
       filtered = filtered
@@ -303,4 +307,8 @@ export default {
     padding-top: 15px !important
     width: 80% !important
 
+  div.inputColumnName input
+    width: 70%
+    height: 2rem
+    
 </style>
