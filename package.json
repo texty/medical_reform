@@ -19,6 +19,7 @@
     "jsonp": "^0.2.1",
     "pug-plain-loader": "^1.0.0",
     "scrollama": "^2.0.0",
+    "similarity": "^1.1.1",
     "stylus-loader": "^3.0.2",
     "tween.js": "^16.6.0",
     "tweenjs": "^1.0.2",

@@ -82,6 +82,11 @@
         v-bind:variable="'money_per_month'"
       />
     </div>
+
+    <p
+      class="text"
+    >Якщо ви досі ще не обрали лікаря для себе та вашої родини. Ви можете зробити це за допомогою нашої візуалізації. Ви можете знайти лікарів, що працюють у вашому місті в таблиці нижче. Та підібрати собі того хто ще не підписав максимум (дві тисячі) декларацій з пацієнтами.</p>
+
     <div class="tableAndName chart">
       <h4>
         <b>Виборіть свого лікаря</b>
@@ -94,9 +99,8 @@
         :hospitals="hospitalNames"
         :oblast="selectedOblast"
         :oblastModel="selectedOblast"
-
       />
-      </div>
+    </div>
 
     <h3 class="text">
       <b>3. Лікарні вкладають гроші у свій розвиток</b>
@@ -186,7 +190,7 @@ import Multiselect from "vue-multiselect";
 import "intersection-observer"; // for cross-browser support
 import Scrollama from "vue-scrollama";
 import jsonp from "jsonp";
-
+import similarity from "similarity"
 
 import HorizontalBarChart from "./components/HorizontalBarChart.vue";
 import BarChart from "./components/BarChart.vue";
@@ -202,9 +206,8 @@ import doctorPayments from "./assets/payments_to_doctors.json";
 import procuramentPivot from "./assets/procurements_pivot_with_regions.json";
 import tableData from "./assets/top_100_per_category.json";
 import cpv from "./assets/cpv.json";
-import doctorsNames from './assets/doctors_for_table.json'
-import hospitalNames from './assets/hospital_names.json'
-
+import doctorsNames from "./assets/doctors_for_table.json";
+import hospitalNames from "./assets/hospital_names.json";
 
 export default {
   name: "app",
@@ -233,7 +236,10 @@ export default {
       max: 100,
       currStep: [],
       oblastByIP: "",
-      oblastNames: [{name:"Misto Kyyiv", data: "Київська"}, {name:"", data:"Чернігівська"}]
+      oblastNames: [
+        { name: "Misto Kyyiv", data: "Київська" },
+        { name: "", data: "Чернігівська" }
+      ]
     };
   },
   mounted() {
@@ -242,14 +248,48 @@ export default {
     }) */
 
     const that = this;
-    
-    jsonp("http://gd.geobytes.com/GetCityDetails", {}, function(err, d){
-      console.log(d.geobytesregion)
-      that.oblastByIP = d.geobytesregion
-      console.log("end of api")
 
-      let obl = {"Misto Kyyiv": "Київ"}
-      that.selectedOblast = obl[that.oblastByIP]
+    jsonp("http://gd.geobytes.com/GetCityDetails", {}, function(err, d) {
+      console.log(d.geobytesregion);
+      that.oblastByIP = d.geobytesregion;
+      console.log("end of api");
+
+      let obl = {
+        "Misto Kyyiv": "Київ",
+        "Ternopils'ka Oblast'": "Тернопільска",
+        "Kirovohrads'ka Oblast'": "Кіровоградська",
+        "Odes'ka Oblast": "Одеська",
+        "Poltavs'ka Oblast'": "Полтавська",
+        "Zhytomyrs'ka Oblast'": "Житомирська",
+        "Cherkas'ka Oblast": "Черкаська",
+        "Rivnens'ka Oblast'": "Рівненська",
+        "Vinnyts'ka Oblast'": "Вінницька",
+        "Sums'ka Oblast'": "Сумська",
+        "Khmelnyts'ka Oblast'": "Хмельницька",
+        "Chernihivs'ka Oblast'": "Чернігівська",
+        "Dnipropetrovs'ka Oblast'": "Дніпропетровська",
+        "Chernivetska Oblast'": "Чернівецька",
+        "Kharkivs'ka Oblast": "Харківська",
+        "Luhans'ka Oblast'": "Луганська",
+        "Volyns'ka Oblast'": "Волинська",
+        "Donets'ka Oblast'": "Донецька",
+        "Kyivs'ka Oblast'": "Київська",
+        "Khersonska Oblast'": "Херсонська",
+        "L'vivs'ka Oblast'": "Львівська",
+        "Mykolaivska Oblast": "Миколаївська",
+        "Zaporiz'ka' Oblast": "Запорізька",
+        "Ivano-Frankivska Oblast'": "Івано-Франківська",
+        "Zakarpatska Oblast'": "Закарпатська"
+      };
+
+      let obl_names = Object.keys(obl);
+      
+      let correct_obl =  obl_names.filter((el) => {
+        return (similarity(el, that.oblastByIP) > 0.8);
+      });
+
+      that.selectedOblast = obl[correct_obl[0]]
+
     });
   },
   methods: {
@@ -274,14 +314,14 @@ export default {
       this.loadProcurements = procurements;
     } */
   },
-/*   watch: {
+  /*   watch: {
      oblastByIP: function() {
       let obl = {"Misto Kyyiv": "Київ"}
       that.selectedOblast = obl[that.oblastByIP]
     },
   }, */
   computed: {
- /*    set_oblast: function() {
+    /*    set_oblast: function() {
       var oblastByIP = this.oblastByIP
       var val = this.oblastNames.find(function(element) {
             return element.name == oblastByIP;

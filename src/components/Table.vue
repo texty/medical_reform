@@ -27,7 +27,7 @@
     </div>
     <!-- Main table element -->
     <div class="background">
-      <b-table  
+      <b-table
         class="mainTable"
         show-empty
         stacked="md"
@@ -45,30 +45,37 @@
       >
         <template slot="top-row">
           <td role="cell" data-label="Назва лікарні" aria-colindex="1">
-            <div class="inputColumnName"><input v-model="filters['hospital_name']" /></div>
+            <div class="inputColumnName">
+              <input v-model="filters['hospital_name']" />
+            </div>
           </td>
         </template>
 
         <template slot="top-row">
           <td role="cell" data-label="Код ЄДРПОУ" aria-colindex="1">
-            <div class="inputColumnName"><input v-model="filters['hospital_edrpou']" /></div>
+            <div class="inputColumnName">
+              <input v-model="filters['hospital_edrpou']" />
+            </div>
           </td>
         </template>
 
         <template slot="top-row">
           <td role="cell" data-label="Опис" aria-colindex="1">
-            <div class="inputColumnName"><input v-model="filters['overal_title']" /></div>
+            <div class="inputColumnName">
+              <input v-model="filters['overal_title']" />
+            </div>
           </td>
         </template>
 
         <template slot="top-row">
           <td role="cell" data-label="Область" aria-colindex="1">
-            <div class="inputColumnName"><input v-model="filters['oblast_name']" /></div>
+            <div class="inputColumnName">
+              <input v-model="filters['oblast_name']" />
+            </div>
           </td>
         </template>
 
         <template slot="top-row">
-          
           <td role="cell" data-label="	Вартість, грн." aria-colindex="1">
             <div class="inputColumnName">
               <vue-slider
@@ -77,9 +84,9 @@
                 :max="maxSumValue"
                 :enable-cross="false"
                 :tooltip-formatter="formaterTooltip"
-            /></div>
+              />
+            </div>
           </td>
-          
         </template>
 
         <template slot="sum" slot-scope="row">
@@ -143,7 +150,7 @@ export default {
     rows: Array,
     cpv: Array,
     hospitals: Array,
-    oblast: String 
+    oblast: String
   },
   data() {
     return {
@@ -197,7 +204,11 @@ export default {
       let filtered = this.names.filter(item => {
         var keys = Object.keys(this.filters);
         keys = keys.filter(e => e !== "sum");
-        return keys.every(key => String(item[key]).toUpperCase().includes(this.filters[key].toUpperCase()));
+        return keys.every(key =>
+          String(item[key])
+            .toUpperCase()
+            .includes(this.filters[key].toUpperCase())
+        );
       });
 
       filtered = filtered
@@ -253,7 +264,9 @@ export default {
     this.filters.sum[1] = this.maxSumValue;
   },
   watch: {
-    oblast() {this.filters.oblast_name = this.oblast}
+    oblast() {
+      this.filters.oblast_name = this.oblast;
+    }
   },
   methods: {
     info(item, index, button) {
@@ -278,7 +291,7 @@ export default {
   directives: {
     tooltip
   }
-}
+};
 </script>
 
 <style lang="scss">

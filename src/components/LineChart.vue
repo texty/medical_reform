@@ -1,19 +1,17 @@
 <template>
   <div>
-    
     <svg :width="svgParameters.width" :height="svgParameters.height">
-      <g 
-      :transform="`translate(${margin.left},${margin.top})`">
-        <path 
-        v-tooltip:right="procuramentTypes[d.name]"
-        v-for="(d,i) in line"
-        v-bind:key="i"  
-        :d="d.line" 
-        :stroke="colors[d.name]"
-        class="line" 
+      <g :transform="`translate(${margin.left},${margin.top})`">
+        <path
+          v-tooltip:right="procuramentTypes[d.name]"
+          v-for="(d,i) in line"
+          v-bind:key="i"
+          :d="d.line"
+          :stroke="colors[d.name]"
+          class="line"
         />
-        <g v-axis:x="getScales()" :transform="`translate(0,${height})`"></g>
-        <g v-axis:y="getScales()" :transform="`translate(0,0)`"></g>
+        <g v-axis:x="getScales()" :transform="`translate(0,${height})`" />
+        <g v-axis:y="getScales()" :transform="`translate(0,0)`" />
         <text>{{ name }}</text>
       </g>
     </svg>
@@ -21,11 +19,11 @@
 </template>
 
 <script>
-import * as d3 from 'd3';
-import tooltip from 'vue-simple-tooltip';
+import * as d3 from "d3";
+import tooltip from "vue-simple-tooltip";
 
 export default {
-  name: 'vue-line-chart',
+  name: "vue-line-chart",
   props: {
     inputData: Array,
     name: String,
@@ -33,13 +31,14 @@ export default {
   },
   data() {
     return {
-      tooltip:'fuck',
+      tooltip: "fuck",
       procuramentTypes: {
-        'type:331': 'Медичне обладнання',
-        'type:45': ' Будівельні роботи та поточний ремонт',
-        'type:48': 'Програмне забезпечення',
-        'type:30': "Офісна та комп'ютерна техніка",
-        "type:44": "Конструкції та конструкційні матеріали; допоміжна будівельна продукція"
+        "type:331": "Медичне обладнання",
+        "type:45": " Будівельні роботи та поточний ремонт",
+        "type:48": "Програмне забезпечення",
+        "type:30": "Офісна та комп'ютерна техніка",
+        "type:44":
+          "Конструкції та конструкційні матеріали; допоміжна будівельна продукція"
       },
       margin: {
         top: 25,
@@ -47,82 +46,97 @@ export default {
         bottom: 25,
         left: 100
       },
-     /*  svgParameters: {
+      /*  svgParameters: {
         width: 300,
         height: 100
       }, */
       colors: {
-        "type:30": 'red',
-        "type:331": 'green',
-        "type:44": 'blue',
-        "type:45": 'yellow',
-        "type:48": 'black'
+        "type:30": "red",
+        "type:331": "green",
+        "type:44": "blue",
+        "type:45": "yellow",
+        "type:48": "black"
       }
     };
   },
-  mounted() {
-  },
+  mounted() {},
   computed: {
     data: function() {
       return this.inputData;
     },
-    computed_number: function(){
+    computed_number: function() {
       let nested = this.inputData;
       /* let nested = d3.nest().key(d => d.id_item_short).entries(this.inputData) */
 
       nested.forEach(d => {
-        var dates = d.values.map(d => d.date_month)
-        let allDates = ["2016-07-01", "2016-08-01", "2016-09-01", "2016-10-01",
-                    "2016-11-01", "2016-12-01", "2017-01-01", "2017-02-01",
-                    "2017-03-01", "2017-04-01", "2017-05-01", "2017-06-01",
-                    "2017-07-01", "2017-08-01", "2017-09-01", "2017-10-01", 
-                    "2017-11-01", "2017-12-01", "2018-01-01", "2018-02-01", 
-                    "2018-03-01", "2018-04-01", "2018-05-01", "2018-06-01", 
-                    "2018-07-01", "2018-09-01", "2018-10-01", "2018-11-01", 
-                    "2018-12-01"];
+        var dates = d.values.map(d => d.date_month);
+        let allDates = [
+          "2016-07-01",
+          "2016-08-01",
+          "2016-09-01",
+          "2016-10-01",
+          "2016-11-01",
+          "2016-12-01",
+          "2017-01-01",
+          "2017-02-01",
+          "2017-03-01",
+          "2017-04-01",
+          "2017-05-01",
+          "2017-06-01",
+          "2017-07-01",
+          "2017-08-01",
+          "2017-09-01",
+          "2017-10-01",
+          "2017-11-01",
+          "2017-12-01",
+          "2018-01-01",
+          "2018-02-01",
+          "2018-03-01",
+          "2018-04-01",
+          "2018-05-01",
+          "2018-06-01",
+          "2018-07-01",
+          "2018-09-01",
+          "2018-10-01",
+          "2018-11-01",
+          "2018-12-01"
+        ];
 
         let dateDifference = allDates.filter(x => !dates.includes(x));
 
-
         dateDifference.forEach(dd => {
-            d.values.push(
-          {
-          date_month: dd,
-          hospital_edrpou: d.values[0].hospital_edrpou,
-          id_item_short: d.values[0].id_item_short,
-          name: d.values[0].name,
-          oblast_name: d.values[0].oblast_name,
-          sum:0,
-          }
-        )
-        })
-        
-
-        
+          d.values.push({
+            date_month: dd,
+            hospital_edrpou: d.values[0].hospital_edrpou,
+            id_item_short: d.values[0].id_item_short,
+            name: d.values[0].name,
+            oblast_name: d.values[0].oblast_name,
+            sum: 0
+          });
+        });
       });
 
       nested.forEach(elem => {
-        elem.values.sort(function(a,b){
+        elem.values.sort(function(a, b) {
           return new Date(b.date_month) - new Date(a.date_month);
-        })
-      })
-
+        });
+      });
 
       return nested;
     },
     line: function() {
-      var calculatePath = this.calculatePath
+      var calculatePath = this.calculatePath;
       let lines = this.computed_number.map(function(d) {
-        return {'name': d.key, 'line':calculatePath(d.values)}
+        return { name: d.key, line: calculatePath(d.values) };
       });
       return lines;
     },
     width: function() {
-      return this.svgParameters.width - this.margin.left - this.margin.right
+      return this.svgParameters.width - this.margin.left - this.margin.right;
     },
     height: function() {
-      return this.svgParameters.height - this.margin.top - this.margin.bottom
-    },
+      return this.svgParameters.height - this.margin.top - this.margin.bottom;
+    }
   },
   directives: {
     axis(el, binding) {
@@ -130,44 +144,50 @@ export default {
       const axisMethod = { x: "axisBottom", y: "axisLeft" }[axis];
       const methodArg = binding.value[axis];
 
-
-      const axisFinal = d3[axisMethod](methodArg)
+      const axisFinal = d3[axisMethod](methodArg);
 
       d3.select(el).call(axisFinal.ticks(3));
     },
-    directives: {tooltip}
+    directives: { tooltip }
   },
   methods: {
     getScales() {
       var values = [];
       var dates = [];
       this.computed_number.forEach(d => {
-          d.values.forEach(dd => { 
-              values.push(+dd.sum)
-              dates.push(new Date(dd.date_month))
-           }) 
-      })
+        d.values.forEach(dd => {
+          values.push(+dd.sum);
+          dates.push(new Date(dd.date_month));
+        });
+      });
 
-      var x = d3.scaleTime()
+      var x = d3
+        .scaleTime()
         .range([0, this.width])
         .domain(d3.extent(dates));
-  
-      var y = d3.scaleLinear()
+
+      var y = d3
+        .scaleLinear()
         .range([this.height, 0])
         .domain([0, d3.max(values)]);
-      
+
       return { x, y };
     },
     calculatePath(data) {
       const scale = this.getScales();
-      const path = d3.line()
-        .x(function(d) { return scale.x(new Date(d.date_month)); })
-        .y(function(d) { return scale.y(d.sum); })
+      const path = d3
+        .line()
+        .x(function(d) {
+          return scale.x(new Date(d.date_month));
+        })
+        .y(function(d) {
+          return scale.y(d.sum);
+        })
         .curve(d3.curveMonotoneX);
-      
+
       return path(data);
-    },
-  },
+    }
+  }
 };
 </script>
 

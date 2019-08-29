@@ -109,11 +109,9 @@ export default {
     toDraw: function(oldValue) {
       var amount = this.tempData.length;
 
-      this.oblast = 'Львівська'
+      this.oblast = "Львівська";
 
-
-      TweenLite.to(this.staticData, 3, this.data)
-      
+      TweenLite.to(this.staticData, 3, this.data);
 
       /* for (var i = 0; i < amount; i++) {
         var element = this.tempData[i];
@@ -224,7 +222,7 @@ export default {
     /* this.oblast = "Львівська"; */
     /* this.staticData = this.data */
 
-/* 
+    /* 
     function renewData(newData) {
         let temp = [];
         for (var i = 0; i < newData.length; i++) {
@@ -240,11 +238,8 @@ export default {
       .getBoundingClientRect();
     this.mountedWidth = svgBcr.width;
 
-
-  /*   TweenLite.to(this.staticData, 1, {'declarations_ratio': 0})
+    /*   TweenLite.to(this.staticData, 1, {'declarations_ratio': 0})
     TweenLite.killTweensOf(this.staticData) */
-
-    
 
     /* let amount = this.tempData.length;
 
