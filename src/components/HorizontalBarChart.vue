@@ -1,4 +1,4 @@
-<template>
+<template v-model="usersOblast">
   <div class="horizontalPlot" :width="svgParameters.width" :height="svgParameters.height">
     <div class="selectorOblast">
       <h4>
@@ -83,11 +83,11 @@ export default {
   props: {
     temp: Array,
     variable: String,
-    toDraw: Boolean
+    toDraw: Boolean,
   },
   data() {
     return {
-      oblast: "Київська",
+      oblast: "",
       hover: false,
       heightOfbar: 5,
       checker: false,
@@ -109,7 +109,7 @@ export default {
     toDraw: function(oldValue) {
       var amount = this.tempData.length;
 
-      this.oblast = "Львівська";
+      this.oblast = this.$attrs.usersOblast == 'Київ' ? "Київська" :  this.$attrs.usersOblast
 
       TweenLite.to(this.staticData, 3, this.data);
 

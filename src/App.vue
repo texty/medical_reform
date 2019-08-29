@@ -42,6 +42,7 @@
         :class="{ active: 1 == currStep }"
         data-step-no="1"
         v-bind:to-draw="currStep.includes('1')"
+        :usersOblast="selectedOblast"
       />
     </Scrollama>
 
