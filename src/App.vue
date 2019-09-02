@@ -185,6 +185,7 @@
   </div>
 </template>
 
+<script src="http://gd.geobytes.com/gd?after=-1&variables=GeobytesCountry,GeobytesCity,GeobytesRegion"></script>
 <script>
 import * as d3 from "d3";
 import Multiselect from "vue-multiselect";
@@ -235,6 +236,7 @@ export default {
       itemCount: 25,
       min: 10,
       max: 100,
+      checker: null,
       currStep: [],
       oblastByIP: "",
       oblastNames: [
@@ -248,12 +250,14 @@ export default {
       console.log(response)
     }) */
 
+    console.log('trying another way')
     const that = this;
 
-    jsonp("http://gd.geobytes.com/GetCityDetails", {}, function(err, d) {
-      console.log(d.geobytesregion);
-      that.oblastByIP = d.geobytesregion;
+
+    jsonp("http://gd.geobytes.com/GetCityDetails?fqcn=", {}, function(err, d) {
+      that.oblastByIP = sGeobytesRegion;
       console.log("end of api");
+      // alert(sGeobytesRegion);
 
       let obl = {
         "Misto Kyyiv": "Київ",
