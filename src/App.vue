@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <router-view></router-view>
     <div class="header"></div>
 
     <p
@@ -185,7 +186,7 @@
   </div>
 </template>
 
-<script src="http://gd.geobytes.com/gd?after=-1&variables=GeobytesCountry,GeobytesCity,GeobytesRegion"></script>
+<script src="https://gd.geobytes.com/gd?after=-1&variables=GeobytesCountry,GeobytesCity,GeobytesRegion"></script>
 <script>
 import * as d3 from "d3";
 import Multiselect from "vue-multiselect";
@@ -254,48 +255,50 @@ export default {
     const that = this;
 
 
-    jsonp("http://gd.geobytes.com/GetCityDetails?fqcn=", {}, function(err, d) {
-      that.oblastByIP = sGeobytesRegion;
-      console.log("end of api");
-      // alert(sGeobytesRegion);
+    // jsonp("http://gd.geobytes.com/GetCityDetails?fqcn=", {}, function(err, d) {
+    //   that.oblastByIP = d.geobytesregion;
+    //   console.log("end of api");
+    //   // alert(sGeobytesRegion);
 
-      let obl = {
-        "Misto Kyyiv": "Київ",
-        "Ternopils'ka Oblast'": "Тернопільска",
-        "Kirovohrads'ka Oblast'": "Кіровоградська",
-        "Odes'ka Oblast": "Одеська",
-        "Poltavs'ka Oblast'": "Полтавська",
-        "Zhytomyrs'ka Oblast'": "Житомирська",
-        "Cherkas'ka Oblast": "Черкаська",
-        "Rivnens'ka Oblast'": "Рівненська",
-        "Vinnyts'ka Oblast'": "Вінницька",
-        "Sums'ka Oblast'": "Сумська",
-        "Khmelnyts'ka Oblast'": "Хмельницька",
-        "Chernihivs'ka Oblast'": "Чернігівська",
-        "Dnipropetrovs'ka Oblast'": "Дніпропетровська",
-        "Chernivetska Oblast'": "Чернівецька",
-        "Kharkivs'ka Oblast": "Харківська",
-        "Luhans'ka Oblast'": "Луганська",
-        "Volyns'ka Oblast'": "Волинська",
-        "Donets'ka Oblast'": "Донецька",
-        "Kyivs'ka Oblast'": "Київська",
-        "Khersonska Oblast'": "Херсонська",
-        "L'vivs'ka Oblast'": "Львівська",
-        "Mykolaivska Oblast": "Миколаївська",
-        "Zaporiz'ka' Oblast": "Запорізька",
-        "Ivano-Frankivska Oblast'": "Івано-Франківська",
-        "Zakarpatska Oblast'": "Закарпатська"
-      };
+    //   let obl = {
+    //     "Misto Kyyiv": "Київ",
+    //     "Ternopils'ka Oblast'": "Тернопільска",
+    //     "Kirovohrads'ka Oblast'": "Кіровоградська",
+    //     "Odes'ka Oblast": "Одеська",
+    //     "Poltavs'ka Oblast'": "Полтавська",
+    //     "Zhytomyrs'ka Oblast'": "Житомирська",
+    //     "Cherkas'ka Oblast": "Черкаська",
+    //     "Rivnens'ka Oblast'": "Рівненська",
+    //     "Vinnyts'ka Oblast'": "Вінницька",
+    //     "Sums'ka Oblast'": "Сумська",
+    //     "Khmelnyts'ka Oblast'": "Хмельницька",
+    //     "Chernihivs'ka Oblast'": "Чернігівська",
+    //     "Dnipropetrovs'ka Oblast'": "Дніпропетровська",
+    //     "Chernivetska Oblast'": "Чернівецька",
+    //     "Kharkivs'ka Oblast": "Харківська",
+    //     "Luhans'ka Oblast'": "Луганська",
+    //     "Volyns'ka Oblast'": "Волинська",
+    //     "Donets'ka Oblast'": "Донецька",
+    //     "Kyivs'ka Oblast'": "Київська",
+    //     "Khersonska Oblast'": "Херсонська",
+    //     "L'vivs'ka Oblast'": "Львівська",
+    //     "Mykolaivska Oblast": "Миколаївська",
+    //     "Zaporiz'ka' Oblast": "Запорізька",
+    //     "Ivano-Frankivska Oblast'": "Івано-Франківська",
+    //     "Zakarpatska Oblast'": "Закарпатська"
+    //   };
 
-      let obl_names = Object.keys(obl);
+    //   let obl_names = Object.keys(obl);
       
-      let correct_obl =  obl_names.filter((el) => {
-        return (similarity(el, that.oblastByIP) > 0.8);
-      });
+    //   let correct_obl =  obl_names.filter((el) => {
+    //     return (similarity(el, that.oblastByIP) > 0.8);
+    //   });
 
-      that.selectedOblast = obl[correct_obl[0]]
+    //   that.selectedOblast = obl[correct_obl[0]]
 
-    });
+    // });
+
+    that.selectedOblast = "Київ"
   },
   methods: {
     onSelect(value) {
