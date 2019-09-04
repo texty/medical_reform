@@ -146,6 +146,7 @@ import tooltip from "vue-simple-tooltip";
 /* import 'vue-slider-component/theme/antd.css'; */
 
 export default {
+  name: 'med-table', 
   props: {
     rows: Array,
     cpv: Array,

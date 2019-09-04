@@ -1,5 +1,15 @@
 <template>
   <div id="app">
+
+    <router-link
+      :to="{ name: 'med-table', params: { fixed: true, small: true, cpv: codesCPV, 
+    rows: tableData, hospitals: hospitalNames, oblast: selectedOblast, oblastModel: selectedOblast  } }"
+    >dhdhshshsh</router-link>
+
+    <router-link
+      :to="{ name: 'med-table', params: { smth: 'hello_shit' } }"
+    >dhdhshshsh</router-link>
+
     <router-view></router-view>
     <div class="header"></div>
 
@@ -193,7 +203,7 @@ import Multiselect from "vue-multiselect";
 import "intersection-observer"; // for cross-browser support
 import Scrollama from "vue-scrollama";
 import jsonp from "jsonp";
-import similarity from "similarity"
+import similarity from "similarity";
 
 import HorizontalBarChart from "./components/HorizontalBarChart.vue";
 import BarChart from "./components/BarChart.vue";
@@ -251,9 +261,8 @@ export default {
       console.log(response)
     }) */
 
-    console.log('trying another way')
+    console.log("trying another way");
     const that = this;
-
 
     // jsonp("http://gd.geobytes.com/GetCityDetails?fqcn=", {}, function(err, d) {
     //   that.oblastByIP = d.geobytesregion;
@@ -289,7 +298,7 @@ export default {
     //   };
 
     //   let obl_names = Object.keys(obl);
-      
+
     //   let correct_obl =  obl_names.filter((el) => {
     //     return (similarity(el, that.oblastByIP) > 0.8);
     //   });
@@ -298,7 +307,7 @@ export default {
 
     // });
 
-    that.selectedOblast = "Київ"
+    that.selectedOblast = "Київ";
   },
   methods: {
     onSelect(value) {
