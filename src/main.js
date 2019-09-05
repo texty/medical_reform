@@ -39,15 +39,15 @@ Vue.component('horizontal-bar', Bar)
 
 const router = new VueRouter({
   routes: [
-    // {
-    //   path: '/',
-    //   // name: 'app',
-    //   component: App
-    // },
+    {
+      path: '/',
+      name: 'app',
+      component: App
+    },
     {
       path: '/med',
       name: 'med-table',
-      component: Table
+      component: Table,
     },
     {
       path: '/horizontal',
@@ -56,13 +56,14 @@ const router = new VueRouter({
       props: {
         temp: horizontalData, oblastProp: "Київська",
         toDraw: true, variable: "declarations_ratio"
-      }
+      },
+      // props: true
     }
   ]
 })
 
 new Vue({
   router,
-  render: h => h(App)
+  // render: h => h(App)
 }).$mount('#main')
 

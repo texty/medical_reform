@@ -1,5 +1,6 @@
 <template v-model="usersOblast">
   <div class="horizontalPlot" :width="svgParameters.width" :height="svgParameters.height">
+    <article></article>
     <div class="selectorOblast">
       <h4>
         <b>Кількість підписаних декларацій</b>

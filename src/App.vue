@@ -9,7 +9,7 @@
       :to="{ name: 'horizontal-bar', params: { smth: 'hello_shit' } }"
     >dhdhshshsh</router-link>
 
-    <router-view></router-view>
+    <!-- <router-view></router-view> -->
     <div class="header"></div>
 
     <p
