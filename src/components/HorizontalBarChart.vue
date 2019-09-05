@@ -84,6 +84,7 @@ export default {
     temp: Array,
     variable: String,
     toDraw: Boolean,
+    oblastProp: String
   },
   data() {
     return {
@@ -109,9 +110,10 @@ export default {
     toDraw: function(oldValue) {
       var amount = this.tempData.length;
 
-      this.oblast = this.$attrs.usersOblast == 'Київ' ? "Київська" :  this.$attrs.usersOblast
+      // this.oblast = this.$attrs.usersOblast == 'Київ' ? "Київська" :  this.$attrs.usersOblast
 
-      TweenLite.to(this.staticData, 3, this.data);
+      // this.oblast = this.oblastProp
+      // TweenLite.to(this.staticData, 3, this.data);
 
       /* for (var i = 0; i < amount; i++) {
         var element = this.tempData[i];
@@ -237,6 +239,10 @@ export default {
       .querySelector("div.horizontalPlot")
       .getBoundingClientRect();
     this.mountedWidth = svgBcr.width;
+
+
+    this.oblast = this.oblastProp
+    TweenLite.to(this.staticData, 3, this.data);
 
     /*   TweenLite.to(this.staticData, 1, {'declarations_ratio': 0})
     TweenLite.killTweensOf(this.staticData) */

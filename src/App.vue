@@ -2,12 +2,11 @@
   <div id="app">
 
     <router-link
-      :to="{ name: 'med-table', params: { fixed: true, small: true, cpv: codesCPV, 
-    rows: tableData, hospitals: hospitalNames, oblast: selectedOblast, oblastModel: selectedOblast  } }"
+      :to="{ name: 'med-table', params: { smth: 'hello_shit' } }"
     >dhdhshshsh</router-link>
 
-    <router-link
-      :to="{ name: 'med-table', params: { smth: 'hello_shit' } }"
+   <router-link
+      :to="{ name: 'horizontal-bar', params: { smth: 'hello_shit' } }"
     >dhdhshshsh</router-link>
 
     <router-view></router-view>
