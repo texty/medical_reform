@@ -147,7 +147,7 @@ export default {
     }  */
 
     const svgBcr = document
-      .querySelector("div.finalBars")
+      .querySelector(".finalBars")
       .getBoundingClientRect();
     this.svgWidth = svgBcr.width;
   },

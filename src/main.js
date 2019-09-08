@@ -16,11 +16,12 @@ import Bar from './components/HorizontalBarChart.vue'
 
 import App from './App.vue'
 import Home from './components/Home.vue'
+import BarPlots from './components/BarPlots'
 
 
 // data
-import horizontalData from "./assets/rajon_stats.json";
-
+/* import horizontalData from "./assets/rajon_stats.json";
+ */
 
 
 import 'bootstrap/dist/css/bootstrap.css'
@@ -37,6 +38,7 @@ Vue.component('app', App)
 Vue.component('med-table', Table)
 Vue.component('horizontal-bar', Bar)
 Vue.component('home', Home)
+Vue.component('bar-plots', BarPlots)
 
 
 
@@ -63,10 +65,14 @@ const router = new VueRouter({
       name: 'horizontal-bar',
       component: Bar,
       props: {
-        temp: horizontalData, oblastProp: "Київська",
+        oblastProp: "Київська",
         toDraw: true, variable: "declarations_ratio"
       },
-      // props: true
+    },
+    {
+      path: '/doctors',
+      name: 'bar-plots',
+      component: BarPlots
     }
   ]
 })
