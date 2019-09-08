@@ -199,10 +199,10 @@
 <script>
 import * as d3 from "d3";
 import Multiselect from "vue-multiselect";
-import "intersection-observer"; // for cross-browser support
+/* import "intersection-observer"; // for cross-browser support
 import Scrollama from "vue-scrollama";
 import jsonp from "jsonp";
-import similarity from "similarity";
+import similarity from "similarity"; */
 
 import HorizontalBarChart from "./components/HorizontalBarChart.vue";
 import BarChart from "./components/BarChart.vue";
@@ -438,7 +438,7 @@ export default {
     BarChart,
     ParallelPlot,
     Table,
-    Scrollama,
+    /* Scrollama */
     DoctorsTable
   }
 };
@@ -446,9 +446,6 @@ export default {
 
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
-
-<style src="vue-scrollama/dist/vue-scrollama.css">
-</style>
 
 
 <style lang="sass">

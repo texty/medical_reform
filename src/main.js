@@ -1,6 +1,6 @@
 // import '@babel/polyfill'
-import 'es6-promise/auto'
-// import 'mutationobserver-shim'
+/* import 'es6-promise/auto'
+ */// import 'mutationobserver-shim'
 import Vue from 'vue'
 import './plugins/bootstrap-vue'
 import BootstrapVue from 'bootstrap-vue'
@@ -15,6 +15,8 @@ import Table from './components/Table.vue'
 import Bar from './components/HorizontalBarChart.vue'
 
 import App from './App.vue'
+import Home from './components/Home.vue'
+
 
 // data
 import horizontalData from "./assets/rajon_stats.json";
@@ -34,6 +36,8 @@ Vue.config.productionTip = false
 Vue.component('app', App)
 Vue.component('med-table', Table)
 Vue.component('horizontal-bar', Bar)
+Vue.component('home', Home)
+
 
 
 
@@ -41,6 +45,11 @@ const router = new VueRouter({
   routes: [
     {
       path: '/',
+      name: 'home',
+      component: Home
+    },
+    {
+      path: '/app',
       name: 'app',
       component: App
     },
