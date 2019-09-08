@@ -13,8 +13,10 @@ import VueRouter from 'vue-router'
 
 import Table from './components/Table.vue'
 import Bar from './components/HorizontalBarChart.vue'
-
 import App from './App.vue'
+
+
+import Text from '@/components/Text.vue'
 import Home from './components/Home.vue'
 import BarPlots from './components/BarPlots'
 import DoctorsTable from "./components/DoctorsTable.vue";
@@ -37,13 +39,14 @@ Vue.use(BootstrapVue)
 
 Vue.config.productionTip = false
 
-Vue.component('app', App)
+Vue.component('text', Text)
 Vue.component('med-table', Table)
 Vue.component('horizontal-bar', Bar)
 Vue.component('home', Home)
 Vue.component('bar-plots', BarPlots)
 Vue.component('doctors-table', DoctorsTable)
 Vue.component('procurement-plots', ProcurementPlots)
+Vue.component('app', App)
 
 
 
@@ -56,10 +59,15 @@ const router = new VueRouter({
       name: 'home',
       component: Home
     },
-    {
+/*     {
       path: '/app',
       name: 'app',
       component: App
+    }, */
+    {
+      path: '/text',
+      name: 'text',
+      component: Text
     },
     {
       path: '/med-table',
