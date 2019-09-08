@@ -143,18 +143,26 @@ import * as d3 from "d3";
 import VueSlider from "vue-slider-component";
 import tooltip from "vue-simple-tooltip";
 
+import cpv from "@/assets/cpv.json";
+import hospitalNames from "@/assets/hospital_names.json";
+import tableData from "@/assets/top_100_per_category.json";
+
+
 /* import 'vue-slider-component/theme/antd.css'; */
 
 export default {
   name: 'med-table', 
   props: {
-    rows: Array,
+/*     rows: Array,
     cpv: Array,
     hospitals: Array,
-    oblast: String
+    oblast: String */
   },
   data() {
     return {
+      rows: tableData,
+      cpv: cpv,
+      hospitals: hospitalNames,
       fields: [
         { key: "hospital_name", label: "Назва лікарні" },
         {
@@ -189,7 +197,7 @@ export default {
         hospital_name: "",
         hospital_edrpou: "",
         overal_title: "",
-        oblast_name: this.$attrs.oblastModel,
+        oblast_name: this.$route.params.oblast,
         sum: [0, 20000000]
       }
     };
@@ -197,12 +205,15 @@ export default {
   components: {
     VueSlider
   },
+  created(){
+    /* this.filters.oblast_name = this.$route.params.oblast */
+  },
   computed: {
     maxSumValue() {
       return d3.max(this.rows.map(d => d.sum));
     },
     filtered() {
-      let filtered = this.names.filter(item => {
+      let filtered = this.rows.filter(item => {
         var keys = Object.keys(this.filters);
         keys = keys.filter(e => e !== "sum");
         return keys.every(key =>
@@ -212,11 +223,15 @@ export default {
         );
       });
 
+      debugger;
+
+
       filtered = filtered
         .filter(
           e => (e.sum >= this.filters.sum[0]) & (e.sum <= this.filters.sum[1])
         )
         .sort((a, b) => Number(b.sum) - Number(a.sum));
+
 
       /* here we changed number of pages in pagination according to number of elements filtered */
       this.onFiltered(filtered);

@@ -17,6 +17,8 @@ import Bar from './components/HorizontalBarChart.vue'
 import App from './App.vue'
 import Home from './components/Home.vue'
 import BarPlots from './components/BarPlots'
+import DoctorsTable from "./components/DoctorsTable.vue";
+
 
 
 // data
@@ -39,6 +41,7 @@ Vue.component('med-table', Table)
 Vue.component('horizontal-bar', Bar)
 Vue.component('home', Home)
 Vue.component('bar-plots', BarPlots)
+Vue.component('doctors-table', DoctorsTable)
 
 
 
@@ -56,7 +59,7 @@ const router = new VueRouter({
       component: App
     },
     {
-      path: '/med',
+      path: '/med-table',
       name: 'med-table',
       component: Table,
     },
@@ -73,6 +76,11 @@ const router = new VueRouter({
       path: '/doctors',
       name: 'bar-plots',
       component: BarPlots
+    },
+    {
+      path: '/doctors-table',
+      name: "doctors-table", 
+      component: DoctorsTable
     }
   ]
 })
