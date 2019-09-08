@@ -17,6 +17,10 @@
         <div>
         <router-link :to="{ name: 'med-table', params: { oblast: 'Київська' } }">Med Table</router-link>
       </div>
+
+        <div>
+        <router-link :to="{ name: 'procurement_plots', params: { oblast: 'Київська' } }">ParallelPlot</router-link>
+      </div>
     </div>
   </div>
 </template>

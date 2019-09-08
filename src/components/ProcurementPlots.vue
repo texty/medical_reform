@@ -1,0 +1,132 @@
+<template>
+  <div class="procurements step chart" data-step-no="2" :class="{ active: 2 == currStep }">
+    <h4>
+      <b>Порівняння закупівель лікарень за 2017-2019 роки в різних областях, грн.</b>
+    </h4>
+
+    <div class="parallelPlotOblast">
+      <p>
+        <i>Графіка інтерактивна, ви можете обирати область зі списку</i>
+      </p>
+      <multiselect
+        :hide-selected="true"
+        deselect-label
+        placeholder="Виберіть область"
+        select-label
+        :allow-empty="false"
+        v-model="selectetOblast"
+        :options="oblastNames"
+      ></multiselect>
+    </div>
+
+    <div class="parallelPlot">
+      <ParallelPlot
+        class="line"
+        v-for="(d,i) in selectedProcurement"
+        v-bind:key="i"
+        :name="d.key"
+        :inputData="d.values"
+        :svgParameters="{width: '100%',height: '100%'}"
+        :selectedOblast="selectetOblast"
+      />
+    </div>
+  </div>
+</template>
+
+<script>
+import ParallelPlot from "@/components/ParallelPlot.vue";
+import Multiselect from "vue-multiselect";
+
+import procuramentPivot from "@/assets/procurements_pivot_with_regions.json";
+
+export default {
+  data() {
+    return {
+      loadProcurementPivot: procuramentPivot,
+      selectetOblast: "",
+      oblastNames: [
+        "Київська",
+        "Чернівецька",
+        "Донецька",
+        "Тернопільська",
+        "Волинська",
+        "Харківська",
+        "Вінницька",
+        "Сумська",
+        "Івано-Франківська",
+        "Чернігівська",
+        "Луганська",
+        "Полтавська",
+        "Миколаївська",
+        "Житомирська",
+        "Хмельницька",
+        "Черкаська",
+        "Херсонська",
+        "Львівська",
+        "Запорізька",
+        "Закарпатська",
+        "Дніпропетровська",
+        "Рівненська",
+        "Кіровоградська",
+        "Одеська"
+      ]
+    };
+  },
+  computed: {
+    nestedProcurement: function() {
+      let nest = d3
+        .nest()
+        .key(d => d.id_item_short)
+        .key(d => d.oblast)
+        .rollup(function(leaves) {
+          return {
+            2017: d3.sum(leaves, function(d) {
+              return d[2017];
+            }),
+            2019: d3.sum(leaves, function(d) {
+              return d[2019];
+            })
+          };
+        })
+        .entries(this.loadProcurementPivot.filter(d => d.oblast != null));
+
+      return nest;
+    },
+    selectedProcurement: function() {
+      let selectedOblast = this.selectedOblast;
+      let data = this.nestedProcurement.filter(function(d) {
+        return d.values.length > 10;
+      });
+
+      let selectedData = data.filter(function(d) {
+        return [
+          "type:48",
+          "type:51",
+          "type:45",
+          "type:35",
+          "type:38",
+          ,
+          /* 'type:70' */ "type:42",
+          "type:39",
+          "type:30"
+        ].includes(d.key);
+
+        return d.key;
+      });
+
+      /* let selectedProcurementType = selectedOblastData.values.filter(function(d) {
+          return  selectedProcurementTypes.includes(d.key)
+      }); */
+
+      return selectedData;
+    }
+  },
+  mounted() {
+      this.selectetOblast = this.$route.params.oblast
+  },
+  components: {
+    ParallelPlot,
+    Multiselect
+  }
+};
+</script>

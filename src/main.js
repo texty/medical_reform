@@ -18,6 +18,7 @@ import App from './App.vue'
 import Home from './components/Home.vue'
 import BarPlots from './components/BarPlots'
 import DoctorsTable from "./components/DoctorsTable.vue";
+import ProcurementPlots from './components/ProcurementPlots.vue'
 
 
 
@@ -42,6 +43,8 @@ Vue.component('horizontal-bar', Bar)
 Vue.component('home', Home)
 Vue.component('bar-plots', BarPlots)
 Vue.component('doctors-table', DoctorsTable)
+Vue.component('procurement-plots', ProcurementPlots)
+
 
 
 
@@ -81,6 +84,11 @@ const router = new VueRouter({
       path: '/doctors-table',
       name: "doctors-table", 
       component: DoctorsTable
+    },
+    {
+      path: '/procurement_plots',
+      name: "procurement_plots", 
+      component: ProcurementPlots
     }
   ]
 })
