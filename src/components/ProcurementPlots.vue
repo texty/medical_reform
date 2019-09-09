@@ -40,6 +40,9 @@ import Multiselect from "vue-multiselect";
 import procuramentPivot from "@/assets/procurements_pivot_with_regions.json";
 
 export default {
+  props: {
+    incomingOblast: String
+  },
   data() {
     return {
       loadProcurementPivot: procuramentPivot,
@@ -122,7 +125,12 @@ export default {
     }
   },
   mounted() {
-      this.selectetOblast = this.$route.params.oblast
+      this.selectetOblast = this.incomingOblast
+  },
+  watch: {
+    incomingOblast: function(newProp, oldProp) {
+      this.selectetOblast = newProp
+    },
   },
   components: {
     ParallelPlot,

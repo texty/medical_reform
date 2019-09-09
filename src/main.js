@@ -102,7 +102,10 @@ const router = new VueRouter({
     {
       path: '/procurement_plots',
       name: "procurement_plots", 
-      component: ProcurementPlots
+      component: ProcurementPlots,
+      props: (route) => ({
+        incomingOblast: route.query.obl || "Київська",
+      }) 
     }
   ]
 })
