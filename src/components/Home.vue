@@ -4,7 +4,7 @@
       <router-link :to="{ name: 'horizontal-bar', params: { smth: 'hello_shit' } }">Horizontal Bar</router-link>
     </div>
     <div>
-      <router-link :to="{ name: 'text' }">Text</router-link>
+      <router-link :to="{ name: 'text-element' }">Text</router-link>
 
       <div>
         <router-link :to="{ name: 'bar-plots', params: { smth: 'hello_shit' } }">Bar Plots</router-link>

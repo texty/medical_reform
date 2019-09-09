@@ -92,9 +92,9 @@ export default {
   },
   computed: {
     data: function() {
-      var variable = this.variable;
+      const that = this
       var data = this.tempData.map(function(d) {
-        return +d[variable];
+        return +d[that.variable];
       });
       return data;
     },
@@ -107,14 +107,14 @@ export default {
     computedScales: function() {
       let x = d3
         .scaleLinear()
-        .domain(d3.extent(this.data.map(d => d)))
+        .domain(d3.extent(this.data))
         .nice()
         .range([0, this.width]);
 
       let bins = d3
         .histogram()
         .domain(x.domain())
-        .thresholds(x.ticks(40))(this.data.map(d => d));
+        .thresholds(x.ticks(40))(this.data);
 
       let y = d3
         .scaleLinear()
@@ -150,6 +150,8 @@ export default {
       .querySelector(".finalBars")
       .getBoundingClientRect();
     this.svgWidth = svgBcr.width;
+    
+
   },
   methods: {
     getRandomArbitrary(min, max) {

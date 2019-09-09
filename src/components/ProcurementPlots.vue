@@ -1,5 +1,5 @@
 <template>
-  <div class="procurements step chart" data-step-no="2" :class="{ active: 2 == currStep }">
+  <div class="procurements step chart">
     <h4>
       <b>Порівняння закупівель лікарень за 2017-2019 роки в різних областях, грн.</b>
     </h4>

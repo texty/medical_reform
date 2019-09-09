@@ -1,19 +1,13 @@
 <template>
-  <div class="finalBars">
+  <div class="finalBars" >
     <BarChart
-      data-step-no="2"
+      v-for="(d,i) in ['decl_count', 'money_per_month']"
+      v-bind:key="i"
       v-bind:temp="payments"
       v-bind:oblast="selectedOblast"
-      v-bind:variable="'decl_count'"
+      v-bind:variable="d"
     />
 
-    <BarChart
-      data-step-no="yes"
-      v-bind:temp="payments"
-      v-bind:oblast="selectedOblast"
-      v-bind:variable="'money_per_month'"
-    />
-    <p>sdggsgsg</p>
   </div>
 </template>
 

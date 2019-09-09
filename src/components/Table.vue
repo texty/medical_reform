@@ -223,8 +223,6 @@ export default {
         );
       });
 
-      debugger;
-
 
       filtered = filtered
         .filter(

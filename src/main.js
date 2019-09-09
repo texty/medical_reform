@@ -6,7 +6,7 @@ import './plugins/bootstrap-vue'
 import BootstrapVue from 'bootstrap-vue'
 // import store from './store'
 // import SvgTransition from 'vue-svg-transition';
-// import axios from 'axios'
+import axios from 'axios'
 // import VueAxios from 'vue-axios'
 // import router from './router'
 import VueRouter from 'vue-router'
@@ -112,3 +112,59 @@ new Vue({
   // render: h => h(App)
 }).$mount('#main')
 
+
+// oblast names, take compare code from App.vue file
+
+// Chernihiv Oblast
+// Cherkasy Oblast
+// Chernivtsi Oblast
+// Dnipropetrovsk Oblast
+// Donetsk Oblast
+// Frankivsk Oblast
+// Kharkiv Oblast
+// Kherson Oblast
+// Khmelnytskyi Oblast
+// Kiev Oblast
+// the oblast
+// Kirovohrad Oblast
+// Luhansk Oblast
+// Lviv Oblast
+// Mykolaiv Oblast
+// Odessa Oblast
+// Poltava Oblast
+// Rivne Oblast
+// Sumy Oblast
+// Ternopil Oblast
+// Vinnytsia Oblast
+// Volyn Oblast
+// Zakarpattia Oblast
+// Zaporizhia Oblast
+// Zhytomyr Oblast
+
+
+// var coords = null
+
+// if ("geolocation" in navigator) {
+//   // Do something with coordinates returned
+//   async function processCoords() {
+//       let coord = await navigator.geolocation.getCurrentPosition
+//       let latitude = await coord.coords.latitude;
+//       let longitude = await coord.coords.longitude;
+
+//       return {latitude, longitude}
+//   }
+
+//   // Fetch Coordinates
+//   processCoords().then(d => (coords = d))
+
+//   axios
+//     .get(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${coords.latitude}&lon=${coords.longitude}`)
+//     .then(response => (console.log(response.data.place_id)));
+// }
+
+// console.log(coords)
+
+
+// axios
+//   .get('https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=50.4367297&lon=35.5024426')
+//   .then(response => (console.log(response.data.place_id)));
