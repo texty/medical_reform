@@ -118,7 +118,7 @@ export default {
 
       let y = d3
         .scaleLinear()
-        .domain([1, d3.max(bins, d => d.length)])
+        .domain([100, d3.max(bins, d => d.length)])
         .nice()
         .range([this.height - this.margin.bottom, this.margin.top]);
 
