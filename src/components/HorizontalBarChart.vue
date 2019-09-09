@@ -125,6 +125,9 @@ export default {
         });
       } */
     },
+    oblastProp: function(newProp, oldProp) {
+      this.oblast = newProp
+    },
     oblast: function(newValue, oldValue) {
       function everythingToZero(data) {
         for (var i = 0; i < data.length; i++) {

@@ -39,7 +39,7 @@ Vue.use(BootstrapVue)
 
 Vue.config.productionTip = false
 
-Vue.component('text', Text)
+Vue.component('text-element', Text)
 Vue.component('med-table', Table)
 Vue.component('horizontal-bar', Bar)
 Vue.component('home', Home)
@@ -65,8 +65,8 @@ const router = new VueRouter({
       component: App
     }, */
     {
-      path: '/text',
-      name: 'text',
+      path: '/text-element',
+      name: 'text-element',
       component: Text
     },
     {
@@ -80,7 +80,6 @@ const router = new VueRouter({
       component: Bar,
       props: (route) => ({
         oblastProp: route.query.obl || "Київська",
-        temp: horizontalData,
         toDraw: true,
         variable: "declarations_ratio"
       }) 
