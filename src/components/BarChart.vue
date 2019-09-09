@@ -9,8 +9,8 @@
           v-for="(d,i) in computedScales.bins"
           v-bind:key="i"
           v-tooltip:right="variable == 'decl_count' 
-          ? formatNumber().format(d.x0) + ' лікарів підписали ' + formatNumber().format(d.x1) + ' декларації' 
-          : formatNumber().format(d.x0 )+ ' лікарів отримують ' + formatNumber().format(d.x1) + ' гривень в місяць'"
+          ? formatNumber().format(d.length) + ' лікарів підписали ' + formatNumber().format(d.x1) + ' декларації' 
+          : formatNumber().format(d.length )+ ' лікарів отримують ' + formatNumber().format(d.x1) + ' гривень в місяць'"
           :x="computedScales.x(d.x0)"
           :width="Math.max(0, computedScales.x(d.x1) - computedScales.x(d.x0) - 1)"
           :y="computedScales.y(d.length)"
