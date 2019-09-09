@@ -79,6 +79,8 @@ import { TweenLite } from "gsap";
 import { selectAll } from "d3-selection";
 import { transition } from "d3-transition";
 
+import horizontalData from "@/assets/rajon_stats.json";
+
 export default {
   name: "vue-bar-chart",
   props: {
@@ -93,7 +95,7 @@ export default {
       hover: false,
       heightOfbar: 5,
       checker: false,
-      tempData: JSON.parse(JSON.stringify(this.temp)),
+      tempData: horizontalData,
       staticData: [{ rajon_grouped: "", declarations_ratio: 0 }],
       mountedWidth: 0,
       margin: {
@@ -184,7 +186,7 @@ export default {
       return out;
     },
     oblast_names: function() {
-      return [...new Set(this.temp.map(d => d.oblast))];
+      return [...new Set(this.tempData.map(d => d.oblast))];
     },
     svgParameters: function() {
       return {

@@ -171,16 +171,22 @@ import * as d3 from "d3";
 import VueSlider from "vue-slider-component";
 import tooltip from "vue-simple-tooltip";
 
+import doctorsNames from "@/assets/doctors_for_table.json";
+import hospitalNames from "@/assets/hospital_names.json";
+
 /* import 'vue-slider-component/theme/antd.css'; */
 
 export default {
   props: {
-    rows: Array,
-    hospitals: Array,
-    oblast: String
-  },
+/*     rows: Array,
+    hospitals: Array, */
+/*     oblast: String*/  
+},
   data() {
     return {
+      hospitals: hospitalNames,
+      rows: doctorsNames,
+      oblast: this.$route.params.oblast,
       fields: [
         {
           key: "doctor_full_name",
@@ -217,7 +223,7 @@ export default {
         le_transfer: "",
         total_decl_count: [0, 3000],
         division_settlement: "",
-        da_area: this.$attrs.oblastModel,
+        da_area: this.$route.params.oblast,
         division_address: ""
       }
     };
@@ -290,7 +296,7 @@ export default {
   },
   watch: {
     oblast() {
-      this.filters.da_area = this.oblast;
+      /* this.filters.da_area = this.oblast */
     }
   },
   mounted() {

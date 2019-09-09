@@ -1,6 +1,6 @@
 // import '@babel/polyfill'
-import 'es6-promise/auto'
-// import 'mutationobserver-shim'
+/* import 'es6-promise/auto'
+ */// import 'mutationobserver-shim'
 import Vue from 'vue'
 import './plugins/bootstrap-vue'
 import BootstrapVue from 'bootstrap-vue'
@@ -13,12 +13,20 @@ import VueRouter from 'vue-router'
 
 import Table from './components/Table.vue'
 import Bar from './components/HorizontalBarChart.vue'
-
 import App from './App.vue'
 
-// data
-import horizontalData from "./assets/rajon_stats.json";
 
+import Text from '@/components/Text.vue'
+import Home from './components/Home.vue'
+import BarPlots from './components/BarPlots'
+import DoctorsTable from "./components/DoctorsTable.vue";
+import ProcurementPlots from './components/ProcurementPlots.vue'
+
+
+
+// data
+/* import horizontalData from "./assets/rajon_stats.json";
+ */
 
 
 import 'bootstrap/dist/css/bootstrap.css'
@@ -31,9 +39,16 @@ Vue.use(BootstrapVue)
 
 Vue.config.productionTip = false
 
-Vue.component('app', App)
+Vue.component('text', Text)
 Vue.component('med-table', Table)
 Vue.component('horizontal-bar', Bar)
+Vue.component('home', Home)
+Vue.component('bar-plots', BarPlots)
+Vue.component('doctors-table', DoctorsTable)
+Vue.component('procurement-plots', ProcurementPlots)
+Vue.component('app', App)
+
+
 
 
 
@@ -41,11 +56,21 @@ const router = new VueRouter({
   routes: [
     {
       path: '/',
+      name: 'home',
+      component: Home
+    },
+/*     {
+      path: '/app',
       name: 'app',
       component: App
+    }, */
+    {
+      path: '/text',
+      name: 'text',
+      component: Text
     },
     {
-      path: '/med',
+      path: '/med-table',
       name: 'med-table',
       component: Table,
     },
@@ -60,6 +85,25 @@ const router = new VueRouter({
         variable: "declarations_ratio"
       }) 
       // props: true
+      // props: {
+      //   oblastProp: "Київська",
+      //   toDraw: true, variable: "declarations_ratio"
+      // },
+    },
+    {
+      path: '/doctors',
+      name: 'bar-plots',
+      component: BarPlots
+    },
+    {
+      path: '/doctors-table',
+      name: "doctors-table", 
+      component: DoctorsTable
+    },
+    {
+      path: '/procurement_plots',
+      name: "procurement_plots", 
+      component: ProcurementPlots
     }
   ]
 })

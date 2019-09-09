@@ -1,8 +1,7 @@
 <template>
-  <div>
+  <div class="finalBars">
     <BarChart
       data-step-no="2"
-      v-bind:to-draw="currStep.includes('2')"
       v-bind:temp="payments"
       v-bind:oblast="selectedOblast"
       v-bind:variable="'decl_count'"
@@ -10,21 +9,28 @@
 
     <BarChart
       data-step-no="yes"
-      v-bind:to-draw="currStep.includes('yes')"
       v-bind:temp="payments"
       v-bind:oblast="selectedOblast"
       v-bind:variable="'money_per_month'"
     />
+    <p>sdggsgsg</p>
   </div>
 </template>
 
 <script>
-import BarChart from "BarChart.vue";
+import BarChart from "@/components/BarChart.vue";
+import doctorPayments from "@/assets/payments_to_doctors.json";
+
 
 export default {
   props: {
-      oblast: String, 
-      data: Array
+
+  },
+  data() {
+    return {
+      payments: doctorPayments,
+      selectedOblast: "Київська"
+    }
   },
   components: {
     BarChart
@@ -33,4 +39,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+div.finalBars {
+  background-color: #4555bd;
+  display: grid;
+  grid-template-columns: 1fr;
+  color: white;
+  fill: white;
+}
 </style>
