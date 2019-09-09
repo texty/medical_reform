@@ -50,13 +50,15 @@ const router = new VueRouter({
       component: Table,
     },
     {
-      path: '/horizontal',
+      path: '/horizontal/',
       name: 'horizontal-bar',
       component: Bar,
-      props: {
-        temp: horizontalData, oblastProp: "Київська",
-        toDraw: true, variable: "declarations_ratio"
-      },
+      props: (route) => ({
+        oblastProp: route.query.obl || "Київська",
+        temp: horizontalData,
+        toDraw: true,
+        variable: "declarations_ratio"
+      }) 
       // props: true
     }
   ]
