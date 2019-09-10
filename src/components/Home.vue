@@ -1,11 +1,16 @@
 <template>
   <div>
     <div id="top">
-      <h1>Медична реформа</h1>
-      <h4>Візуалізація на основі відкитих даних</h4>
+      <div class="headers">
+        <img src="img/plus.png" />
+        <div class="headerText">
+          <h1>Медична реформа</h1>
+          <h4>Візуалізація на основі відкритих даних</h4>
+        </div>
+      </div>
     </div>
-    <main>
-      <div>
+    <div class="main">
+      <div class="links">
         <router-link
           tag="img"
           src="img/declarations.png"
@@ -13,11 +18,11 @@
         >Horizontal Bar</router-link>
         <p>Кількість декларацій по регіонах</p>
       </div>
-      <div>
+      <div class="links">
         <router-link tag="img" src="img/text.png" :to="{ name: 'text-element' }">Text</router-link>
         <p>Текст статі</p>
       </div>
-      <div>
+      <div class="links">
         <router-link
           tag="img"
           src="img/doctors.png"
@@ -26,7 +31,7 @@
         <p>Кількість декларацій по регіонах</p>
       </div>
 
-      <div>
+      <div class="links">
         <router-link
           tag="img"
           src="img/table.png"
@@ -35,7 +40,7 @@
         <p>Кількість декларацій по регіонах</p>
       </div>
 
-      <div>
+      <div class="links">
         <router-link
           tag="img"
           src="img/table.png"
@@ -44,7 +49,7 @@
         <p>Кількість декларацій по регіонах</p>
       </div>
 
-      <div>
+      <div class="links">
         <router-link
           tag="img"
           src="img/zakupivki.png"
@@ -52,7 +57,7 @@
         >ParallelPlot</router-link>
         <p>Кількість декларацій по регіонах</p>
       </div>
-    </main>
+    </div>
   </div>
 </template>
 
@@ -68,6 +73,15 @@ body {
 div#top {
   background-color: #184a77;
   color: white;
+  text-align: center; 
+
+}
+
+div.main {
+  width: 70%;
+  margin: 0 auto;
+  text-align: center; 
+
 }
 
 img {
@@ -75,15 +89,7 @@ img {
   height: 3em;
 }
 
-.parent {
-    white-space: nowrap;
-    overflow-x: auto;
-}
 
-.children {
-   display: inline-block;
-   margin-left: 20px; 
-}
 
 .text {
   margin: 2em 25% 1em 25%;
