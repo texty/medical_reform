@@ -13,7 +13,7 @@ import VueRouter from 'vue-router'
 
 import Table from './components/Table.vue'
 import Bar from './components/HorizontalBarChart.vue'
-import App from './App.vue'
+// import App from './App.vue'
 
 
 import Text from '@/components/Text.vue'
@@ -46,7 +46,7 @@ Vue.component('home', Home)
 Vue.component('bar-plots', BarPlots)
 Vue.component('doctors-table', DoctorsTable)
 Vue.component('procurement-plots', ProcurementPlots)
-Vue.component('app', App)
+// Vue.component('app', App)
 
 
 
