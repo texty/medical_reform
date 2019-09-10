@@ -1,4 +1,6 @@
 <template>
+<div>
+  <Header></Header>
   <div class="procurements step chart">
     <h4>
       <b>Порівняння закупівель лікарень за 2017-2019 роки в різних областях, грн.</b>
@@ -31,11 +33,13 @@
       />
     </div>
   </div>
+</div>
 </template>
 
 <script>
 import ParallelPlot from "@/components/ParallelPlot.vue";
 import Multiselect from "vue-multiselect";
+import Header from "@/components/Header.vue";
 
 import procuramentPivot from "@/assets/procurements_pivot_with_regions.json";
 
@@ -134,7 +138,8 @@ export default {
   },
   components: {
     ParallelPlot,
-    Multiselect
+    Multiselect,
+    Header
   }
 };
 </script>

@@ -1,4 +1,6 @@
 <template v-model="usersOblast">
+<div>
+  <Header></Header>
   <div class="horizontalPlot" :width="svgParameters.width" :height="svgParameters.height">
     <article></article>
     <div class="selectorOblast">
@@ -70,6 +72,7 @@
       </svg>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -80,6 +83,9 @@ import { selectAll } from "d3-selection";
 import { transition } from "d3-transition";
 
 import horizontalData from "@/assets/rajon_stats.json";
+
+import Header from "@/components/Header.vue";
+
 
 export default {
   name: "vue-bar-chart",
@@ -107,7 +113,8 @@ export default {
     };
   },
   components: {
-    Multiselect
+    Multiselect,
+    Header
   },
   watch: {
     toDraw: function(oldValue) {

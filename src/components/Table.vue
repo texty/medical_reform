@@ -1,4 +1,6 @@
 <template  v-model="oblastModel">
+<div>
+  <Header></Header>
   <b-container fluid>
     <!-- User Interface controls -->
 
@@ -136,12 +138,15 @@
       <pre>{{ infoModal.content }}</pre>
     </b-modal>
   </b-container>
+</div>
 </template>
 
 <script>
 import * as d3 from "d3";
 import VueSlider from "vue-slider-component";
 import tooltip from "vue-simple-tooltip";
+import Header from "@/components/Header.vue";
+
 
 import cpv from "@/assets/cpv.json";
 import hospitalNames from "@/assets/hospital_names.json";
@@ -203,7 +208,8 @@ export default {
     };
   },
   components: {
-    VueSlider
+    VueSlider,
+    Header
   },
   created(){
     /* this.filters.oblast_name = this.$route.params.oblast */
