@@ -1,7 +1,9 @@
 <template>
   <div>
-    <h1>Медична реформа</h1>
-    <h4>Візуалізація на основі відкитих даних</h4>
+    <div id="top">
+      <h1>Медична реформа</h1>
+      <h4>Візуалізація на основі відкитих даних</h4>
+    </div>
     <main>
       <div>
         <router-link
@@ -9,41 +11,46 @@
           src="img/declarations.png"
           :to="{ name: 'horizontal-bar', params: { smth: 'hello_shit' } }"
         >Horizontal Bar</router-link>
+        <p>Кількість декларацій по регіонах</p>
       </div>
       <div>
         <router-link tag="img" src="img/text.png" :to="{ name: 'text-element' }">Text</router-link>
+        <p>Текст статі</p>
+      </div>
+      <div>
+        <router-link
+          tag="img"
+          src="img/doctors.png"
+          :to="{ name: 'bar-plots', params: { smth: 'hello_shit' } }"
+        >Bar Plots</router-link>
+        <p>Кількість декларацій по регіонах</p>
+      </div>
 
-        <div>
-          <router-link
-            tag="img"
-            src="img/doctors.png"
-            :to="{ name: 'bar-plots', params: { smth: 'hello_shit' } }"
-          >Bar Plots</router-link>
-        </div>
+      <div>
+        <router-link
+          tag="img"
+          src="img/table.png"
+          :to="{ name: 'doctors-table', params: { oblast: 'Київська' } }"
+        >Doctors Table</router-link>
+        <p>Кількість декларацій по регіонах</p>
+      </div>
 
-        <div>
-          <router-link
-            tag="img"
-            src="img/table.png"
-            :to="{ name: 'doctors-table', params: { oblast: 'Київська' } }"
-          >Doctors Table</router-link>
-        </div>
+      <div>
+        <router-link
+          tag="img"
+          src="img/table.png"
+          :to="{ name: 'med-table', params: { oblast: 'Київська' } }"
+        >Med Table</router-link>
+        <p>Кількість декларацій по регіонах</p>
+      </div>
 
-        <div>
-          <router-link
-            tag="img"
-            src="img/table.png"
-            :to="{ name: 'med-table', params: { oblast: 'Київська' } }"
-          >Med Table</router-link>
-        </div>
-
-        <div>
-          <router-link
-            tag="img"
-            src="img/zakupivki.png"
-            :to="{ name: 'procurement_plots', params: { oblast: 'Київська' } }"
-          >ParallelPlot</router-link>
-        </div>
+      <div>
+        <router-link
+          tag="img"
+          src="img/zakupivki.png"
+          :to="{ name: 'procurement_plots', params: { oblast: 'Київська' } }"
+        >ParallelPlot</router-link>
+        <p>Кількість декларацій по регіонах</p>
       </div>
     </main>
   </div>
@@ -56,6 +63,26 @@
 <style lang="scss">
 body {
   margin: 0;
+}
+
+div#top {
+  background-color: #184a77;
+  color: white;
+}
+
+img {
+  width: 3em;
+  height: 3em;
+}
+
+.parent {
+    white-space: nowrap;
+    overflow-x: auto;
+}
+
+.children {
+   display: inline-block;
+   margin-left: 20px; 
 }
 
 .text {
