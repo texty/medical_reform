@@ -41,6 +41,7 @@ import * as d3 from "d3";
 import wrapper from "vue-svg-textwrap";
 import tooltip from "vue-simple-tooltip";
 
+
 export default {
   name: "vue-hist-chart",
   props: {
@@ -161,7 +162,7 @@ export default {
       let format = d3.format(",");
       return { format };
     }
-  }
+  },
 };
 </script>
 

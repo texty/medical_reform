@@ -1,4 +1,6 @@
 <template>
+<div>
+<Header></Header>
   <div class="finalBars" >
     <BarChart
       v-for="(d,i) in ['decl_count', 'money_per_month']"
@@ -7,12 +9,14 @@
       v-bind:oblast="selectedOblast"
       v-bind:variable="d"
     />
-
   </div>
+</div>
 </template>
 
 <script>
 import BarChart from "@/components/BarChart.vue";
+import Header from "@/components/Header.vue";
+
 import doctorPayments from "@/assets/payments_to_doctors.json";
 
 
@@ -27,7 +31,8 @@ export default {
     }
   },
   components: {
-    BarChart
+    BarChart,
+    Header
   }
 };
 </script>

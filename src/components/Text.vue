@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Header></Header>
     <p
       class="text"
     >Медична реформа — це важлива і водночас складна тема. Легко заплутатись у тому, звідки бере гроші лікарня, на що їх витрачає, скільки пацієнтів зазвичай обслуговує один лікар та як відрізняється прогрес медреформи по регіонах. До того ж, реформа ще не завершилась. У 2019 році закінчується перший етап — реформування первинної ланки, сімейної медицини.</p>
@@ -78,15 +79,24 @@
       <li>Дані про тендери медичні закладів з системи публічних закупівель Prozorro.</li>
     </ul>
 
-            <div>
-        <router-link :to="{ name: 'procurement_plots', params: { oblast: 'Київська' } }">ParallelPlot</router-link>
-      </div>
+    <div>
+      <router-link :to="{ name: 'procurement_plots', params: { oblast: 'Київська' } }">ParallelPlot</router-link>
+    </div>
 
     <p
       class="text"
     >Дані є відкритими, тобто, це публічна інформація у форматах, які дозволяють її автоматичну обробку та використання. Ви можете отримати доступ до них через відкритий API (посилання коли буде)</p>
   </div>
 </template>
+
+<script>
+import Header from "@/components/Header.vue";
+export default {
+  components: {
+    Header
+  }
+};
+</script>
 
 
 <style lang="scss">
