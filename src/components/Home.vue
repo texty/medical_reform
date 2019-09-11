@@ -179,10 +179,27 @@ div.headers {
 
 /* Меню-навігації для усіх сторінок окрім головної */
 div.navigation {
+ 
   display:block;
   background-color: #133c61;
   display:flex;
   margin-bottom:50px;
+  justify-content: space-between;
+
+#to-main {
+  
+  margin: auto 2vw auto 0;
+  text-decoration: none;
+  padding-bottom:1px;
+  border-bottom: 1px solid white;
+  color:white;
+  font-weight: 600;
+
+  a {
+    color:white;
+  }
+  
+}
 
   #navicons-container {
     display:flex;
