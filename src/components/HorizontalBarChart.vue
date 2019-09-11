@@ -28,7 +28,7 @@
         ref="transition"
         trigger="none"
       >
-        <g :transform="`translate(${(svgParameters.width-width)/2},${margin.top})`">
+        <g :transform="`translate(${(svgParameters.width - width)/2},${margin.top})`">
           <rect
             v-for="(d,i) in staticData"
             v-bind:key="i"
@@ -80,7 +80,7 @@ import * as d3 from "d3";
 import Multiselect from "vue-multiselect";
 import { TweenLite } from "gsap";
 import { selectAll } from "d3-selection";
-import { transition } from "d3-transition";
+/*import { transition } from "d3-transition";*/
 
 import horizontalData from "@/assets/rajon_stats.json";
 
@@ -117,7 +117,7 @@ export default {
     Navigation
   },
   watch: {
-    toDraw: function(oldValue) {
+    toDraw: function (oldValue) {
       var amount = this.tempData.length;
 
       // this.oblast = this.$attrs.usersOblast == 'Київ' ? "Київська" :  this.$attrs.usersOblast
@@ -200,8 +200,8 @@ export default {
     },
     svgParameters: function() {
       return {
-        width: this.mountedWidth,
-        height: 35 * this.data.length
+           width: this.mountedWidth,
+           height: 35 * this.data.length
       };
     },
     width: function() {
@@ -252,7 +252,6 @@ export default {
       .querySelector("div.horizontalPlot")
       .getBoundingClientRect();
     this.mountedWidth = svgBcr.width;
-
 
     this.oblast = this.oblastProp
     TweenLite.to(this.staticData, 3, this.data);

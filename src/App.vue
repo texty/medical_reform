@@ -120,6 +120,7 @@ export default {
   name: "app",
   data() {
     return {
+      
       variables: ["doctors_to_people_ration", "decl_count"],
       selectedVariable: "declarations_ratio",
       selectedOblast: "",
@@ -151,6 +152,7 @@ export default {
     };
   },
   mounted() {
+    
     /* this.axios.get("http://gd.geobytes.com/GetCityDetails").then((response) => {
       console.log(response)
     }) */
@@ -204,6 +206,7 @@ export default {
     that.selectedOblast = "Київ";
   },
   methods: {
+     
     onSelect(value) {
       this.currentValue = value;
     },

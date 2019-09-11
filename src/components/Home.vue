@@ -1,49 +1,86 @@
 <template>
   <div>
     <Header></Header>
-    <!-- <div class="main">
+    <div class="main" :style="{'margin-left': leftHeaderMargin, 'width': 'auto' }">
       <div class="links">
         <router-link
           tag="img"
-          src="img/declarations.png"
+          src="img/declarations-blue.png"
           :to="{ name: 'horizontal-bar', params: { smth: 'hello_shit' } }"
-        >Horizontal Bar</router-link>       
+        >Horizontal Bar</router-link>  
+        <div class="icon-description">
+         <router-link
+            tag="p"
+            :to="{ name: 'horizontal-bar', params: { smth: 'hello_shit' } }"        
+         >Кількість підписаних декларацій</router-link>     
+        </div>
       </div>
       <div class="links">
         <router-link tag="img" src="img/text.png" :to="{ name: 'text-element' }">Text</router-link>
+        <div class="icon-description">
+          <router-link
+            tag="p"
+            :to="{ name: 'text-element' }"           
+          >Текст</router-link>   
+        </div>
+      
      </div>
       <div class="links">
         <router-link
           tag="img"
-          src="img/doctors.png"
+          src="img/doctors-blue.png"
           :to="{ name: 'bar-plots', params: { smth: 'hello_shit' } }"
         >Bar Plots</router-link>
+        <div class="icon-description">
+         <router-link
+            tag="p"
+            :to="{ name: 'bar-plots', params: { smth: 'hello_shit' } }"
+         >Кількість декларацій по регіонах</router-link>
+        </div>
       </div>
 
       <div class="links">
         <router-link
           tag="img"
-          src="img/table.png"
+          src="img/table-blue.png"
           :to="{ name: 'doctors-table', params: { oblast: 'Київська' } }"
         >Doctors Table</router-link>
+        <div class="icon-description">
+        <router-link
+             tag="p"
+            :to="{ name: 'doctors-table', params: { oblast: 'Київська' } }"
+        >Таблиця 1</router-link>
+        </div>
       </div>
 
       <div class="links">
         <router-link
           tag="img"
-          src="img/table.png"
+          src="img/table-blue.png"
           :to="{ name: 'med-table', params: { oblast: 'Київська' } }"
         >Med Table</router-link>
+        <div class="icon-description">
+        <router-link
+            tag="p"
+            :to="{ name: 'med-table', params: { oblast: 'Київська' } }"
+        >Таблиця 2</router-link>
+        </div>
      </div>
 
       <div class="links">
         <router-link
           tag="img"
-          src="img/zakupivki.png"
+          src="img/zakupivli-blue.png"
           :to="{ name: 'procurement_plots', params: { oblast: 'Київська' } }"
         >ParallelPlot</router-link>
+        <div class="icon-description">
+        <router-link
+            tag="p"
+            :to="{ name: 'procurement_plots', params: { oblast: 'Київська' } }"
+        >Порівняння закупівель лікарень за 2017-2019 роки в різних областях, грн</router-link>
+        </div>
       </div>
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -52,7 +89,31 @@ import Header from '@/components/Header.vue'
 export default {
   components: {
     Header
-  }
+  },
+  data() {
+    return {
+      leftHeaderMargin: '245px',
+      leftHeaderWidth: '500px'
+      
+    }
+  },
+  mounted: function() {
+    this.getPos()
+    this.$nextTick(function() {         
+              window.addEventListener("resize", this.getPos);
+    })
+
+  },
+  methods: {
+    getPos: function() {
+      var that = this;
+         var headerBounding = document.querySelector('#headerBounding').getBoundingClientRect();
+         var left = headerBounding.left
+         var width = headerBounding.width
+         that.leftHeaderMargin = left + 33 + "px";
+         that.leftHeaderWidth = width - 50 + "px";        
+    }
+}
 }
 
 
@@ -68,11 +129,12 @@ body {
   margin: 0;
 }
 
+
+/* Шапка із загом і підзагом */
 div#top {
-  padding:100px 0;
+  padding:80px 0;
   background-color: #184a77;
   color: white;
-  // text-align: center; 
 }
 
 
@@ -113,10 +175,14 @@ div.headers {
   }
 }
 
+
+
+/* Меню-навігації для усіх сторінок окрім головної */
 div.navigation {
   display:block;
   background-color: #133c61;
   display:flex;
+  margin-bottom:50px;
 
   #navicons-container {
     display:flex;
@@ -132,6 +198,7 @@ div.navigation {
   img {
     width:50px;
     height: 50px;
+    opacity:0.9;
     @media(max-width:800px){
       width: 40px;
       height: 40px;
@@ -139,13 +206,42 @@ div.navigation {
   }
 }
 
+/* Меню-навігації для головної сторінки */
 div.main {
   width: 70%;
-  margin: 0 auto;
+  margin: 50px auto;
   text-align: center; 
+  color:  #184a77;
 
+
+.links {
+  width:100%;
+  cursor:pointer;
+  margin:30px 0;
+  display:grid;
+  grid-template-columns: 120px auto;
+
+  img {
+    width: 60px;
+    height: 60px;
+  }
+
+  .icon-description {
+    display:flex;
+    width: max-content;
+
+    p {
+      margin:auto 0;
+      text-align:left;
+      text-transform: uppercase;
+      font-weight: 700;
+      }
+   }  
+  }
 }
 
+
+//ІНШЕ
 // old styles from App.vue file
 .text {
   margin: 2em 25% 1em 25%;
@@ -323,9 +419,5 @@ table {
   justify-content: center;
 }
 
-.links {
-  display:grid;
-  grid-template-columns: auto auto;
-}
 </style>
 
