@@ -320,10 +320,10 @@ export default {
 
 <style lang="sass">
   .mainTable
-    background-color: #4555bd
+    background-color: white
 
   .background
-    background-color: #4555bd
+    background-color: white
 
   div.tableNavigation
     padding-left: 1em
@@ -335,7 +335,7 @@ export default {
 
   .mainTable
     padding: auto
-    /* text-align: center */
+   
 
   .tableNavigation div.navigationRow
     display: flex

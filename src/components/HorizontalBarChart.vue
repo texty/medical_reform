@@ -36,7 +36,7 @@
             :y="getScales().y(d.rajon_grouped) + 5"
             :height="heightOfbar/2"
             :width="drawIfTrue(getScales().x(+d[variable]))"
-            :fill="i == data.length-1 ? '#ff61ef'  : 'white'"
+            :fill="i == data.length-1 ? '#ff61ef'  : color"
             :class="{ active: hover === i }"
           />
           <text
@@ -45,7 +45,7 @@
             :x="getScales().x(+d[variable]) + 10"
             :y="getScales().y(d.rajon_grouped) + 10"
             :width="1"
-            fill="white"
+            fill=color
           >{{ Math.round(d[variable]) + '%' }}</text>
 
           <text
@@ -54,7 +54,7 @@
             :x="0"
             :y="getScales().y(d.rajon_grouped) - 5"
             :width="2"
-            fill="white"
+            fill=color
           >{{ d.rajon_grouped }}</text>
 
           <circle
@@ -63,7 +63,7 @@
             :cx="getScales().x(+d[variable])"
             :cy="getScales().y(d.rajon_grouped) + 7"
             :r="6"
-            :fill="i + 'b' == data.length-1 + 'b' ? '#ff61ef'  : 'white'"
+            :fill="i + 'b' == data.length-1 + 'b' ? '#ff61ef'  : color"
           />
 
           <!-- <g v-axis:x="getScales()" :transform="`translate(0,${height})`"></g> -->
@@ -97,6 +97,7 @@ export default {
   },
   data() {
     return {
+      color: '#184a77',
       oblast: "",
       hover: false,
       heightOfbar: 5,

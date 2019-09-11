@@ -1,7 +1,8 @@
 <template>
 <div>
 <Navigation></Navigation>
-  <div class="finalBars" :style="{'margin-left': leftHeaderMargin, 'width': leftHeaderWidth }">
+  <!--*Женя: додала  margin-left та ширину, аби воно рівнялось на рівні з headers-->
+  <div class="finalBars" :style="{'margin-left': leftHeaderMargin, 'width': leftHeaderWidth }"> 
     <BarChart
       v-for="(d,i) in ['decl_count', 'money_per_month']"
       v-bind:key="i"
@@ -28,22 +29,23 @@ export default {
     return {
       payments: doctorPayments,
       selectedOblast: "Київська",
-      leftHeaderMargin: '245px',
-      leftHeaderWidth: '500px'      
+      leftHeaderMargin: '245px', // *Женя: додала зміну
+      leftHeaderWidth: '500px' // *Женя: додала зміну     
     }
   },
   components: {
     BarChart,
     Navigation
   },
+
   mounted: function() {
     this.getPos()
-    this.$nextTick(function() {         
+    this.$nextTick(function() {  // *Женя: щоб перемальовувалась на ресайзі     
               window.addEventListener("resize", this.getPos);
     })
   },
   methods: {
-    getPos: function() {
+    getPos: function() { //*Женя: додала фунцію
       var that = this;
          var headerBounding = document.querySelector('#headerBounding').getBoundingClientRect();
          var left = headerBounding.left

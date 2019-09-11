@@ -1,5 +1,5 @@
 <template>
-  <div id="barchartContainer">
+  <div id="barchartContainer"> <!-- *Женя: доадала id, аби за ним рахувати ширину svg *не працює -->
     <svg :width="svgWidth" :height="svgHeigh">
       <g :transform="`translate(${ margin.left },${margin.top})`">
         <rect
@@ -152,7 +152,8 @@ export default {
 
   },
   methods: {
-    getSvgWidth: function() {
+    getSvgWidth: function() { // *Женя: перенесла до methods і запакувала у функцію, бо в mounted воно не рахувало
+      // *Женя: намагалась спіймати тут ширину div, який э child для .finalBars, воно ловить, але чомусь ділить цю ширину навіл, не знайшла, де це відбувається
       var svgBcr = document.querySelector("#barchartContainer").getBoundingClientRect();
       console.log(svgBcr.width)
       this.svgWidth = svgBcr.width ;

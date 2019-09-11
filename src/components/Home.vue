@@ -92,6 +92,7 @@ export default {
   },
   data() {
     return {
+      color: '#184a77',
       leftHeaderMargin: '245px',
       leftHeaderWidth: '500px'
       
@@ -227,8 +228,8 @@ div.navigation {
   }
 
   img {
-    width:50px;
-    height: 50px;
+    width:45px;
+    height: 45px;
     opacity:0.9;
     @media(max-width:800px){
       width: 40px;
@@ -372,17 +373,18 @@ a {
 }
 
 div.plot {
-  background-color: $blue;
   text-align: center;
 
   .table {
-    color: white;
+    color: $blue;
   }
 }
 
 div.procurements {
   div.parallelPlot {
-    background-color: $blue;
+    background-color: white;
+    color:$blue;
+    fill: $blue;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     padding: 2em 0;
@@ -462,6 +464,9 @@ table {
   display: flex;
   justify-content: center;
 }
+
+
+// таблиця
 
 </style>
 

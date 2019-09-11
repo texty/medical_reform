@@ -14,7 +14,7 @@
       <text
         :x="svgWidth/2"
         text-anchor="middle"
-        :fill="'white'"
+        :fill="color"
         y="5%"
       >{{ procuramentTypes[name] }}</text>
       <g :transform="`translate(${(svgWidth-width)/2},35)`">
@@ -31,13 +31,13 @@
 
         <text
           class="yearLabel"
-          :fill="'white'"
+          :fill="color"
           :transform="`translate(${getScales().x(2019)},
            ${height + 20})`"
         >{{ '2019' }}</text>
         <text
           class="yearLabel"
-          :fill="'white'"
+          :fill="color"
           :transform="`translate(${getScales().x(2017) - 25},
          ${height + 20})`"
         >{{ '2017' }}</text>
@@ -60,6 +60,7 @@ export default {
   },
   data() {
     return {
+      color: '#184a77',
       svgWidth: 0,
       svgHeigh: 250,
       tooltip: "fuck",
@@ -211,13 +212,12 @@ export default {
 <style lang="sass" scoped>
 svg 
   display: block
-  /* width: 100% */
   height: 17em
 
 path
   fill: none
   stroke-width: 1px
-  color: white
+  color: #184a77
 
 path.line
   filter: blur(2px)
@@ -227,6 +227,9 @@ path.line
   backdrop-filter: blur(2px)
   -webkit-filter: url(#blurFilter)
 
+.tick text
+    fill: #184a77
+  
 path.toggle
   stroke-width: 5px
 
@@ -237,7 +240,7 @@ div.line
   stroke-width: 5px
 
 .axisWhite
-  color: white
+  color: #184a77
 
 text.yearLabel
   font-size: 10px 
