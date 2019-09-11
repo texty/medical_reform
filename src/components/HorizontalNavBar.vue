@@ -44,6 +44,15 @@
               </div>
             </div>
 
+
+
+              <div class="links">
+                <router-link
+                  :to="{ name: 'procurement_plots', params: { oblast: 'Київська' } }"
+                >На головну</router-link>
+              </div>
+            </div>
+
         
       </div>
   </div>
