@@ -338,7 +338,7 @@ a {
 
 div.plot {
   background-color: #4555bd;
-  text-aligh: center;
+  text-align: center;
 
   .table {
     color: white;

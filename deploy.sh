@@ -22,9 +22,9 @@ git commit -m 'deploy'
 # если вы публикуете по адресу https://<USERNAME>.github.io/<REPO>
 
 # для того, щоб працювати
-git push -f git@github.com:ptrBodnar/medical_reform.git master
+# git push -f git@github.com:ptrBodnar/medical_reform.git master
 
 # для того, щоб показати
-# git push -f git@github.com:texty/medical_reform.git master:gh-pages
+git push -f git@github.com:texty/medical_reform.git master:gh-pages
 
 cd -

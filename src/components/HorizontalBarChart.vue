@@ -118,7 +118,7 @@ export default {
   },
   watch: {
     toDraw: function (oldValue) {
-      var amount = this.tempData.length;
+      //var amount = this.tempData.length;
 
       // this.oblast = this.$attrs.usersOblast == 'Київ' ? "Київська" :  this.$attrs.usersOblast
 
