@@ -1,7 +1,7 @@
 <template>
   <div>
     <Header></Header>
-    <div class="main" :style="{'margin-left': leftHeaderMargin, 'width': 'auto' }">
+    <div class="main" :style="{'margin-left': leftHeaderMargin, 'width': 'auto', 'margin-right':'10%' }">
       <div class="links">
         <router-link
           tag="img"
@@ -125,6 +125,9 @@ export default {
 <style lang="scss">
 
 // styles only for Home.vue
+
+$blue: #184a77;
+
 body {
   margin: 0;
 }
@@ -133,7 +136,7 @@ body {
 /* Шапка із загом і підзагом */
 div#top {
   padding:80px 0;
-  background-color: #184a77;
+  background-color: $blue;
   color: white;
   @media(max-width:350px){
       padding:30px 0;
@@ -143,6 +146,7 @@ div#top {
 
 
 div.headers {
+  //min-width:50%;
   width:max-content;
   margin:0 auto 0 auto;
   display: grid;
@@ -166,7 +170,8 @@ div.headers {
   }
 
   h1 {
-    font-size:3.5rem;
+    letter-spacing: 2px;
+    font-size:3.6rem;
     @media(max-width:800px){
        font-size:3rem;
     }
@@ -175,16 +180,14 @@ div.headers {
 
   h4 {
     letter-spacing: 1px;
-    font-size:2rem
+    font-size:2.3rem
   }
 }
 
 
 
 /* Меню-навігації для усіх сторінок окрім головної */
-div.navigation {
- 
-  
+div.navigation {  
   background-color: #133c61;
   display:flex;
   margin-bottom:50px;
@@ -288,7 +291,7 @@ ul {
  */
 }
 a {
-  color: #4555bd;
+  color: $blue;
 }
 
 h2.text {
@@ -313,7 +316,7 @@ div.selectorOblast {
 }
 
 path {
-  color: white;
+  color:$blue;
 }
 
 div.parallelPlotOblast {
@@ -359,8 +362,8 @@ div.tableNavigation .row {
   }
 
   .page-item.active .page-link {
-    background-color: #4555bd;
-    border-color: #4555bd;
+    background-color: $blue;
+    border-color: $blue;
   }
 }
 
@@ -369,7 +372,7 @@ a {
 }
 
 div.plot {
-  background-color: #4555bd;
+  background-color: $blue;
   text-align: center;
 
   .table {
@@ -379,7 +382,7 @@ div.plot {
 
 div.procurements {
   div.parallelPlot {
-    background-color: #4555bd;
+    background-color: $blue;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     padding: 2em 0;
@@ -422,11 +425,20 @@ div.line {
 }
 
 div.finalBars {
-  background-color: #4555bd;
+ //background-color: #4555bd;
+  width:100%;
   display: grid;
-  grid-template-columns: 1fr;
-  color: white;
-  fill: white;
+  grid-template-columns: 1fr 1fr;
+  color: $blue;;
+  fill: $blue;
+  @media(max-width:800px) {
+    display:block;
+  }
+
+  .barchartContainer {
+    grid-column:span 1;
+    width:100%;
+  }
 }
 
 rect.bar:hover {

@@ -1,7 +1,7 @@
 <template>
 <div>
 <Navigation></Navigation>
-  <div class="finalBars" >
+  <div class="finalBars" :style="{'margin-left': leftHeaderMargin, 'width': leftHeaderWidth }">
     <BarChart
       v-for="(d,i) in ['decl_count', 'money_per_month']"
       v-bind:key="i"
@@ -27,22 +27,40 @@ export default {
   data() {
     return {
       payments: doctorPayments,
-      selectedOblast: "Київська"
+      selectedOblast: "Київська",
+      leftHeaderMargin: '245px',
+      leftHeaderWidth: '500px'      
     }
   },
   components: {
     BarChart,
     Navigation
-  }
+  },
+  mounted: function() {
+    this.getPos()
+    this.$nextTick(function() {         
+              window.addEventListener("resize", this.getPos);
+    })
+  },
+  methods: {
+    getPos: function() {
+      var that = this;
+         var headerBounding = document.querySelector('#headerBounding').getBoundingClientRect();
+         var left = headerBounding.left
+         var width = headerBounding.width 
+         that.leftHeaderMargin = left  + 33 - 50 + "px";
+         that.leftHeaderWidth = width + 'px';        
+    }
+} 
 };
 </script>
 
 <style lang="scss" scoped>
-div.finalBars {
-  background-color: #4555bd;
+/* div.finalBars {
+  background-color:$blue;
   display: grid;
   grid-template-columns: 1fr;
   color: white;
   fill: white;
-}
-</style>
+}*/
+</style> 

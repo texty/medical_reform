@@ -15,7 +15,7 @@
               <div class="links">
                 <router-link
                   tag="img"
-                  src="img/doctors.png"
+                  src="img/doctors_table.png"
                   :to="{ name: 'bar-plots', params: { smth: 'hello_shit' } }"
                 >Bar Plots</router-link>
               </div>
@@ -87,9 +87,6 @@ export default {
          var headerBounding = document.querySelector('#headerBounding').getBoundingClientRect();
          var left = headerBounding.left
          var width = headerBounding.width
-         console.log(left)
-         console.log(width)
-
          that.leftHeaderMargin = left + 33 + "px";
          that.leftHeaderWidth = width - 50 + "px";
 

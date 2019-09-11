@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div id="barchartContainer">
     <svg :width="svgWidth" :height="svgHeigh">
-      <g :transform="`translate(${(svgWidth-width)/2 + 20},${margin.top})`">
+      <g :transform="`translate(${ margin.left },${margin.top})`">
         <rect
           :class="'bar'"
           @mouseover.native="hover = true"
@@ -55,7 +55,7 @@ export default {
       svgWidth: 0,
       toDrawT: true,
       hover: false,
-      svgHeigh: 350,
+      svgHeigh: 500,
       tempData: JSON.parse(JSON.stringify(this.temp)),
       names: {
         decl_count: "Кількість декларацій на одного лікаря",
@@ -70,7 +70,7 @@ export default {
         top: 50,
         right: 10,
         bottom: 50,
-        left: 15
+        left: 50
       },
       svgParameters: {
         width: 450,
@@ -100,7 +100,7 @@ export default {
       return data;
     },
     width: function() {
-      return this.svgWidth / 2 - this.margin.left - this.margin.right;
+      return this.svgWidth - this.margin.left - this.margin.right;
     },
     height: function() {
       return this.svgHeigh - this.margin.top - this.margin.bottom;
@@ -110,7 +110,7 @@ export default {
         .scaleLinear()
         .domain(d3.extent(this.data))
         .nice()
-        .range([0, this.width]);
+        .range([0, this.svgWidth - this.margin.left - this.margin.right]);
 
       let bins = d3
         .histogram()
@@ -146,15 +146,20 @@ export default {
         var element = this.tempData[i];
         TweenLite.to(element, 0.1, {money_per_month: 0, decl_count: 0});
     }  */
-
-    const svgBcr = document
-      .querySelector(".finalBars")
-      .getBoundingClientRect();
-    this.svgWidth = svgBcr.width;
+  this.getSvgWidth();
+    
     
 
   },
   methods: {
+    getSvgWidth: function() {
+      var svgBcr = document.querySelector("#barchartContainer").getBoundingClientRect();
+      console.log(svgBcr.width)
+      this.svgWidth = svgBcr.width ;
+     
+    },
+
+
     getRandomArbitrary(min, max) {
       return Math.random() * (max - min) + min;
     },
@@ -167,9 +172,12 @@ export default {
 </script>
 
 <style lang="sass" scoped>
+
+$blue: #184a77;
+
+
 svg
-  display: block
-  /* margin: 25px */
+  display: block  
   margin-right: 0
   width: auto
 
@@ -179,7 +187,7 @@ path
   stroke-width: 3px
 
 rect.bar
-  fill: #FFFFFF
+  fill: $blue
 
 rect.bar:hover
   fill: #ff61ef
