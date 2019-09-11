@@ -1,6 +1,6 @@
 <template>
   <div>
-    <main>
+<!--     <main>
       <div>
         <router-link
           tag="img"
@@ -43,7 +43,7 @@
           >ParallelPlot</router-link>
         </div>
       </div>
-    </main>
+    </main> -->
   </div>
 </template>
 

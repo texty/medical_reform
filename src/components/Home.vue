@@ -1,26 +1,23 @@
 <template>
   <div>
     <Header></Header>
-    <div class="main">
+    <!-- <div class="main">
       <div class="links">
         <router-link
           tag="img"
           src="img/declarations.png"
           :to="{ name: 'horizontal-bar', params: { smth: 'hello_shit' } }"
-        >Horizontal Bar</router-link>
-        <p>Кількість декларацій по регіонах</p>
+        >Horizontal Bar</router-link>       
       </div>
       <div class="links">
         <router-link tag="img" src="img/text.png" :to="{ name: 'text-element' }">Text</router-link>
-        <p>Текст статі</p>
-      </div>
+     </div>
       <div class="links">
         <router-link
           tag="img"
           src="img/doctors.png"
           :to="{ name: 'bar-plots', params: { smth: 'hello_shit' } }"
         >Bar Plots</router-link>
-        <p>Кількість декларацій по регіонах</p>
       </div>
 
       <div class="links">
@@ -29,7 +26,6 @@
           src="img/table.png"
           :to="{ name: 'doctors-table', params: { oblast: 'Київська' } }"
         >Doctors Table</router-link>
-        <p>Кількість декларацій по регіонах</p>
       </div>
 
       <div class="links">
@@ -38,8 +34,7 @@
           src="img/table.png"
           :to="{ name: 'med-table', params: { oblast: 'Київська' } }"
         >Med Table</router-link>
-        <p>Кількість декларацій по регіонах</p>
-      </div>
+     </div>
 
       <div class="links">
         <router-link
@@ -47,9 +42,8 @@
           src="img/zakupivki.png"
           :to="{ name: 'procurement_plots', params: { oblast: 'Київська' } }"
         >ParallelPlot</router-link>
-        <p>Кількість декларацій по регіонах</p>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -60,6 +54,8 @@ export default {
     Header
   }
 }
+
+
 </script>
 
 
@@ -73,14 +69,74 @@ body {
 }
 
 div#top {
+  padding:100px 0;
   background-color: #184a77;
   color: white;
   // text-align: center; 
 }
 
+
 div.headers {
-  display: flex;
-  justify-content: center;
+  width:max-content;
+  margin:0 auto 0 auto;
+  display: grid;
+  grid-template-columns: 120px auto;
+  @media(max-width:800px){
+       display: block;
+       margin:auto;
+       width:90%;
+       text-align: center;
+    }
+
+  img {
+    margin-right:20px;
+    width: 100px;
+    height: 100px;
+    @media(max-width:800px){
+      width: 80px;
+      height: 80px;
+      margin: 30px 0;
+    }   
+  }
+
+  h1 {
+    font-size:3.5rem;
+    @media(max-width:800px){
+       font-size:3rem;
+    }
+
+  }
+
+  h4 {
+    letter-spacing: 1px;
+    font-size:2rem
+  }
+}
+
+div.navigation {
+  display:block;
+  background-color: #133c61;
+  display:flex;
+
+  #navicons-container {
+    display:flex;
+    justify-content:space-between;
+ }
+
+  .links {
+    padding:20px 0;
+    cursor:pointer;
+   
+  }
+
+  img {
+    width:50px;
+    height: 50px;
+    @media(max-width:800px){
+      width: 40px;
+      height: 40px;
+    }   
+  }
 }
 
 div.main {
@@ -89,12 +145,6 @@ div.main {
   text-align: center; 
 
 }
-
-img {
-  width: 5em;
-  height: 5em;
-}
-
 
 // old styles from App.vue file
 .text {
@@ -226,8 +276,9 @@ div.procurements {
 
 h1,
 .content {
-  margin-left: 20px;
-}
+  text-transform: uppercase;
+/*   margin-left: 20px;
+ */}
 
 label {
   display: inline-block;
@@ -270,6 +321,11 @@ table {
 .tableNavigation div.navigationRow {
   display: flex;
   justify-content: center;
+}
+
+.links {
+  display:grid;
+  grid-template-columns: auto auto;
 }
 </style>
 
