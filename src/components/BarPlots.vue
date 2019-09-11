@@ -3,6 +3,7 @@
 <Navigation></Navigation>
   <!--*Женя: додала  margin-left та ширину, аби воно рівнялось на рівні з headers-->
   <div class="finalBars" :style="{'margin-left': leftHeaderMargin, 'width': leftHeaderWidth }"> 
+   
     <BarChart
       v-for="(d,i) in ['decl_count', 'money_per_month']"
       v-bind:key="i"

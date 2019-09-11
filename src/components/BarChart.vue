@@ -23,12 +23,12 @@
 
         <text
           class="yearLabel"
-          :fill="'white'"
+          :fill="color"
           :transform="`translate(5, ${height + 5})`"
         >{{ labels[variable] }}</text>
         <text
           class="yearLabel"
-          :fill="'white'"
+          :fill="color"
           :transform="`translate(5, ${25})`"
         >{{ 'Кількість лікарів' }}</text>
       </g>
@@ -52,7 +52,8 @@ export default {
   },
   data() {
     return {
-      svgWidth: 0,
+      color: '##184a77',
+      svgWidth: '',
       toDrawT: true,
       hover: false,
       svgHeigh: 500,
@@ -73,7 +74,7 @@ export default {
         left: 50
       },
       svgParameters: {
-        width: 450,
+        width: 0,
         height: 300
       }
     };
@@ -147,6 +148,13 @@ export default {
         TweenLite.to(element, 0.1, {money_per_month: 0, decl_count: 0});
     }  */
   this.getSvgWidth();
+
+  /* *Женя: додала, щоб визначав брав ширину потрібного контейнера на завантаження сторінки і на ресайз, тепер, коли перезавантажуєш, 
+  ок з шириною, а коли по кліку відкривається, то ділить ширину. Шукай, звідки воно тягну ту ширину, бо я не змогла знайти */
+  this.$nextTick(function() {   
+              window.addEventListener("load", this.getSvgWidth);      
+              window.addEventListener("resize", this.getSvgWidth);
+    })
     
     
 
@@ -155,7 +163,7 @@ export default {
     getSvgWidth: function() { // *Женя: перенесла до methods і запакувала у функцію, бо в mounted воно не рахувало
       // *Женя: намагалась спіймати тут ширину div, який э child для .finalBars, воно ловить, але чомусь ділить цю ширину навіл, не знайшла, де це відбувається
       var svgBcr = document.querySelector("#barchartContainer").getBoundingClientRect();
-      console.log(svgBcr.width)
+      console.log(svgBcr)
       this.svgWidth = svgBcr.width ;
      
     },

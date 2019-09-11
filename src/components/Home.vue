@@ -388,6 +388,14 @@ div.procurements {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     padding: 2em 0;
+    //Для мобілки по 1 шт. в ряд
+    @media(max-width:800px) {
+      grid-template-columns: 1fr 1fr;   
+    }
+
+     @media(max-width:500px) {
+      grid-template-columns: 1fr;   
+    }
   }
 
   p {
