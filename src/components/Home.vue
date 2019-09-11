@@ -16,7 +16,7 @@
         </div>
       </div>
       <div class="links">
-        <router-link tag="img" src="img/text.png" :to="{ name: 'text-element' }">Text</router-link>
+        <router-link tag="img" src="img/text_blue.png" :to="{ name: 'text-element' }">Text</router-link>
         <div class="icon-description">
           <router-link
             tag="p"
