@@ -10,7 +10,6 @@
       </div>
 
 
-
     </div>
           <div class="navigation">
         <div :style="{'margin-left': leftHeaderMargin, 'width': leftHeaderWidth }" id="navicons-container">
@@ -55,6 +54,16 @@
                   :to="{ name: 'procurement_plots', params: { oblast: 'Київська' } }"
                 >ParallelPlot</router-link>
               </div>
+
+
+                <div class="links">
+                <router-link
+                  :to="{ name: 'home', params: { oblast: 'Київська' } }"
+                >На головну</router-link>
+              </div>
+
+
+
             </div>
 
         
