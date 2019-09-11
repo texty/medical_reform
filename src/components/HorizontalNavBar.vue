@@ -46,7 +46,7 @@
 
 
 
-              <div id="to-main" class="links">
+              <div id="to-main" class="">
                 <router-link
                   :to="{ name: 'home', params: { oblast: 'Київська' } }"
                 >на головну</router-link>

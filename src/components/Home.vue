@@ -109,7 +109,7 @@ export default {
       var that = this;
          var headerBounding = document.querySelector('#headerBounding').getBoundingClientRect();
          var left = headerBounding.left
-         var width = headerBounding.width
+         var width = headerBounding.width/1.5
          that.leftHeaderMargin = left + 33 + "px";
          that.leftHeaderWidth = width - 50 + "px";        
     }
@@ -135,6 +135,10 @@ div#top {
   padding:80px 0;
   background-color: #184a77;
   color: white;
+  @media(max-width:350px){
+      padding:30px 0;
+
+    } 
 }
 
 
@@ -180,20 +184,27 @@ div.headers {
 /* Меню-навігації для усіх сторінок окрім головної */
 div.navigation {
  
-  display:block;
+  
   background-color: #133c61;
   display:flex;
   margin-bottom:50px;
   justify-content: space-between;
+  @media(max-width:1100px){
+      display:block;
+    }
 
-#to-main {
-  
+#to-main {  
+  padding:5 0 20px 0 !important;
   margin: auto 2vw auto 0;
   text-decoration: none;
   padding-bottom:1px;
   border-bottom: 1px solid white;
   color:white;
   font-weight: 600;
+  @media(max-width:1100px){
+     text-align: center;
+     padding-bottom:20px;
+    }
 
   a {
     color:white;
@@ -219,7 +230,11 @@ div.navigation {
     @media(max-width:800px){
       width: 40px;
       height: 40px;
-    }   
+    }  
+     @media(max-width:350px){
+      width: 25px;
+      height: 25px;
+    }    
   }
 }
 
