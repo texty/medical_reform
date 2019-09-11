@@ -65,6 +65,8 @@
 </script>
 
 
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+
 <style lang="scss">
 body {
   margin: 0;
@@ -129,11 +131,13 @@ div.selectorOblast {
 }
 
 path {
-  stroke-color: white;
+  color: white;
 }
 
 div.parallelPlotOblast {
-  display: flex p {
+  display: flex;
+
+  p {
     margin-left: 3.35em;
   }
 

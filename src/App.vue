@@ -345,8 +345,6 @@ export default {
 
 <style lang="sass">
 
-
-
 * 
   /* border: 1px solid #f00 */
 /*   transition: all 3s
