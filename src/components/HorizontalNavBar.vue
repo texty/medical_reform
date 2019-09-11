@@ -46,15 +46,15 @@
 
 
 
-              <div class="links">
+              <div id="to-main" class="links">
                 <router-link
                   :to="{ name: 'home', params: { oblast: 'Київська' } }"
-                >На головну</router-link>
+                >на головну</router-link>
               </div>
             </div>
 
         
-      </div>
+      
   </div>
 </template>
 
