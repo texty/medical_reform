@@ -68,6 +68,8 @@
 <style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <style lang="scss">
+
+// styles only for Home.vue
 body {
   margin: 0;
 }
@@ -75,8 +77,12 @@ body {
 div#top {
   background-color: #184a77;
   color: white;
-  text-align: center; 
+  // text-align: center; 
+}
 
+div.headers {
+  display: flex;
+  justify-content: center;
 }
 
 div.main {
@@ -87,12 +93,12 @@ div.main {
 }
 
 img {
-  width: 3em;
-  height: 3em;
+  width: 5em;
+  height: 5em;
 }
 
 
-
+// old styles from App.vue file
 .text {
   margin: 2em 25% 1em 25%;
   line-height: 1.5;
