@@ -1,6 +1,6 @@
 <template v-model="oblastModel">
 <div>
-  <Header></Header>
+  <Navigation></Navigation>
   <b-container fluid>
     <!-- User Interface controls -->
 
@@ -173,7 +173,7 @@
 import * as d3 from "d3";
 import VueSlider from "vue-slider-component";
 import tooltip from "vue-simple-tooltip";
-import Header from "@/components/Header.vue";
+import Navigation from "@/components/Navigation.vue";
 
 
 import doctorsNames from "@/assets/doctors_for_table.json";
@@ -235,7 +235,7 @@ export default {
   },
   components: {
     VueSlider,
-    Header
+    Navigation
   },
   computed: {
     get_hospital_name() {

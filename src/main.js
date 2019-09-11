@@ -21,6 +21,7 @@ import Home from './components/Home.vue'
 import BarPlots from './components/BarPlots'
 import DoctorsTable from "./components/DoctorsTable.vue";
 import ProcurementPlots from './components/ProcurementPlots.vue'
+import Header from "./components/Header.vue"
 
 
 
@@ -46,7 +47,7 @@ Vue.component('home', Home)
 Vue.component('bar-plots', BarPlots)
 Vue.component('doctors-table', DoctorsTable)
 Vue.component('procurement-plots', ProcurementPlots)
-// Vue.component('app', App)
+Vue.component('app', Header)
 
 
 
@@ -59,11 +60,11 @@ const router = new VueRouter({
       name: 'home',
       component: Home
     },
-/*     {
-      path: '/app',
-      name: 'app',
-      component: App
-    }, */
+    {
+      path: '/header',
+      name: 'header',
+      component: Header
+    },
     {
       path: '/text-element',
       name: 'text-element',

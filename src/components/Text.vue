@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Header></Header>
+    <Navigation></Navigation>
     <p
       class="text"
     >Медична реформа — це важлива і водночас складна тема. Легко заплутатись у тому, звідки бере гроші лікарня, на що їх витрачає, скільки пацієнтів зазвичай обслуговує один лікар та як відрізняється прогрес медреформи по регіонах. До того ж, реформа ще не завершилась. У 2019 році закінчується перший етап — реформування первинної ланки, сімейної медицини.</p>
@@ -90,10 +90,10 @@
 </template>
 
 <script>
-import Header from "@/components/Header.vue";
+import Navigation from "@/components/Navigation.vue";
 export default {
   components: {
-    Header
+    Navigation
   }
 };
 </script>

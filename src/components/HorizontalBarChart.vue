@@ -1,6 +1,6 @@
 <template v-model="usersOblast">
 <div>
-  <Header></Header>
+  <Navigation></Navigation>
   <div class="horizontalPlot" :width="svgParameters.width" :height="svgParameters.height">
     <article></article>
     <div class="selectorOblast">
@@ -84,7 +84,7 @@ import { transition } from "d3-transition";
 
 import horizontalData from "@/assets/rajon_stats.json";
 
-import Header from "@/components/Header.vue";
+import Navigation from "@/components/Navigation.vue";
 
 
 export default {
@@ -114,7 +114,7 @@ export default {
   },
   components: {
     Multiselect,
-    Header
+    Navigation
   },
   watch: {
     toDraw: function(oldValue) {

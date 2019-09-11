@@ -1,6 +1,6 @@
 <template>
 <div>
-<Header></Header>
+<Navigation></Navigation>
   <div class="finalBars" >
     <BarChart
       v-for="(d,i) in ['decl_count', 'money_per_month']"
@@ -15,7 +15,7 @@
 
 <script>
 import BarChart from "@/components/BarChart.vue";
-import Header from "@/components/Header.vue";
+import Navigation from "@/components/Navigation.vue";
 
 import doctorPayments from "@/assets/payments_to_doctors.json";
 
@@ -32,7 +32,7 @@ export default {
   },
   components: {
     BarChart,
-    Header
+    Navigation
   }
 };
 </script>

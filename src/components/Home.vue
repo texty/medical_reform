@@ -1,14 +1,6 @@
 <template>
   <div>
-    <div id="top">
-      <div class="headers">
-        <img src="img/plus.png" />
-        <div class="headerText">
-          <h1>Медична реформа</h1>
-          <h4>Візуалізація на основі відкритих даних</h4>
-        </div>
-      </div>
-    </div>
+    <Header></Header>
     <div class="main">
       <div class="links">
         <router-link
@@ -62,6 +54,12 @@
 </template>
 
 <script>
+import Header from '@/components/Header.vue'
+export default {
+  components: {
+    Header
+  }
+}
 </script>
 
 
