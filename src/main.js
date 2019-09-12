@@ -4,10 +4,10 @@
 import Vue from 'vue'
 import './plugins/bootstrap-vue'
 import BootstrapVue from 'bootstrap-vue'
-// import store from './store'
+import store from './store'
 // import SvgTransition from 'vue-svg-transition';
-import axios from 'axios'
-// import VueAxios from 'vue-axios'
+/* import axios from 'axios'
+ */// import VueAxios from 'vue-axios'
 // import router from './router'
 import VueRouter from 'vue-router'
 
@@ -113,8 +113,12 @@ const router = new VueRouter({
 
 new Vue({
   router,
+  store,
   // render: h => h(App)
 }).$mount('#main')
+
+
+
 
 
 // oblast names, take compare code from App.vue file

@@ -30,8 +30,8 @@ export default {
     return {
       payments: doctorPayments,
       selectedOblast: "Київська",
-      leftHeaderMargin: '', // *Женя: додала зміну
-      leftHeaderWidth: '' // *Женя: додала зміну     
+      leftHeaderMargin: this.$store.state.left, // *Женя: додала зміну
+      leftHeaderWidth: this.$store.state.width // *Женя: додала зміну     
     }
   },
   components: {
@@ -39,7 +39,11 @@ export default {
     Navigation
   },
 
+  сreated: function(){
+   
+  },
   mounted: function() {
+    
     this.getPos()
     this.$nextTick(function() {  // *Женя: щоб перемальовувалась на ресайзі     
               window.addEventListener("resize", this.getPos);
@@ -47,12 +51,12 @@ export default {
   },
   methods: {
     getPos: function() { //*Женя: додала фунцію
-      var that = this;
+/*       var that = this;
          var headerBounding = document.querySelector('#headerBounding').getBoundingClientRect();
          var left = headerBounding.left
          var width = headerBounding.width 
          that.leftHeaderMargin = left  + 33 - 50 + "px";
-         that.leftHeaderWidth = width + 'px';        
+         that.leftHeaderWidth = width + 'px';     */    
     }
 } 
 };
