@@ -82,7 +82,7 @@ import { TweenLite } from "gsap";
 import { selectAll } from "d3-selection";
 /*import { transition } from "d3-transition";*/
 
-import horizontalData from "@/assets/rajon_stats.json";
+import horizontalData from "@/assets/rajon_stats_new.json";
 
 import Navigation from "@/components/Navigation.vue";
 
