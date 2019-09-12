@@ -61,11 +61,11 @@ export default {
       tempData: JSON.parse(JSON.stringify(this.temp)),
       names: {
         decl_count: "Кількість декларацій на одного лікаря",
-        money_per_month: "Виплати одному лікарю в місяць"
+        money_per_month: "Виплати на одного лікаря в місяць"
       },
       labels: {
         decl_count: "Кількість пацієнтів на одного лікаря",
-        money_per_month: "Виплати кожному лікарю, грн. в місяць"
+        money_per_month: "Плата пацієнтів одного лікаря, грн. в місяць (отримує лікарня або ФОП)"
       },
       tempVar: this.temp,
       margin: {
