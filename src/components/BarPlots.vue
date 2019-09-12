@@ -30,8 +30,8 @@ export default {
     return {
       payments: doctorPayments,
       selectedOblast: "Київська",
-      leftHeaderMargin: '245px', // *Женя: додала зміну
-      leftHeaderWidth: '500px' // *Женя: додала зміну     
+      leftHeaderMargin: '', // *Женя: додала зміну
+      leftHeaderWidth: '' // *Женя: додала зміну     
     }
   },
   components: {
