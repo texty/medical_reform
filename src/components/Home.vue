@@ -76,7 +76,7 @@
           <router-link
             tag="p"
             :to="{ name: 'procurement_plots', params: { oblast: 'Київська' } }"
-          >Порівняння закупівель лікарень за 2017-2019 роки в різних областях, грн</router-link>
+          >Порівняння закупівель лікарень</router-link>
         </div>
       </div>
     </div>
@@ -262,6 +262,9 @@ div.main {
     margin: 30px 0;
     display: grid;
     grid-template-columns: 120px auto;
+    @media (max-width: 400px) {
+      grid-template-columns: 120px;
+    }
 
     img {
       width: 60px;
