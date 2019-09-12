@@ -322,15 +322,22 @@ path {
 
 div.parallelPlotOblast {
   display: flex;
+  @media(max-width:800px){
+    display: block;
+  }
 
   p {
-    margin-left: 3.35em;
+    margin-left: 0;
   }
 
   div.multiselect {
     width: auto;
     height: auto;
     margin-left: 1em;
+    @media(max-width:800px){
+        width:90%;
+        margin:30px auto;        
+    }
   }
 }
 
@@ -382,28 +389,41 @@ div.plot {
 
 div.procurements {
   div.parallelPlot {
+    margin-left:-60px;
     background-color: white;
     color:$blue;
     fill: $blue;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(auto-fill, 400px);
     padding: 2em 0;
     //Для мобілки по 1 шт. в ряд
     @media(max-width:800px) {
-      grid-template-columns: 1fr 1fr;   
+      grid-template-columns: repeat(auto-fill, 250px);  
+      margin-left:0;
     }
 
      @media(max-width:500px) {
-      grid-template-columns: 1fr;   
+      grid-template-columns: repeat(auto-fill, 300px);  
+      margin-left:0;
     }
   }
 
   p {
-    padding: 0.5em 0em 0.5em 0.5em;
+    padding: 0.5em 0;
+    @media(max-width:800px){
+        width:90%;
+        margin:30px auto;
+        padding: 0;
+    }
   }
 
-  h4 {
-    padding: 0.5em 2.7em;
+  h4 {  
+    padding: 0.5em 0;
+    @media(max-width:800px){
+        width:90%;
+        margin:auto;
+        padding: 0;
+    }
   }
 }
 

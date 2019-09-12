@@ -59,7 +59,7 @@ export default {
     selectedOblast: String
   },
   data() {
-    return {
+    return {      
       color: '#184a77',
       svgWidth: 0,
       svgHeigh: 250,
@@ -97,10 +97,8 @@ export default {
       }
     };
   },
-  mounted() {
-    var svgBcr = document
-      .querySelector("div.parallelPlot div.line")
-      .getBoundingClientRect();
+  mounted() { 
+    var svgBcr = document.querySelector("div.parallelPlot div.line").getBoundingClientRect();
     this.svgWidth = svgBcr.width;
   },
   computed: {
@@ -140,7 +138,7 @@ export default {
     },
     wrapper
   },
-  methods: {
+  methods: {    
     getScales() {
       var values = [];
       var dates = [];

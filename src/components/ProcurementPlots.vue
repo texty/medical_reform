@@ -1,14 +1,14 @@
 <template>
 <div>
   <Navigation></Navigation>
-  <div class="procurements step chart">
-    <h4>
-      <b>Порівняння закупівель лікарень за 2017-2019 роки в різних областях, грн.</b>
+  <div class="procurements step chart" :style="{ 'margin-left': leftHeaderMargin }">
+    <h4 :style="{ 'color': color, 'max-width': '90%', 'margin': 'auto 0' }">
+      <b>Порівняння закупівель лікарень за 2017-2019 роки в різних областях, грн</b>
     </h4>
 
     <div class="parallelPlotOblast">
-      <p>
-        <i>Графіка інтерактивна, ви можете обирати область зі списку</i>
+      <p :style="{ 'color': color }">
+        Графіка інтерактивна, ви можете обирати область зі списку
       </p>
       <multiselect
         :hide-selected="true"
@@ -49,6 +49,9 @@ export default {
   },
   data() {
     return {
+      color: '#184a77',
+      leftHeaderMargin: '245px', // *Женя: додала зміну
+      leftHeaderWidth: '500px', // *Женя: додала зміну     
       loadProcurementPivot: procuramentPivot,
       selectetOblast: "",
       oblastNames: [
@@ -129,6 +132,12 @@ export default {
     }
   },
   mounted() {
+    this.getPos()
+    this.$nextTick(function() {  // *Женя: щоб перемальовувалась на ресайзі     
+        window.addEventListener("resize", this.getPos);
+        window.addEventListener("load", this.getPos);
+    })
+
       this.selectetOblast = this.incomingOblast
   },
   watch: {
@@ -140,6 +149,16 @@ export default {
     ParallelPlot,
     Multiselect,
     Navigation
+  }, 
+  methods: {
+    getPos: function() { //*Женя: додала фунцію
+         var that = this;
+         var headerBounding = document.querySelector('#headerBounding').getBoundingClientRect();
+         var left = headerBounding.left
+         var width = headerBounding.width 
+         that.leftHeaderMargin = left  + 33 + "px";
+         that.leftHeaderWidth = width + 'px';     
+    }
   }
 };
 </script>

@@ -154,10 +154,7 @@ export default {
   this.$nextTick(function() {   
               window.addEventListener("load", this.getSvgWidth);      
               window.addEventListener("resize", this.getSvgWidth);
-    })
-    
-    
-
+    })  
   },
   methods: {
     getSvgWidth: function() { // *Женя: перенесла до methods і запакувала у функцію, бо в mounted воно не рахувало
@@ -167,8 +164,6 @@ export default {
       this.svgWidth = svgBcr.width ;
      
     },
-
-
     getRandomArbitrary(min, max) {
       return Math.random() * (max - min) + min;
     },
