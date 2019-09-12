@@ -247,14 +247,16 @@ export default {
       return d3.max(this.rows.map(d => d.total_decl_count));
     },
     filtered() {
-      let filtered = this.rows.filter(item => {
-        var keys = Object.keys(this.filters);
+      const that = this;
+      let filtered = that.rows.filter(item => {
+        var keys = Object.keys(that.filters);
         keys = keys.filter(e => e !== "total_decl_count");
-        return keys.every(key =>
-          String(item[key])
-            .toUpperCase()
-            .includes(this.filters[key].toUpperCase())
-        );
+        return keys.every(function(key) {
+          const s = String(item[key]).toUpperCase()
+          return (s & s !== "")
+            ? s.includes(that.filters[key].toUpperCase())
+            : s;
+        });
       });
 
       filtered = filtered
