@@ -81,7 +81,7 @@ import { TweenLite } from "gsap";
 import { selectAll } from "d3-selection";
 /*import { transition } from "d3-transition";*/
 
-import horizontalData from "@/assets/rajon_stats.json";
+import horizontalData from "@/assets/rajon_stats_new.json";
 
 import Navigation from "@/components/Navigation.vue";
 
@@ -107,7 +107,7 @@ export default {
       staticData: [{ rajon_grouped: "", declarations_ratio: 0 }],
       mountedWidth: 0,
       margin: {
-        top: 15,
+        top: 20,
         right: 70,
         bottom: 25,
         left: 0
