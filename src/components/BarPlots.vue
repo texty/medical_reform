@@ -5,11 +5,18 @@
   <div class="finalBars" :style="{'margin-left': leftHeaderMargin, 'width': leftHeaderWidth }"> 
    
     <BarChart
-      v-for="(d,i) in ['decl_count', 'money_per_month']"
-      v-bind:key="i"
       v-bind:temp="payments"
       v-bind:oblast="selectedOblast"
-      v-bind:variable="d"
+      v-bind:variable="'decl_count'"  
+      v-bind:dataShort="decl_count"  
+    />
+
+    <BarChart
+      v-bind:temp="payments"
+      v-bind:oblast="selectedOblast"
+      v-bind:variable="'money_per_month'" 
+      v-bind:dataShort="money_per_month"  
+   
     />
   </div>
 </div>
@@ -21,6 +28,9 @@ import Navigation from "@/components/Navigation.vue";
 
 import doctorPayments from "@/assets/payments_to_doctors.json";
 
+import money_per_month from '@/assets/money_per_month.json'
+import decl_count from '@/assets/decl_count.json'
+
 
 export default {
   props: {
@@ -30,6 +40,8 @@ export default {
     return {
       payments: doctorPayments,
       selectedOblast: "Київська",
+      decl_count: decl_count, 
+      money_per_month: money_per_month,
       leftHeaderMargin: '', // *Женя: додала зміну
       leftHeaderWidth: '' // *Женя: додала зміну     
     }

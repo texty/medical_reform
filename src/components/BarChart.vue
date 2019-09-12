@@ -6,15 +6,15 @@
           :class="'bar'"
           @mouseover.native="hover = true"
           @mouseleave.native="hover = false"
-          v-for="(d,i) in computedScales.bins"
+          v-for="(d,i) in dataShort"
           v-bind:key="i"
           v-tooltip:right="variable == 'decl_count' 
-          ? formatNumber().format(d.length) + ' лікарів підписали ' + formatNumber().format(d.x1) + ' декларації' 
-          : formatNumber().format(d.length )+ ' лікарів отримують ' + formatNumber().format(d.x1) + ' гривень в місяць'"
+          ? formatNumber().format(d.len) + ' лікарів підписали ' + formatNumber().format(d.x1) + ' декларації' 
+          : formatNumber().format(d.len )+ ' лікарів отримують ' + formatNumber().format(d.x1) + ' гривень в місяць'"
           :x="computedScales.x(d.x0)"
           :width="Math.max(0, computedScales.x(d.x1) - computedScales.x(d.x0) - 1)"
-          :y="computedScales.y(d.length)"
-          :height="computedScales.y(1) - computedScales.y(d.length)"
+          :y="computedScales.y(d.len)"
+          :height="computedScales.y(1) - computedScales.y(d.len)"
           :data="d.value"
         />
         <text>{{ `${names[variable]}` }}</text>
@@ -48,7 +48,8 @@ export default {
     temp: Array,
     variable: String,
     oblast: String,
-    toDraw: Boolean
+    toDraw: Boolean,
+    dataShort: Array
   },
   data() {
     return {
@@ -109,22 +110,22 @@ export default {
     computedScales: function() {
       let x = d3
         .scaleLinear()
-        .domain(d3.extent(this.data))
+        .domain([this.dataShort[0].x0, this.dataShort[this.dataShort.length - 1].x0])
         .nice()
         .range([0, this.svgWidth - this.margin.left - this.margin.right]);
 
-      let bins = d3
+/*       let bins = d3
         .histogram()
         .domain(x.domain())
-        .thresholds(x.ticks(40))(this.data);
+        .thresholds(x.ticks(40))(this.data); */
 
       let y = d3
         .scaleLinear()
-        .domain([100, d3.max(bins, d => d.length)])
+        .domain([100, d3.max(this.dataShort, d => d.len)])
         .nice()
         .range([this.height - this.margin.bottom, this.margin.top]);
 
-      return { x, y, bins };
+      return { x, y, /* bins */ };
     }
   },
   directives: {

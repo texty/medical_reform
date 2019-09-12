@@ -1,7 +1,7 @@
 <template v-model="usersOblast">
 <div>
   <Navigation></Navigation>
-  <div class="horizontalPlot" :width="svgParameters.width" >
+  <div class="horizontalPlot" :style="{ 'margin-left': leftHeaderMargin, 'width': leftHeaderWidth }">
     <article></article>
     <div class="selectorOblast">
       <h4>
@@ -21,7 +21,7 @@
       </div>
     </div>
 
-     <div class="plot">
+     <div class="plot" >
       <svg
         :width="svgParameters.width"
         :height="svgParameters.height"
@@ -95,6 +95,8 @@ export default {
   },
   data() {
     return {
+      leftHeaderMargin: '', // *Женя: додала зміну
+      leftHeaderWidth: '', // *Женя: додала зміну     
       color: '#184a77',
       oblast: "",
       hover: false,
@@ -205,7 +207,7 @@ export default {
     },
     width: function() {
       return (
-        this.svgParameters.width / 2 - this.margin.left - this.margin.right
+        this.svgParameters.width  - this.margin.left - this.margin.right
       );
     },
     height: function() {
@@ -233,6 +235,11 @@ export default {
   },
   created() {},
   mounted() {
+    this.getPos();
+    this.$nextTick(function() {
+      window.addEventListener("resize", this.getPos);
+      window.addEventListener("load", this.getPos);
+    });
     /* this.oblast = "Львівська"; */
     /* this.staticData = this.data */
 
@@ -248,7 +255,7 @@ export default {
     /* this.staticData = renewData(this.data) */
 
     const svgBcr = document
-      .querySelector("div.horizontalPlot")
+      .querySelector("div#headerBounding")
       .getBoundingClientRect();
     this.mountedWidth = svgBcr.width;
 
@@ -266,6 +273,14 @@ export default {
     } */
   },
   methods: {
+     getPos: function() {
+      var that = this;
+      var headerBounding = document.querySelector("#headerBounding").getBoundingClientRect();
+      var left = headerBounding.left;
+      var width = headerBounding.width ;
+      that.leftHeaderMargin = left + 33  + "px";
+      that.leftHeaderWidth = width - 50 + "px";
+    },
     AnimateLoad() {
       let checker = this.checker;
 
