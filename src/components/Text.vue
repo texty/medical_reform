@@ -97,29 +97,18 @@ export default {
   data() {
     return {
       color: '#184a77',
-      leftHeaderMargin: '245px', // *Женя: додала зміну
-      leftHeaderWidth: '500px', // *Женя: додала зміну     
+      leftHeaderWidth: this.$store.state.width, // *Женя: додала зміну
+      leftHeaderMargin: this.$store.state.left, // *Женя: додала зміну     
     }
   },
   components: {
     Navigation
   }, 
    mounted() {
-    this.getPos()
-    this.$nextTick(function() {  // *Женя: щоб перемальовувалась на ресайзі     
-        window.addEventListener("resize", this.getPos);
-        window.addEventListener("load", this.getPos);
-    })
+    
   },
   methods: {
-    getPos: function() { //*Женя: додала фунцію
-      var that = this;
-         var headerBounding = document.querySelector('#headerBounding').getBoundingClientRect();
-         var left = headerBounding.left
-         var width = headerBounding.width 
-         that.leftHeaderMargin = left  + 33 + "px";
-         that.leftHeaderWidth = width + 'px';        
-    }
+    
 } 
 
 };

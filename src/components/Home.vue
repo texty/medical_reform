@@ -88,6 +88,8 @@ export default {
   },
   data() {
     return {
+      leftHeaderMargin: this.$store.state.left,
+      leftHeaderWidth: this.$store.state.width,
       color: "#184a77",
       leftHeaderMargin: "245px",
       leftHeaderWidth: "500px"
@@ -117,8 +119,8 @@ export default {
       this.$store.dispatch('setValueLeft', left)
 
 
-      that.leftHeaderMargin = left + 33 + "px";
-      that.leftHeaderWidth = width - 50 + "px";
+      that.$store.state.left = left + 33 + "px";
+      that.$store.state.left = width - 50 + "px";
     }
   }
 };

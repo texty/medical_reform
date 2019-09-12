@@ -42,22 +42,11 @@ export default {
   сreated: function(){
    
   },
-  mounted: function() {
+  mounted: function() {    
     
-    this.getPos()
-    this.$nextTick(function() {  // *Женя: щоб перемальовувалась на ресайзі     
-              window.addEventListener("resize", this.getPos);
-    })
   },
   methods: {
-    getPos: function() { //*Женя: додала фунцію
-/*       var that = this;
-         var headerBounding = document.querySelector('#headerBounding').getBoundingClientRect();
-         var left = headerBounding.left
-         var width = headerBounding.width 
-         that.leftHeaderMargin = left  + 33 - 50 + "px";
-         that.leftHeaderWidth = width + 'px';     */    
-    }
+    
 } 
 };
 </script>
