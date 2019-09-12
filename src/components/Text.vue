@@ -80,8 +80,8 @@
       <li>Дані про тендери медичні закладів з системи публічних закупівель Prozorro.</li>
     </ul>
    
-    <div>
-      <router-link :to="{ name: 'procurement_plots', params: { oblast: 'Київська' } }">ParallelPlot</router-link>
+    <div style="margin-bottom:50px;">
+      <router-link class="linkToAnotherPage" :to="{ name: 'procurement_plots', params: { oblast: 'Київська' } }">ParallelPlot</router-link>
     </div>
 
     <p

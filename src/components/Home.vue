@@ -131,6 +131,7 @@ $blue: #184a77;
 
 body {
   margin: 0;
+  line-height:1.6;
 }
 
 
@@ -281,22 +282,32 @@ div.main {
 // old styles from App.vue file
 .text {
   //margin: 2em 25% 1em 25%;
+  position:relative;
   line-height: 1.5;
   font-size: 1.15em;
 }
 
 ul {
-  //margin: 2em 25% 0 25%;
-  /*     line-height: 1.5em;
-    font-size: 1.15em;
- */
+  margin-bottom: 50px !important;
+   /*margin: 2em 25% 0 25%;
+    line-height: 1.5em;
+    font-size: 1.15em; */ 
 }
-a {
-  color: $blue;
+
+a.linkToAnotherPage {
+  color: blue;
+  font-size: 1.15em;
+  font-weight: bold;
 }
 
 h2.text {
   font-size: 2em;
+  margin-top:50px;
+  font-weight: bold;
+}
+
+h3.text {
+  margin-top:30px;
 }
 
 .chart {
