@@ -2,8 +2,8 @@
 <div>
   <Navigation></Navigation>
   <div class="procurements step chart" :style="{ 'margin-left': leftHeaderMargin }">
-    <h4 :style="{ 'color': color, 'max-width': '90%', 'margin': 'auto 0' }">
-      <b>Порівняння закупівель лікарень за 2017-2019 роки в різних областях, грн</b>
+    <h4 :style="{ 'color': color, 'max-width': '90%' }">
+      <b>Порівняння закупівель лікарень за 2017-2019 роки, грн</b>
     </h4>
 
     <div class="parallelPlotOblast">

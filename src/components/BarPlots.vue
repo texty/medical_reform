@@ -3,21 +3,30 @@
 <Navigation></Navigation>
   <!--*Женя: додала  margin-left та ширину, аби воно рівнялось на рівні з headers-->
   <div class="finalBars" :style="{'margin-left': leftHeaderMargin, 'width': leftHeaderWidth }"> 
+  <div>
+  <div class="barChartsTiles"><h4>Кількість декларацій <br>на одного лікаря</h4></div> 
    
     <BarChart
       v-bind:temp="payments"
       v-bind:oblast="selectedOblast"
-      v-bind:variable="'decl_count'"  
       v-bind:dataShort="decl_count"  
     />
 
+    <p style="margin-left:50px; font-size:13px">Виплати на лікаря в місяць</p>
+
+    
+ </div>
+
+ <div>
+<div class="barChartsTiles"><h4>Виплати на одного <br> лікаря в місяць</h4></div>
     <BarChart
       v-bind:temp="payments"
       v-bind:oblast="selectedOblast"
-      v-bind:variable="'money_per_month'" 
       v-bind:dataShort="money_per_month"  
    
     />
+    <p style="margin-left:50px; font-size:13px">Отримує лікарня/ФОП за пацієнтів одного лікаря, грн/міс.</p>
+    </div>
   </div>
 </div>
 </template>
@@ -67,7 +76,7 @@ export default {
       var left = headerBounding.left;
       var width = headerBounding.width ;
       that.leftHeaderMargin = left + 33 - 50  + "px";
-      that.leftHeaderWidth = width - 50 + "px";
+      that.leftHeaderWidth = window.innerWidth - left - (window.innerWidth * 0.2) + "px";
     }
   }
 };

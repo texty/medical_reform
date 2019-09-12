@@ -1,5 +1,5 @@
 <template>
-  <div id="barchartContainer"> <!-- *Женя: доадала id, аби за ним рахувати ширину svg *не працює -->
+  <div> 
     <svg :width="svgWidth" :height="svgHeigh">
       <g :transform="`translate(${ margin.left },${margin.top})`">
         <rect
@@ -7,7 +7,7 @@
           @mouseover.native="hover = true"
           @mouseleave.native="hover = false"
           v-for="(d,i) in dataShort"
-          v-bind:key="i"
+          v-bind:key="i"        
           v-tooltip:right="variable == 'decl_count' 
           ? formatNumber().format(d.len) + ' лікарів підписали ' + formatNumber().format(d.x1) + ' декларації' 
           : formatNumber().format(d.len )+ ' лікарів отримують ' + formatNumber().format(d.x1) + ' гривень в місяць'"
@@ -17,7 +17,7 @@
           :height="computedScales.y(1) - computedScales.y(d.len)"
           :data="d.value"
         />
-        <text>{{ `${names[variable]}` }}</text>
+        
         <g v-axis:x="computedScales" :transform="`translate(0,${height - margin.bottom})`" />
         <g v-axis:y="computedScales" :transform="`translate(0,0)`" />
 
@@ -29,8 +29,13 @@
         <text
           class="yearLabel"
           :fill="color"
-          :transform="`translate(5, ${25})`"
-        >{{ 'Кількість лікарів' }}</text>
+          :transform="`translate(-40, ${15})`"
+        >{{ 'К-ть' }}</text>
+        <text
+          class="yearLabel"
+          :fill="color"
+          :transform="`translate(-40, ${30})`"
+        >{{ 'лікарів' }}</text>
       </g>
     </svg>
   </div>
@@ -60,18 +65,18 @@ export default {
       svgHeigh: 500,
       tempData: JSON.parse(JSON.stringify(this.temp)),
       names: {
-        decl_count: "Кількість декларацій на одного лікаря",
-        money_per_month: "Виплати на одного лікаря в місяць"
+        decl_count: "Кількість декларацій на лікаря",
+        money_per_month: "Виплати на лікаря в місяць"
       },
       labels: {
         decl_count: "Кількість пацієнтів на одного лікаря",
-        money_per_month: "Плата пацієнтів одного лікаря, грн. в місяць (отримує лікарня або ФОП)"
+        money_per_month: "Отримує лікарня/ФОП за пацієнтів одного лікаря, грн/міс."
       },
       tempVar: this.temp,
       margin: {
         top: 50,
         right: 10,
-        bottom: 50,
+        bottom: 15,
         left: 50
       },
       svgParameters: {
@@ -196,7 +201,6 @@ export default {
 
 $blue: #184a77;
 
-
 svg
   display: block  
   margin-right: 0
@@ -215,5 +219,5 @@ rect.bar:hover
 
 
 text.yearLabel
-  font-size: 9px
+  font-size: 13px
 </style>

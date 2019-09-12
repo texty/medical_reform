@@ -321,19 +321,38 @@ h3.text {
 
 div.selectorOblast {
   background-color: white;
-  padding-top: 1em;
   padding-bottom: 1em;
 
   h4 {
     color:$blue;
     text-align: left;
     margin: 0 0 20px 0;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
   }
-  h5 {
-    color:$blue;
-    display: flex;
-    align-items: left;
-    justify-content: left;
+
+  p {
+    color: $blue;
+    padding: 0.5em 0;
+    margin-left: 0;
+    font-size:18px;
+    @media (max-width: 800px) {
+      width: 90%;
+      margin: 30px 0;
+      padding: 0;
+    }
+  }
+
+  div.multiselect {
+    color: $blue;
+    width: auto;
+    height: max-content;
+    margin-left: 1em;
+    @media (max-width: 800px) {
+      width: 90%;
+      margin: 30px 0;
+    }
   }
 }
 
@@ -342,6 +361,8 @@ path {
 }
 
 div.parallelPlotOblast {
+  color: $blue;
+  fill: $blue;
   display: flex;
   @media (max-width: 800px) {
     display: block;
@@ -349,6 +370,7 @@ div.parallelPlotOblast {
 
   p {
     margin-left: 0;
+    font-size:18px;
   }
 
   div.multiselect {
@@ -409,6 +431,20 @@ div.plot {
 }
 
 div.procurements {
+
+ h4 {
+    //padding: 0.5em 0;
+    margin: 0 0 20px 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    @media (max-width: 800px) {
+      width: 90%;
+      margin: auto;
+      padding: 0;
+      
+    }
+  }
+
   div.parallelPlot {
     margin-left: -60px;
     background-color: white;
@@ -439,11 +475,14 @@ div.procurements {
   }
 
   h4 {
-    padding: 0.5em 0;
+    //padding: 0.5em 0;
+    margin: 0 0 20px 0;
+    letter-spacing: 1px;
     @media (max-width: 800px) {
       width: 90%;
       margin: auto;
       padding: 0;
+      
     }
   }
 }
@@ -482,10 +521,28 @@ div.finalBars {
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-gap: 50px;
   color: $blue;
   fill: $blue;
   @media (max-width: 800px) {
     display: block;
+  }
+
+  .barChartsTiles {
+    height:50px;
+    margin-left:50px;
+
+    h4 {
+      font-weight: bold;
+      margin: 0 0 20px 0;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      @media (max-width: 800px) {
+        width: 90%;
+        margin: auto;
+        padding: 0;      
+      }
+    }
   }
 
   .barchartContainer {

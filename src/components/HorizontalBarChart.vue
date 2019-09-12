@@ -4,11 +4,10 @@
   <div class="horizontalPlot" :style="{ 'margin-left': leftHeaderMargin, 'width': leftHeaderWidth }">
     <article></article>
     <div class="selectorOblast">
-      <h4>
-        <b>Кількість підписаних декларацій</b>
+      <h4>Кількість підписаних декларацій
       </h4>
       <div class="oblast">
-        <h5>Оберіть область:</h5>
+        <p>Оберіть область:</p>
         <multiselect
           :hide-selected="true"
           placeholder="Виберіть область"
