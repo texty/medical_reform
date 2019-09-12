@@ -202,7 +202,7 @@ export default {
         hospital_name: "",
         hospital_edrpou: "",
         overal_title: "",
-        oblast_name: this.$route.params.oblast,
+        oblast_name: this.$route.params.oblast ? this.$route.params.oblast : "Київська",
         sum: [0, 20000000]
       }
     };
@@ -219,12 +219,14 @@ export default {
       return d3.max(this.rows.map(d => d.sum));
     },
     filtered() {
+      
+
       let filtered = this.rows.filter(item => {
         var keys = Object.keys(this.filters);
         keys = keys.filter(e => e !== "sum");
         return keys.every(key => {
           const s = String(item[key]).toUpperCase();
-          return (s & s !== "")
+          return (s !== "")
             ? s.includes(this.filters[key].toUpperCase())
             : s;
         });
@@ -286,8 +288,8 @@ export default {
   },
   watch: {
     oblast() {
-      this.filters.oblast_name = this.oblast;
-    }
+/*       this.filters.oblast_name = this.oblast;
+ */    }
   },
   methods: {
     info(item, index, button) {
