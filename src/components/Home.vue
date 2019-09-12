@@ -313,6 +313,10 @@ div.selectorOblast {
   padding-top: 1em;
   padding-bottom: 1em;
 
+  h4 {
+    margin: 0 0 20px 0;
+  }
+
   h5 {
     display: flex;
     align-items: center;

@@ -28,7 +28,7 @@
         ref="transition"
         trigger="none"
       >
-        <g :transform="`translate(${(svgParameters.width - width)/2},${margin.top})`">
+        <g :transform="`translate(${ margin.left },${margin.top})`">
           <rect
             v-for="(d,i) in staticData"
             v-bind:key="i"
@@ -107,9 +107,9 @@ export default {
       mountedWidth: 0,
       margin: {
         top: 15,
-        right: 25,
+        right: 70,
         bottom: 25,
-        left: -15
+        left: 0
       }
     };
   },
@@ -201,7 +201,7 @@ export default {
     },
     svgParameters: function() {
       return {
-           width: this.mountedWidth,
+           width: this.mountedWidth - 60,
            height: 35 * this.data.length
       };
     },
@@ -365,8 +365,7 @@ div.plot
   padding-bottom: 1.5em
 
 div.selectorOblast 
-  h4
-    margin: 0.5em 25px
+  
   h5 
     margin: 0px 25px
 
