@@ -108,7 +108,7 @@ export default {
       staticData: [{ rajon_grouped: "", declarations_ratio: 0 }],
       mountedWidth: 0,
       margin: {
-        top: 15,
+        top: 20,
         right: 70,
         bottom: 25,
         left: 0
