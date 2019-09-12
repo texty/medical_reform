@@ -62,7 +62,7 @@ export default {
       svgWidth: '',
       toDrawT: true,
       hover: false,
-      svgHeigh: 500,
+      svgHeigh: 450,
       tempData: JSON.parse(JSON.stringify(this.temp)),
       names: {
         decl_count: "Кількість декларацій на лікаря",
