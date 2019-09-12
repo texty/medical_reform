@@ -125,6 +125,10 @@ export default {
 <style lang="scss">
 // styles only for Home.vue
 
+.horizontalPlot {
+  min-height:70vh;
+}
+
 $blue: #184a77;
 
 body {
@@ -235,6 +239,7 @@ div.navigation {
 
 /* Меню-навігації для головної сторінки */
 div.main {
+  min-height:70vh;
   width: 70%;
   margin: 50px auto;
   text-align: center;
@@ -455,6 +460,7 @@ div.line {
 }
 
 div.finalBars {
+  min-height:70vh;
   //background-color: #4555bd;
   width: 100%;
   display: grid;
