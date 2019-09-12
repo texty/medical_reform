@@ -80,10 +80,6 @@
       <li>Дані про тендери медичні закладів з системи публічних закупівель Prozorro.</li>
     </ul>
    
-    <div style="margin-bottom:50px;">
-      <router-link class="linkToAnotherPage" :to="{ name: 'procurement_plots', params: { oblast: 'Київська' } }">ParallelPlot</router-link>
-    </div>
-
     <p
       class="text"
     >Дані є відкритими, тобто, це публічна інформація у форматах, які дозволяють її автоматичну обробку та використання. Ви можете отримати доступ до них через відкритий API (посилання коли буде)</p>
