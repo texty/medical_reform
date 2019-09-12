@@ -1,6 +1,7 @@
 <template>
   <div>
     <Navigation></Navigation>
+    <div :style="{'margin-left': leftHeaderMargin, 'margin-bottom': '100px','width':leftHeaderWidth }">
     <p
       class="text"
     >Медична реформа — це важлива і водночас складна тема. Легко заплутатись у тому, звідки бере гроші лікарня, на що їх витрачає, скільки пацієнтів зазвичай обслуговує один лікар та як відрізняється прогрес медреформи по регіонах. До того ж, реформа ще не завершилась. У 2019 році закінчується перший етап — реформування первинної ланки, сімейної медицини.</p>
@@ -78,7 +79,7 @@
       <li>Набір даних про пацієнтів, лікарів та медичні заклади, доступний через відкритий АРІ Національної Служби Здоров’я;</li>
       <li>Дані про тендери медичні закладів з системи публічних закупівель Prozorro.</li>
     </ul>
-
+   
     <div>
       <router-link :to="{ name: 'procurement_plots', params: { oblast: 'Київська' } }">ParallelPlot</router-link>
     </div>
@@ -87,34 +88,44 @@
       class="text"
     >Дані є відкритими, тобто, це публічна інформація у форматах, які дозволяють її автоматичну обробку та використання. Ви можете отримати доступ до них через відкритий API (посилання коли буде)</p>
   </div>
+   </div>
 </template>
 
 <script>
 import Navigation from "@/components/Navigation.vue";
-export default {
+export default {  
+  data() {
+    return {
+      color: '#184a77',
+      leftHeaderMargin: '245px', // *Женя: додала зміну
+      leftHeaderWidth: '500px', // *Женя: додала зміну     
+    }
+  },
   components: {
     Navigation
-  }
+  }, 
+   mounted() {
+    this.getPos()
+    this.$nextTick(function() {  // *Женя: щоб перемальовувалась на ресайзі     
+        window.addEventListener("resize", this.getPos);
+        window.addEventListener("load", this.getPos);
+    })
+  },
+  methods: {
+    getPos: function() { //*Женя: додала фунцію
+      var that = this;
+         var headerBounding = document.querySelector('#headerBounding').getBoundingClientRect();
+         var left = headerBounding.left
+         var width = headerBounding.width 
+         that.leftHeaderMargin = left  + 33 + "px";
+         that.leftHeaderWidth = width + 'px';        
+    }
+} 
+
 };
 </script>
 
 
 <style lang="scss">
-.text {
-  margin: 2em 25% 1em 25%;
-  line-height: 1.5;
-  font-size: 1.15em;
-  a {
-    color: #4555bd;
-  }
-  ul {
-    margin: 2em 25% 0 25%;
-    line-height: 1.5;
-    font-size: 1.15em;
-  }
-}
 
-h2.text {
-  font-size: 2em;
-}
 </style>

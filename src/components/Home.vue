@@ -280,13 +280,13 @@ div.main {
 //ІНШЕ
 // old styles from App.vue file
 .text {
-  margin: 2em 25% 1em 25%;
+  //margin: 2em 25% 1em 25%;
   line-height: 1.5;
   font-size: 1.15em;
 }
 
 ul {
-  margin: 2em 25% 0 25%;
+  //margin: 2em 25% 0 25%;
   /*     line-height: 1.5em;
     font-size: 1.15em;
  */
