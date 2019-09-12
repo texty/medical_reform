@@ -8,7 +8,7 @@
       <div class="links">
         <router-link          
           tag="img"
-          src="img/declarations-blue.png"
+          src="img/text-blue.png"
           :to="{ name: 'horizontal-bar', params: { smth: 'hello_shit' } }"
         >Horizontal Bar</router-link>
         <div class="icon-description">
@@ -30,7 +30,7 @@
       <div class="links">
         <router-link
           tag="img"
-          src="img/doctors-blue.png"
+          src="img/doctors_blue.png"
           :to="{ name: 'bar-plots', params: { smth: 'hello_shit' } }"
         >Bar Plots</router-link>
         <div class="icon-description">
@@ -69,7 +69,7 @@
       <div class="links">
         <router-link
           tag="img"
-          src="img/zakupivli-blue.png"
+          src="img/zakupivki_blue.png"
           :to="{ name: 'procurement_plots', params: { oblast: 'Київська' } }"
         >ParallelPlot</router-link>
         <div class="icon-description">
