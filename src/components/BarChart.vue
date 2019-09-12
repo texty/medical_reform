@@ -158,10 +158,9 @@ export default {
   },
   methods: {
     getSvgWidth: function() { // *Женя: перенесла до methods і запакувала у функцію, бо в mounted воно не рахувало
-      // *Женя: намагалась спіймати тут ширину div, який э child для .finalBars, воно ловить, але чомусь ділить цю ширину навіл, не знайшла, де це відбувається
-      var svgBcr = document.querySelector("#barchartContainer").getBoundingClientRect();
-      console.log(svgBcr)
-      this.svgWidth = svgBcr.width ;
+      var headerBounding = document.querySelector("#headerBounding").getBoundingClientRect();
+      //var svgBcr = document.querySelector("#barchartContainer").getBoundingClientRect();
+      this.svgWidth = (headerBounding.width / 2) ;
      
     },
     getRandomArbitrary(min, max) {
@@ -178,7 +177,6 @@ export default {
 <style lang="sass" scoped>
 
 $blue: #184a77;
-
 
 svg
   display: block  

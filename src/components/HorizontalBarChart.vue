@@ -142,7 +142,7 @@ export default {
           var element = data[i];
           TweenLite.to(element, 3, { declarations_ratio: 0 });
         }
-        console.log("everythingToZero +");
+        //console.log("everythingToZero +");
       }
 
       function renewData(newData) {
@@ -162,7 +162,7 @@ export default {
           });
         }
 
-        console.log("everythingToNewValue +");
+        //console.log("everythingToNewValue +");
       }
 
       everythingToZero(this.staticData);
@@ -288,7 +288,7 @@ export default {
           checker = true;
         });
 
-      console.log("yesss");
+      //console.log("yesss");
 
       return a;
     },
