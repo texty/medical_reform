@@ -222,11 +222,12 @@ export default {
       let filtered = this.rows.filter(item => {
         var keys = Object.keys(this.filters);
         keys = keys.filter(e => e !== "sum");
-        return keys.every(key =>
-          String(item[key])
-            .toUpperCase()
-            .includes(this.filters[key].toUpperCase())
-        );
+        return keys.every(key => {
+          const s = String(item[key]).toUpperCase();
+          return (s & s !== "")
+            ? s.includes(this.filters[key].toUpperCase())
+            : s;
+        });
       });
 
 
