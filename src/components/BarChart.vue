@@ -147,22 +147,39 @@ export default {
         var element = this.tempData[i];
         TweenLite.to(element, 0.1, {money_per_month: 0, decl_count: 0});
     }  */
-  this.getSvgWidth();
+    if(window.innerWidth > 800){
+      this.getSvgWidthDesk();
+      this.$nextTick(function() {   
+              window.addEventListener("load", this.getSvgWidthDesk);      
+              window.addEventListener("resize", this.getSvgWidthDesk);
+    })  
+
+    } else {
+      this.getSvgWidthMob();
+      this.$nextTick(function() {   
+              window.addEventListener("load", this.getSvgWidthMob);      
+              window.addEventListener("resize", this.getSvgWidthMob);
+    })  
+
+    }
+  
 
   /* *Женя: додала, щоб визначав брав ширину потрібного контейнера на завантаження сторінки і на ресайз, тепер, коли перезавантажуєш, 
   ок з шириною, а коли по кліку відкривається, то ділить ширину. Шукай, звідки воно тягну ту ширину, бо я не змогла знайти */
-  this.$nextTick(function() {   
-              window.addEventListener("load", this.getSvgWidth);      
-              window.addEventListener("resize", this.getSvgWidth);
-    })  
+
   },
   methods: {
-    getSvgWidth: function() { // *Женя: перенесла до methods і запакувала у функцію, бо в mounted воно не рахувало
+    getSvgWidthDesk: function() { // *Женя: перенесла до methods і запакувала у функцію, бо в mounted воно не рахувало
       var headerBounding = document.querySelector("#headerBounding").getBoundingClientRect();
-      //var svgBcr = document.querySelector("#barchartContainer").getBoundingClientRect();
-      this.svgWidth = (headerBounding.width / 2) ;
-     
+      //var svgBcr = document.querySelector("#barchartContainer").getBoundingClientRect();      
+      this.svgWidth = (headerBounding.width / 2) ;     
     },
+    getSvgWidthMob: function() { // *Женя: перенесла до methods і запакувала у функцію, бо в mounted воно не рахувало
+      var headerBounding = document.querySelector("#headerBounding").getBoundingClientRect();
+      //var svgBcr = document.querySelector("#barchartContainer").getBoundingClientRect();      
+      this.svgWidth = headerBounding.width ;     
+    },
+
     getRandomArbitrary(min, max) {
       return Math.random() * (max - min) + min;
     },
@@ -177,6 +194,7 @@ export default {
 <style lang="sass" scoped>
 
 $blue: #184a77;
+
 
 svg
   display: block  
