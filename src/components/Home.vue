@@ -336,7 +336,7 @@ div.parallelPlotOblast {
     margin-left: 1em;
     @media(max-width:800px){
         width:90%;
-        margin:30px auto;        
+        margin:30px 0;        
     }
   }
 }
@@ -412,7 +412,7 @@ div.procurements {
     padding: 0.5em 0;
     @media(max-width:800px){
         width:90%;
-        margin:30px auto;
+        margin:30px 0;
         padding: 0;
     }
   }
