@@ -22,7 +22,7 @@
           v-for="(d,i) in line"
           v-bind:key="i"
           :d="d.line"
-          :stroke="d.name == selectedOblast ? '#ff61ef' : d.growth"
+          :stroke="d.name == selectedOblast ? '#184a77' : d.growth"
           v-bind:class="{'line': d.name != selectedOblast, 'toggle': d.name == selectedOblast}"
           :opacity="d.name == selectedOblast ? 1 : 0.8"
         />
@@ -109,7 +109,7 @@ export default {
           name: d.key,
           line: calculatePath(d.value),
           growth:
-            100 - (d.value[2017] / d.value[2019]) * 100 > 25 ? "white" : "black"
+            100 - (d.value[2017] / d.value[2019]) * 100 > 25 ? "#7d7d7d" : "black"
         };
       });
       return lines;
@@ -215,7 +215,7 @@ svg
 path
   fill: none
   stroke-width: 1px
-  color: #184a77
+  // stroke: #184a77
 
 path.line
   filter: blur(2px)
@@ -241,7 +241,8 @@ div.line
   color: #184a77
 
 text.yearLabel
-  font-size: 10px 
+  font-size: 10px
+
 
 </style>
 

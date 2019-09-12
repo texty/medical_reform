@@ -504,5 +504,11 @@ table {
 }
 
 // таблиця
+
+.multiselect__option--highlight {
+  background: #7d7d7d !important;
+}
+
+
 </style>
 
