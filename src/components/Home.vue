@@ -230,6 +230,10 @@ div.navigation {
     opacity: 0.6;
   }
 
+  .router-link-exact-active.router-link-active {
+    opacity:1 !important;
+  }
+
   img {
     width: 45px;
     height: 45px;   
