@@ -24,7 +24,7 @@
           src="img/text_blue.png" 
           :to="{ name: 'text-element' }">Text</router-link>
         <div class="icon-description">
-          <router-link tag="p" :to="{ name: 'text-element' }">Текст</router-link>
+          <router-link tag="p" :to="{ name: 'text-element' }">Стаття з поясненнями</router-link>
         </div>
       </div>
       <div class="links">
@@ -44,14 +44,14 @@
       <div class="links">
         <router-link
           tag="img"
-          src="img/table-blue.png"
+          src="img/doctors_table_blue.png"
           :to="{ name: 'doctors-table', params: { oblast: 'Київська' } }"
         >Doctors Table</router-link>
         <div class="icon-description">
           <router-link
             tag="p"
             :to="{ name: 'doctors-table', params: { oblast: 'Київська' } }"
-          >Таблиця 1</router-link>
+          >Таблиця для вибору лікарів</router-link>
         </div>
       </div>
 
@@ -62,7 +62,7 @@
           :to="{ name: 'med-table', params: { oblast: 'Київська' } }"
         >Med Table</router-link>
         <div class="icon-description">
-          <router-link tag="p" :to="{ name: 'med-table', params: { oblast: 'Київська' } }">Таблиця 2</router-link>
+          <router-link tag="p" :to="{ name: 'med-table', params: { oblast: 'Київська' } }">Таблиця закупівель лікарень</router-link>
         </div>
       </div>
 
@@ -513,5 +513,11 @@ table {
 }
 
 // таблиця
+
+.multiselect__option--highlight {
+  background: #7d7d7d !important;
+}
+
+
 </style>
 

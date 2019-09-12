@@ -18,14 +18,14 @@
               <div class="links navicon" @click="navMenuIconsOpacity">
                 <router-link
                   tag="img"
-                  src="img/doctors_table.png"
+                  src="img/doctors.png"
                   :to="{ name: 'bar-plots', params: { smth: 'hello_shit' } }"
                 >Bar Plots</router-link>
               </div>
               <div class="links navicon" @click="navMenuIconsOpacity">
                 <router-link
                   tag="img"
-                  src="img/table.png"
+                  src="img/doctors_table.png"
                   :to="{ name: 'doctors-table', params: { oblast: 'Київська' } }"
                 >Doctors Table</router-link>
              </div>

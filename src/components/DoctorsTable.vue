@@ -228,7 +228,7 @@ export default {
         le_transfer: "",
         total_decl_count: [0, 3000],
         division_settlement: "",
-        da_area: this.$route.params.oblast,
+        da_area: this.$route.params.oblast ? this.$route.params.oblast : "Київська",
         division_address: ""
       }
     };
@@ -253,7 +253,7 @@ export default {
         keys = keys.filter(e => e !== "total_decl_count");
         return keys.every(function(key) {
           const s = String(item[key]).toUpperCase()
-          return (s & s !== "")
+          return (s !== "")
             ? s.includes(that.filters[key].toUpperCase())
             : s;
         });

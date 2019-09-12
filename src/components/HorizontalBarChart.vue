@@ -36,9 +36,10 @@
             :y="getScales().y(d.rajon_grouped) + 5"
             :height="heightOfbar/2"
             :width="drawIfTrue(getScales().x(+d[variable]))"
-            :fill="i == data.length-1 ? '#ff61ef'  : color"
+            :fill="color"
             :class="{ active: hover === i }"
           />
+          <!-- :fill="i == data.length-1 ? '#ff61ef'  : color" -->
           <text
             v-for="(d,i) in staticData"
             v-bind:key="i+'c'"
@@ -63,8 +64,9 @@
             :cx="getScales().x(+d[variable])"
             :cy="getScales().y(d.rajon_grouped) + 7"
             :r="6"
-            :fill="i + 'b' == data.length-1 + 'b' ? '#ff61ef'  : color"
+            :fill="color"
           />
+          <!-- :fill="i + 'b' == data.length-1 + 'b' ? '#ff61ef'  : color" -->
 
         </g>
       </svg>
