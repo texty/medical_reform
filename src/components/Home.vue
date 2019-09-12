@@ -398,13 +398,13 @@ div.procurements {
     padding: 2em 0;
     //Для мобілки по 1 шт. в ряд
     @media(max-width:800px) {
-      grid-template-columns: repeat(auto-fill, 250px);  
+      grid-template-columns: repeat(auto-fill, 300px);  
       margin-left:0;
     }
 
      @media(max-width:500px) {
       grid-template-columns: repeat(auto-fill, 300px);  
-      margin-left:0;
+      margin-left:-20px;
     }
   }
 
