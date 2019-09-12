@@ -348,35 +348,18 @@ export default {
   width: 75%
   margin: 0 auto */
 
-div.selectorOblast
-  h4
-    text-align: center
-
-
 div.selectorOblast div
   display: flex
-  justify-content: center
-
-  
-
-
-
 
 div.plot
   padding-top: 1.5em
   padding-bottom: 1.5em
-
-div.selectorOblast 
-  
-  h5 
-    margin: 0px 25px
 
 div.multiselect
   margin: 0px 25px
   width: auto
 
 svg
-  /* margin: 25px */
   margin-right: 0
   display: inline-block
 

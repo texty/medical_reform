@@ -119,8 +119,6 @@ new Vue({
 
 
 
-
-
 // oblast names, take compare code from App.vue file
 
 // Chernihiv Oblast

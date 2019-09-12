@@ -2,24 +2,27 @@
   <div>
 <div class="navigation">
         <div :style="{'margin-left': leftHeaderMargin, 'width': leftHeaderWidth }" id="navicons-container">
-        <div class="links">
+        <div id="tab1" class="links navicon" >
                 <router-link
                   tag="img"
                   src="img/declarations.png"
-                  :to="{ name: 'horizontal-bar', params: { smth: 'hello_shit' } }"
+                  :to="{ name: 'horizontal-bar', params: { smth: 'hello_shit' } }"  
                 >Horizontal Bar</router-link>          
               </div>
-              <div class="links">
-                <router-link tag="img" src="img/text.png" :to="{ name: 'text-element' }">Text</router-link>
+              <div class="links navicon">
+                <router-link 
+                tag="img" 
+                src="img/text.png" 
+                :to="{ name: 'text-element' }">Text</router-link>
              </div>
-              <div class="links">
+              <div class="links navicon" >
                 <router-link
                   tag="img"
                   src="img/doctors.png"
                   :to="{ name: 'bar-plots', params: { smth: 'hello_shit' } }"
                 >Bar Plots</router-link>
               </div>
-              <div class="links">
+              <div class="links navicon">
                 <router-link
                   tag="img"
                   src="img/doctors_table.png"
@@ -27,7 +30,7 @@
                 >Doctors Table</router-link>
              </div>
 
-              <div class="links">
+              <div class="links navicon">
                 <router-link
                   tag="img"
                   src="img/table.png"
@@ -35,7 +38,7 @@
                 >Med Table</router-link>
              </div>
 
-              <div class="links">
+              <div class="links navicon" >
                 <router-link
                   tag="img"
                   src="img/zakupivki.png"
@@ -64,6 +67,7 @@ export default {
   },  
   data() {
     return {
+      tab1:'false',
       leftHeaderMargin: '245px',
       leftHeaderWidth: '500px'
       
@@ -75,7 +79,8 @@ export default {
     this.getPos()
     this.$nextTick(function() {         
               window.addEventListener("resize", this.getPos);
-    })
+    });
+    
   },
 
   methods: {
@@ -86,7 +91,15 @@ export default {
          var width = headerBounding.width
          that.leftHeaderMargin = left + 33 + "px";
          that.leftHeaderWidth = width - 50 + "px";        
-    }
+    },
+
+/*     navMenuIconsOpacity: function(event) {
+      var clickedElement = event.target;      
+      d3.selectAll('.navicon img').style("opacity", 0.6)
+      var imgChild = clickedElement.querySelector('img');
+      d3.select(clickedElement).style("opacity", 1)
+      console.log(event.target)
+    } */
 }
 
 };

@@ -6,7 +6,7 @@
       :style="{'margin-left': leftHeaderMargin, 'width': 'auto', 'margin-right':'10%' }"
     >
       <div class="links">
-        <router-link
+        <router-link          
           tag="img"
           src="img/declarations-blue.png"
           :to="{ name: 'horizontal-bar', params: { smth: 'hello_shit' } }"
@@ -19,7 +19,10 @@
         </div>
       </div>
       <div class="links">
-        <router-link tag="img" src="img/text_blue.png" :to="{ name: 'text-element' }">Text</router-link>
+        <router-link          
+          tag="img" 
+          src="img/text_blue.png" 
+          :to="{ name: 'text-element' }">Text</router-link>
         <div class="icon-description">
           <router-link tag="p" :to="{ name: 'text-element' }">Стаття з поясненнями</router-link>
         </div>
@@ -114,7 +117,8 @@ export default {
       var width = headerBounding.width / 1.5;
       that.leftHeaderMargin = left + 33 + "px";
       that.leftHeaderWidth = width - 50 + "px";
-    }
+    },
+    
   }
 };
 </script>
@@ -219,13 +223,20 @@ div.navigation {
 
   .links {
     padding: 20px 0;
-    cursor: pointer;
+    cursor: pointer;    
+  }
+
+  .navicon img {
+    opacity: 0.6;
+  }
+
+  .router-link-exact-active.router-link-active {
+    opacity:1 !important;
   }
 
   img {
     width: 45px;
-    height: 45px;
-    opacity: 0.9;
+    height: 45px;   
     @media (max-width: 800px) {
       width: 40px;
       height: 40px;
@@ -314,13 +325,15 @@ div.selectorOblast {
   padding-bottom: 1em;
 
   h4 {
+    color:$blue;
+    text-align: left;
     margin: 0 0 20px 0;
   }
-
   h5 {
+    color:$blue;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    align-items: left;
+    justify-content: left;
   }
 }
 
