@@ -76,7 +76,6 @@ export default {
     this.$nextTick(function() {         
               window.addEventListener("resize", this.getPos);
     })
-
   },
 
   methods: {
@@ -86,9 +85,7 @@ export default {
          var left = headerBounding.left
          var width = headerBounding.width
          that.leftHeaderMargin = left + 33 + "px";
-         that.leftHeaderWidth = width - 50 + "px";
-
-        
+         that.leftHeaderWidth = width - 50 + "px";        
     }
 }
 

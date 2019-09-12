@@ -295,7 +295,7 @@ ul {
 }
 
 a.linkToAnotherPage {
-  color: blue;
+  color: $blue;
   font-size: 1.15em;
   font-weight: bold;
 }
