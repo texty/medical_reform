@@ -1,7 +1,7 @@
 <template v-model="usersOblast">
 <div>
   <Navigation></Navigation>
-  <div class="horizontalPlot" :width="svgParameters.width" :height="svgParameters.height">
+  <div class="horizontalPlot" :width="svgParameters.width" >
     <article></article>
     <div class="selectorOblast">
       <h4>
@@ -21,7 +21,7 @@
       </div>
     </div>
 
-    <div class="plot">
+     <div class="plot">
       <svg
         :width="svgParameters.width"
         :height="svgParameters.height"
@@ -66,11 +66,9 @@
             :fill="i + 'b' == data.length-1 + 'b' ? '#ff61ef'  : color"
           />
 
-          <!-- <g v-axis:x="getScales()" :transform="`translate(0,${height})`"></g> -->
-          <!-- <g v-axis:y="getScales()" :transform="`translate(0,0)`"></g> -->
         </g>
       </svg>
-    </div>
+    </div> 
   </div>
 </div>
 </template>
