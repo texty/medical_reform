@@ -180,7 +180,7 @@ div.headers {
   grid-template-columns: 120px auto;
   @media (max-width: 800px) {
     display: block;
-    margin: auto;
+    margin: auto 5%;
     width: 90%;
     text-align: center;
   }
@@ -382,15 +382,17 @@ div.selectorOblast {
     min-width:250px;
     height: max-content;
     margin-left: 1em;
+    margin-right: 50px;
     @media (max-width: 800px) {
       width: 90%;
       margin: 30px 0;
-      min-width:150px;
+      min-width:100px;
     }
 
     .multiselect__tags {
       min-width:250px;
-      @media (max-width: 800px) {        
+      @media (max-width: 800px) {  
+        width:80%;      
         min-width:150px;
       }
     }
@@ -448,18 +450,6 @@ div.plot {
 }
 
 //закупівлі
-div.procurements {
-  h4 {
-    margin: 0 0 20px 0;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    @media (max-width: 800px) {
-      width: 90%;
-      margin: 0;
-      padding: 0;
-      
-    }
-  }
 
   div.parallelPlotOblast {
     display:flex;
@@ -474,31 +464,55 @@ div.procurements {
       min-width:250px;
       height: max-content;
       margin-left: 1em;
+      margin-right: 50px;
       @media (max-width: 800px) {
         width: 90%;
-        margin: 30px 0;
-        min-width:150px;
+        margin: 10px 20px 10px 0;
+        min-width:100px;
       }
     }
   }
 
+
+div.procurements {
+
+  margin-left: 5%;
+  @media (max-width: 800px) {
+      margin-left: 3%;
+    }
+
+  h4 {
+    margin: 0 0 20px 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    @media (max-width: 800px) {
+      width: 90%;
+      margin: 0;
+      padding: 0;
+      
+    }
+  }
+
+
   div.parallelPlot {
-    margin-left: -60px;
+    margin: 0;
+    //margin: auto;
     background-color: white;
     color: $blue;
     fill: $blue;
     display: grid;
-    grid-template-columns: repeat(auto-fill, 400px);
+    grid-template-columns: repeat(auto-fit, minmax(400px, max-content));   
     padding: 2em 0;
+    
     //Для мобілки по 1 шт. в ряд
     @media (max-width: 800px) {
-      grid-template-columns: repeat(auto-fill, 300px);
-      margin-left: 0;
+      grid-template-columns: repeat(auto-fit, minmax(350px, max-content));
+      
     }
 
-    @media (max-width: 500px) {
-      grid-template-columns: repeat(auto-fill, 300px);
-      margin-left: -20px;
+    @media (max-width: 500px) {      
+      grid-template-columns: repeat(auto-fit, minmax(300px, max-content));
+      
     }
   }
   

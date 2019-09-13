@@ -9,8 +9,8 @@
           v-for="(d,i) in dataShort"
           v-bind:key="i"        
           v-tooltip:right="variable == 'decl_count' 
-          ? formatNumber().format(d.len) + ' лікарів підписали ' + formatNumber().format(d.x1) + ' декларації' 
-          : formatNumber().format(d.len )+ ' лікарів отримують ' + formatNumber().format(d.x1) + ' гривень в місяць'"
+          ? formatNumber().format(d.len) + ' лікарів мають від ' + formatNumber().format(d.x1)  + ' декларацій' 
+          : formatNumber().format(d.len )+ ' лікарів приносять лікарні дохід  від ' + formatNumber().format(d.x1) +' грн'"
           :x="computedScales.x(d.x0)"
           :width="Math.max(0, computedScales.x(d.x1) - computedScales.x(d.x0) - 1)"
           :y="computedScales.y(d.len)"

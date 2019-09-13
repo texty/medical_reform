@@ -6,13 +6,8 @@
     <p class="text">Ми перевірили, що купували медичні заклади до реформи і після неї — і побачили, що лікарні почали купувати більше комп’ютерних систем, медичного обладнання, а також меблів, протипожежних систем і кондиціонерів. Найбільше зросли витрати на комп’ютерні системи.
 Національна Служба Здоров’я і Міністерство Охорони Здоров’я вимагають від лікарень перевести в електронну форму всю адміністративну роботу. А отже, їм потрібно купувати обладнання і програми. Завдяки реформі паперові картки й талони відійдуть у минуле. І ми можемо побачити, що цей процес вже почався.
 </p>   
-  </div>
-  <div class="procurements step chart" :style="{ 'margin-left': leftHeaderMargin }">
-   <!--  <h4 :style="{ 'color': color, 'max-width': '90%' }">
-      <b>Порівняння закупівель лікарень за 2017-2019 роки, грн</b>
-    </h4> -->
 
-    <div class="parallelPlotOblast" :style="{ 'width': leftHeaderWidth }">
+<div class="parallelPlotOblast" :style="{ 'width': leftHeaderWidth }">
       <p>
         Графіка інтерактивна, ви можете обирати область зі списку
       </p>
@@ -26,6 +21,14 @@
         :options="oblastNames"
       ></multiselect>
     </div>
+  </div>
+  
+  <div class="procurements step chart" :style="{  }">
+   <!--  <h4 :style="{ 'color': color, 'max-width': '90%' }">
+      <b>Порівняння закупівель лікарень за 2017-2019 роки, грн</b>
+    </h4> -->
+
+    
 
     <div class="parallelPlot">
       <ParallelPlot
@@ -167,7 +170,7 @@ export default {
          var left = headerBounding.left
          var width = headerBounding.width 
          that.leftHeaderMargin = left  + 33 + "px";
-         that.leftHeaderWidth = width + 'px';     
+         that.leftHeaderWidth = width - 33 + 'px';     
     }
   }
 };

@@ -88,6 +88,7 @@ $blue: #184a77;
     width: 100%;
     margin:80px 0 40px 0;
     display:flex;
+    flex-wrap: wrap;
     padding: 20px 10%;
     justify-content: space-between;
     @media (max-width: 800px) {        
@@ -97,12 +98,13 @@ $blue: #184a77;
       }
 
     .logoContainer {
+        margin: auto;
         display:flex;
         width:200px;
         height:100px;
         @media (max-width: 800px) {        
         padding: 10px 3%;
-        height: 50px;
+        height: 70px;
       }
     }
 
