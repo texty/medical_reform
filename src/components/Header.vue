@@ -4,8 +4,8 @@
       <div id="headerBounding" class="headers">
         <img src="img/plus.png" />
         <div class="headerText">
-          <h1 style="font-weight:600">Медична реформа</h1>
-          <h4>Візуалізація на основі відкритих даних</h4>
+          <h1 style="font-weight:600">ВІДКРИТА МЕДИЦИНА</h1>
+          <h4>Проект на основі даних НСЗУ</h4>
         </div>
       </div>
      </div>

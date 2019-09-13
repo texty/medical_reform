@@ -1,33 +1,29 @@
 <template>
   <div>
     <div id="footer" :style="{  }">
-    <div class="logoContainer">
-        <img src="img/logo/Logo_NSZU_2018.png"/>
-    </div>
+        <div class="logoContainer">
+            <img src="img/logo/Mindigital_white.png"/>
+        </div>
 
-    <div class="logoContainer">
-        <img src="img/logo/Mindigital_white.png"/>
-    </div>
+        <div class="logoContainer">
+            <img src="img/logo/Logo_NSZU_2018.png"/>
+        </div>
+        
+        <div class="logoContainer">
+            <img src="img/logo/USAID.png"/>
+        </div>
 
-    <div class="logoContainer">
-        <img src="img/logo/USAID.png"/>
-    </div>
+        <div class="logoContainer">
+            <img src="img/logo/UKAID.jpg"/>
+        </div>
 
-    <div class="logoContainer">
-        <img src="img/logo/UKAID.jpg"/>
-    </div>
+        <div class="logoContainer">
+            <img src="img/logo/ef_logo.png"/>
+        </div>
 
-    <div class="logoContainer">
-        <img src="img/logo/ef_logo.png"/>
-    </div>
-
-    <div class="logoContainer">
-        <img src="img/logo/texty_logo.png"/>
-    </div>
-
-
-
-
+        <div class="logoContainer">
+            <img src="img/logo/texty_logo.png"/>
+        </div>
      </div>
 
       
