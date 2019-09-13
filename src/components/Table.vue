@@ -63,7 +63,7 @@
         </template> -->
 
         <template slot="top-row">
-          <td role="cell" data-label="Код ЄДРПОУ" aria-colindex="1">
+          <td role="cell" data-label="Назва лікарні" aria-colindex="1">
             <div class="inputColumnName">
               <input v-model="filters['hospital_edrpou']"  placeholder='шукати'/>
             </div>
@@ -199,7 +199,7 @@ export default {
 /*         { key: "hospital_name", label: "Назва лікарні" },
  */     {
           key: "hospital_edrpou",
-          label: "Код ЄДРПОУ",
+          label: "Назва лікарні",
           thStyle: { width: '200px', maxWidth: '200px' },  
           tdClass: "centered"      
         },
