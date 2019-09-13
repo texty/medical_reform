@@ -24,11 +24,11 @@
         </div>
         
         <div class="logoContainer">
-            <img src="img/logo/USAID.png"/>
+            <img src="img/logo/USAID.png" />
         </div>
 
         <div class="logoContainer">
-            <img src="img/logo/UKAID.jpg"/>
+            <img src="img/logo/UKAID.jpg" style="height:80%;"/>
         </div>
 
         <div class="logoContainer">
