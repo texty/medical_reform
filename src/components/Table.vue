@@ -53,13 +53,13 @@
         empty-filtered-text="Таких даних у нас немає"
         :fixed="true"
       >
-        <template slot="top-row">
+<!--         <template slot="top-row">
           <td role="cell" data-label="Назва лікарні" aria-colindex="1">
             <div class="inputColumnName">
               <input v-model="filters['hospital_name']" />
             </div>
           </td>
-        </template>
+        </template> -->
 
         <template slot="top-row">
           <td role="cell" data-label="Код ЄДРПОУ" aria-colindex="1">
@@ -108,7 +108,7 @@
         <template slot="overal_title" slot-scope="row">
           <div v-tooltip:right="row.value">{{ `${ row.value.substring(0,30) + "..." }` }}</div>
         </template>
-
+<!-- 
         <template
           slot="hospital_name"
           slot-scope="row"
@@ -117,7 +117,20 @@
           :title="row.value"
         >
           <div v-tooltip:right="row.value">{{ `${ row.value.substring(0,30) + "..." }` }}</div>
+        </template> -->
+
+        <template
+          slot="hospital_edrpou"
+          slot-scope="row"
+          v-tooltip:right="row.value"
+          v-b-tooltip.hover
+          :title="row.value"
+        >
+          <div v-tooltip:right="(get_hospital_name.get(row.value).le_name + ', ' +  row.value)">{{ `${ (get_hospital_name.get(row.value).le_name + ', ' +  row.value).substring(0,30) + "..." }` }}</div>
         </template>
+
+
+        <!-- get_hospital_name -->
 
         <template slot="actions" slot-scope="row">
           <b-button
@@ -181,8 +194,8 @@ export default {
       cpv: cpv,
       hospitals: hospitalNames,
       fields: [
-        { key: "hospital_name", label: "Назва лікарні" },
-        {
+/*         { key: "hospital_name", label: "Назва лікарні" },
+ */        {
           key: "hospital_edrpou",
           label: "Код ЄДРПОУ"
         },
@@ -228,6 +241,11 @@ export default {
     /* this.filters.oblast_name = this.$route.params.oblast */
   },
   computed: {
+    get_hospital_name() {
+      return d3.map(this.hospitals, function(d) {
+        return d.le_transfer;
+      });
+    },
     maxSumValue() {
       return d3.max(this.rows.map(d => d.sum));
     },
