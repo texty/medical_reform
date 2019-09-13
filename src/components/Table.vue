@@ -35,6 +35,7 @@
         </b-row>
       </b-row>
     </div>
+    
     <!-- Main table element -->
     <div class="background">
       <b-table
@@ -64,7 +65,7 @@
         <template slot="top-row">
           <td role="cell" data-label="Код ЄДРПОУ" aria-colindex="1">
             <div class="inputColumnName">
-              <input v-model="filters['hospital_edrpou']" />
+              <input v-model="filters['hospital_edrpou']"  placeholder='шукати'/>
             </div>
           </td>
         </template>
@@ -72,7 +73,7 @@
         <template slot="top-row">
           <td role="cell" data-label="Опис" aria-colindex="1">
             <div class="inputColumnName">
-              <input v-model="filters['overal_title']" />
+              <input v-model="filters['overal_title']" placeholder='шукати'/>
             </div>
           </td>
         </template>
@@ -195,17 +196,32 @@ export default {
       hospitals: hospitalNames,
       fields: [
 /*         { key: "hospital_name", label: "Назва лікарні" },
- */        {
+ */     {
           key: "hospital_edrpou",
-          label: "Код ЄДРПОУ"
+          label: "Код ЄДРПОУ",
+          thStyle: { width: '200px', maxWidth: '200px' },  
+          tdClass: "centered"      
         },
-        { key: "overal_title", label: "Опис" },
-        { key: "oblast_name", label: "Область" },
+        { 
+          key: "overal_title", 
+          label: "Опис",
+          thStyle: { width: 'auto', maxWidth: 'auto' }, 
+          tdClass: "leftaligned"  
+        },
+        { 
+          key: "oblast_name", 
+          label: "Область",
+          thStyle: { width: '200px', maxWidth: '200px'},
+          tdClass: "centered"    
+         },
+
         {
           key: "sum",
           label: "Вартість, грн.",
           sortable: true,
-          direction: "desc"
+          direction: "desc",
+          thStyle: { width: '200px', maxWidth: '200px' },
+          tdClass: "centered"   
         }
       ],
       totalRows: 1,
@@ -363,38 +379,63 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~vue-slider-component/lib/theme/default.scss";
+//@import "~vue-slider-component/lib/theme/default.scss";
+
+  $blue: #184a77;  
+
+  .mainTable {
+    max-width:1400px;
+    margin:auto;
+    background-color: white;
+   }
+
+  .background  {
+    background-color: white;
+    }
+
+  div.tableNavigation  {
+    padding-left: 1em;
+    padding-bottom: 0.5em;
+    }
+
+    div.row {
+      div.row { 
+        width: auto;
+      }
+    }
+
+  .mainTable{
+    padding: auto;
+  }
+
+  
+  .tableNavigation div.navigationRow {
+    display: flex;
+    justify-content: center;
+  }
+
+  div.vue-slider {
+    padding-top: 15px !important;
+    width: 70% !important;
+    margin:auto;
+  }
+
+  div.inputColumnName input {
+    width: 100%;
+    height: 2rem;
+    text-align: center;   
+  }
+
+  input::placeholder {    
+    padding-left:10px;
+    font-style: italic;
+    text-align:left;
+}
+
+ 
 </style>
 
-<style lang="sass">
-  .mainTable
-    background-color: white
+<style lang="scss">
 
-  .background
-    background-color: white
-
-  div.tableNavigation
-    padding-left: 1em
-    padding-bottom: 0.5em
-
-    div.row
-      div.row
-        width: auto
-
-  .mainTable
-    padding: auto
-   
-
-  .tableNavigation div.navigationRow
-    display: flex
-    justify-content: center
-
-  div.vue-slider 
-    padding-top: 15px !important
-    width: 80% !important
-
-  div.inputColumnName input
-    width: 70%
-    height: 2rem
     
 </style>

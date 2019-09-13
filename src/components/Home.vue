@@ -628,6 +628,16 @@ table {
   background: #7d7d7d !important;
 }
 
+.centered {
+  text-align: center;
+}
+
+.leftaligned {
+  text-align: left;
+}
+
+
+
 
 </style>
 
