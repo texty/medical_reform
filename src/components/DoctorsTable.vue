@@ -1,6 +1,7 @@
 <template v-model="oblastModel">
 <div>
   <Navigation></Navigation>
+  <h4 class="subtitle" :style="{ 'margin-left': leftHeaderMargin, 'margin-bottom': '50px' }">Заголовок до таблиці </h4>
   <b-container fluid>
     <!-- User Interface controls -->
 
@@ -189,6 +190,8 @@ export default {
 },
   data() {
     return {
+      leftHeaderMargin: '', // *Женя: додала зміну
+      leftHeaderWidth: '', // *Женя: додала зміну    
       hospitals: hospitalNames,
       rows: doctorsNames,
       oblast: this.$route.params.oblast,
@@ -311,8 +314,22 @@ export default {
     // Set the initial number of items
     this.totalRows = this.rows.length;
     this.filters.total_decl_count[1] = this.maxSumValue;
+
+    this.getPos()
+    this.$nextTick(function() {  // *Женя: щоб перемальовувалась на ресайзі     
+        window.addEventListener("resize", this.getPos);
+        window.addEventListener("load", this.getPos);
+    })
   },
   methods: {
+    getPos: function() { //*Женя: додала фунцію
+         var that = this;
+         var headerBounding = document.querySelector('#headerBounding').getBoundingClientRect();
+         var left = headerBounding.left
+         var width = headerBounding.width 
+         that.leftHeaderMargin = left + 33 + "px";
+         that.leftHeaderWidth = width + 'px';     
+    },
     info(item, index, button) {
       this.infoModal.title = `Row index: ${index}`;
       this.infoModal.content = JSON.stringify(item, null, 2);

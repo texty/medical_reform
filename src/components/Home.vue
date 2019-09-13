@@ -140,6 +140,15 @@ body {
   line-height: 1.6;
 }
 
+h4.subtitle {
+  color:$blue;
+  text-align: left;
+  margin: 0 0 20px 0;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
 /* Шапка із загом і підзагом */
 div#top {
   padding: 80px 0;
