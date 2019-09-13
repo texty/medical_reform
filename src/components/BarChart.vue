@@ -21,7 +21,7 @@
         <g v-axis:x="computedScales" :transform="`translate(0,${height - margin.bottom})`" />
         <g v-axis:y="computedScales" :transform="`translate(0,0)`" />
 
-        <text
+<!--         <text
           class="yearLabel"
           :fill="color"
           :transform="`translate(5, ${height + 5})`"
@@ -35,7 +35,7 @@
           class="yearLabel"
           :fill="color"
           :transform="`translate(-40, ${30})`"
-        >{{ 'лікарів' }}</text>
+        >{{ 'лікарів' }}</text> -->
       </g>
     </svg>
   </div>
@@ -64,10 +64,10 @@ export default {
       hover: false,
       svgHeigh: 450,
       tempData: JSON.parse(JSON.stringify(this.temp)),
-      names: {
+/*       names: {
         decl_count: "Кількість декларацій на лікаря",
         money_per_month: "Виплати на лікаря в місяць"
-      },
+      }, */
       labels: {
         decl_count: "Кількість пацієнтів на одного лікаря",
         money_per_month: "Отримує лікарня/ФОП за пацієнтів одного лікаря, грн/міс."
