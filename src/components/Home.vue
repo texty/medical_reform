@@ -557,6 +557,73 @@ label {
   width: 150px;
 }
 
+// table.procurements {
+//   @media (min-width:768px){ 
+//   /* стовбчик 1 */  
+//   th:nth-child(1){
+//     width: 200px;
+//     max-width: 200px;
+//     text-align:center !important;
+//     padding: 0;
+//   }
+
+//   td:nth-child(1) {  
+//     width: 200px;
+//     max-width: 200px;
+//     text-align:center !important;
+//     padding: 0;
+//   }
+
+
+//   /* стовбчик 2 */  
+//   th:nth-child(2)  { 
+//     width: auto;
+//     text-align:center !important;
+//     padding: 0;
+//   }
+
+//   td:nth-child(2) {    
+//     width: auto;
+//     text-align:left !important;
+//     padding: 0;
+//   }
+
+//   /* стовбчик 3 */
+//   th:nth-child(3) {
+//     max-width: 150px;
+//     width: 20%;    
+//     text-align:center !important;
+//     padding: 0;
+//   }
+
+//   td:nth-child(3) {
+//     max-width: 150px;
+//     width: 20%;    
+//     text-align:center !important;
+//     padding: 0;
+
+//     input {
+//       width:100%;
+//       text-align: center;
+//       color: $blue;
+//     }
+//   }
+ 
+//   /* стовбчик 4 */
+//   th:nth-child(4) {
+//     width: 150px;
+//     text-align:left !important;
+//     padding: 0;
+//   }
+
+//   td:nth-child(4) {
+//     width: 150px;
+//     text-align:left !important;
+//     padding: 0;   
+//   }  
+//  }
+// }
+
 .area-chart {
   height: 300px;
 }

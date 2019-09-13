@@ -38,7 +38,7 @@
     <!-- Main table element -->
     <div class="background">
       <b-table
-        class="mainTable"
+        class="mainTable procurements"
         show-empty
         stacked="md"
         :items="filtered"
@@ -51,7 +51,7 @@
         :sort-direction="sortDirection"
         @filtered="onFiltered"
         empty-filtered-text="Таких даних у нас немає"
-        :fixed="false"
+        :fixed="true"
       >
 <!--         <template slot="top-row">
           <td role="cell" data-label="Назва лікарні" aria-colindex="1">
@@ -125,6 +125,7 @@
           v-tooltip:right="row.value"
           v-b-tooltip.hover
           :title="row.value"
+          class="justify-content-end"
         >
           <div v-tooltip:right="(get_hospital_name.get(row.value).le_name + ', ' +  row.value)">{{ `${ (get_hospital_name.get(row.value).le_name + ', ' +  row.value).substring(0,30) + "..." }` }}</div>
         </template>
@@ -197,7 +198,8 @@ export default {
 /*         { key: "hospital_name", label: "Назва лікарні" },
  */        {
           key: "hospital_edrpou",
-          label: "Код ЄДРПОУ"
+          label: "Код ЄДРПОУ",
+          thStyle: {width: '200px', backgroundColor: '#3eef33'}
         },
         { key: "overal_title", label: "Опис" },
         { key: "oblast_name", label: "Область" },
@@ -383,6 +385,10 @@ export default {
 
   .mainTable
     padding: auto
+
+  .procurements 
+    background-color: 'red'
+
    
 
   .tableNavigation div.navigationRow
