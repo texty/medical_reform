@@ -28,7 +28,7 @@
         </div>
 
         <div class="logoContainer">
-            <img src="img/logo/UKAID.jpg" style="height:80%;"/>
+            <img src="img/logo/UKAID.jpg" style="height:80%; width:auto;"/>
         </div>
 
         <div class="logoContainer">
