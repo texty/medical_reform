@@ -196,11 +196,11 @@ export default {
       cpv: cpv,
       hospitals: hospitalNames,
       fields: [
-        { key: "hospital_name", 
+     /*    { key: "hospital_name", 
         label: "Назва лікарні", 
         thStyle: { width: '30%', maxWidth: '300px' },  
         tdClass: "leftaligned"
-        },
+        }, */
         {
           key: "hospital_edrpou",
           label: "Назва лікарні",
