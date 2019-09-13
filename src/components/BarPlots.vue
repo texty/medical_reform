@@ -16,6 +16,7 @@
       v-bind:temp="payments"
       v-bind:oblast="selectedOblast"
       v-bind:dataShort="decl_count"  
+      v-bind:variable="'decl_count'"
     />
 
     <p style="margin-left:50px; font-size:13px">Виплати на лікаря в місяць</p>
@@ -28,8 +29,9 @@
     <BarChart
       v-bind:temp="payments"
       v-bind:oblast="selectedOblast"
-      v-bind:dataShort="money_per_month"  
-   
+      v-bind:dataShort="money_per_month" 
+      v-bind:variable="'money_per_month'" 
+  
     />
     <p style="margin-left:50px; font-size:13px">Отримує лікарня/ФОП за пацієнтів одного лікаря, грн/міс.</p>
     </div>
