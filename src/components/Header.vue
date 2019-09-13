@@ -18,8 +18,8 @@
  -->        </div>
 
         <div id="soc">
-            <a id="facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://texty.org.ua/d/2019/medical_reform/" target="_blank" class="share-btn"><i class="fab fa-facebook-square"></i></a>
-            <a id="twitter" href="https://twitter.com/intent/tweet?text=http://texty.org.ua/d/2019/medical_reform/" target="_blank" class="share-btn"><i class="fab fa-twitter-square"></i></a>
+            <a id="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://www.e.gov.ua/medical_reform/" target="_blank" class="share-btn"><i class="fab fa-facebook-square"></i></a>
+            <a id="twitter" href="https://twitter.com/intent/tweet?text=https://www.e.gov.ua/medical_reform/" target="_blank" class="share-btn"><i class="fab fa-twitter-square"></i></a>
         </div>
     </div>
       

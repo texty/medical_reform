@@ -25,6 +25,8 @@
  </div>
 
  <div>
+
+   
 <div class="barChartsTiles"><h4>Виплати на одного <br> лікаря в місяць</h4></div>
     <BarChart
       v-bind:temp="payments"
