@@ -118,8 +118,8 @@
 
         <template slot="le_transfer" slot-scope="row">
           <div
-            v-tooltip:right="get_hospital_name.get(row.value).le_name"
-          >{{ `${ get_hospital_name.get(row.value).le_name.substring(0,25) + "..." }` }}</div>
+            v-tooltip:right="(get_hospital_name.get(row.value).le_name + ', ' +  row.value)"
+          >{{ `${ (get_hospital_name.get(row.value).le_name + ', ' +  row.value).substring(0,25) + "..." }` }}</div>
         </template>
         <!-- 
         <template slot="le_transfer" slot-scope="row">
