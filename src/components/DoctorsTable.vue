@@ -209,7 +209,7 @@ export default {
         },
         { key: "le_transfer", 
           label: "Лікарня",
-          thStyle: { width: 'auto', maxWidth: '200px' },  
+          thStyle: { width: '250px', maxWidth: '250px' },  
           tdClass: "centered"    
           },
         {
@@ -232,7 +232,7 @@ export default {
           },
         { key: "division_address", 
           label: "Адреса лікарні",
-          thStyle: { width: '20%', maxWidth: '200px' },  
+          thStyle: { width: '20%', maxWidth: '250px' },  
           tdClass: "leftaligned"   
         }
       ],

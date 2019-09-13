@@ -628,12 +628,19 @@ table {
   background: #7d7d7d !important;
 }
 
+@media(min-width:768px){
+    tr {
+      height:70px;
+    }
+}
 .centered {
   text-align: center;
+  
 }
 
 .leftaligned {
   text-align: left;
+  min-height:70px;
 }
 
 
