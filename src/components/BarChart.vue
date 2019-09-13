@@ -9,8 +9,8 @@
           v-for="(d,i) in dataShort"
           v-bind:key="i"        
           v-tooltip:right="variable == 'decl_count' 
-          ? formatNumber().format(d.len) + ' лікарів мають від ' + formatNumber().format(d.x1)  + ' декларацій' 
-          : formatNumber().format(d.len )+ ' лікарів приносять лікарні дохід  від ' + formatNumber().format(d.x1) +' грн'"
+          ? formatNumber().format(d.len) + ' лікарів мають від ' + formatNumber().format(d.x0)  + ' до ' + formatNumber().format(d.x1) + ' декларацій' 
+          : formatNumber().format(d.len )+ ' лікарів приносять лікарні дохід  від ' + formatNumber().format(d.x0)  + ' до ' + formatNumber().format(d.x1) +' грн'"
           :x="computedScales.x(d.x0)"
           :width="Math.max(0, computedScales.x(d.x1) - computedScales.x(d.x0) - 1)"
           :y="computedScales.y(d.len)"
@@ -64,10 +64,10 @@ export default {
       hover: false,
       svgHeigh: 450,
       tempData: JSON.parse(JSON.stringify(this.temp)),
-/*       names: {
+      names: {
         decl_count: "Кількість декларацій на лікаря",
         money_per_month: "Виплати на лікаря в місяць"
-      }, */
+      },
       labels: {
         decl_count: "Кількість пацієнтів на одного лікаря",
         money_per_month: "Отримує лікарня/ФОП за пацієнтів одного лікаря, грн/міс."
