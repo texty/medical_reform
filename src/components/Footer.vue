@@ -88,10 +88,11 @@ $blue: #184a77;
     width: 100%;
     margin:80px 0 40px 0;
     display:flex;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;    
     padding: 20px 10%;
     justify-content: space-between;
-    @media (max-width: 800px) {        
+    @media (max-width: 800px) {
+      flex-wrap: wrap;        
         padding: 10px 3%;
         height: 70px;
         margin:30px 0;
