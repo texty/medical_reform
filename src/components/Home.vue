@@ -164,7 +164,7 @@ h4.subtitle {
 
 /* Шапка із загом і підзагом */
 div#top {
-  padding: 80px 0;
+  padding: 30px 0;
   background-color: $blue;
   color: white;
   @media (max-width: 350px) {
