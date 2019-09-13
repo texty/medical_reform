@@ -51,7 +51,7 @@
         :sort-direction="sortDirection"
         @filtered="onFiltered"
         empty-filtered-text="Таких даних у нас немає"
-        :fixed="true"
+        :fixed="false"
       >
 <!--         <template slot="top-row">
           <td role="cell" data-label="Назва лікарні" aria-colindex="1">
@@ -126,7 +126,7 @@
           v-b-tooltip.hover
           :title="row.value"
         >
-          <div v-tooltip:right="(get_hospital_name.get(row.value).le_name + ', ' +  row.value)">{{ `${ (get_hospital_name.get(row.value).le_name + ', ' +  row.value).substring(0,30) + "..." }` }}</div>
+          <div v-tooltip:right="(get_hospital_name.get(row.value).le_name + ', ' +  row.value)">{{ `${ (get_hospital_name.get(row.value).le_name + ', ' +  row.value).substring(0,60) + "..." }` }}</div>
         </template>
 
 

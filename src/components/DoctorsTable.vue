@@ -48,7 +48,7 @@
         :sort-direction="sortDirection"
         @filtered="onFiltered"
         empty-filtered-text="Таких даних у нас немає"
-        :fixed="true"
+        :fixed="false"
       >
         <template slot="top-row">
           <td role="cell" data-label="Ім'я лікаря" aria-colindex="1">
@@ -119,7 +119,7 @@
         <template slot="le_transfer" slot-scope="row">
           <div
             v-tooltip:right="(get_hospital_name.get(row.value).le_name + ', ' +  row.value)"
-          >{{ `${ (get_hospital_name.get(row.value).le_name + ', ' +  row.value).substring(0,25) + "..." }` }}</div>
+          >{{ `${ (get_hospital_name.get(row.value).le_name + ', ' +  row.value).substring(0,60) + "..." }` }}</div>
         </template>
         <!-- 
         <template slot="le_transfer" slot-scope="row">
