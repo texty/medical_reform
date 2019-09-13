@@ -390,10 +390,11 @@ div.selectorOblast {
     }
 
     .multiselect__tags {
+      border: 0;
       min-width:250px;
       @media (max-width: 800px) {  
         width:80%;      
-        min-width:150px;
+        min-width:100px;
       }
     }
   }

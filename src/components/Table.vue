@@ -317,7 +317,7 @@ export default {
          var left = headerBounding.left
          var width = headerBounding.width 
          that.leftHeaderMargin = left + 33 + "px";
-         that.leftHeaderWidth = width + 'px';     
+         that.leftHeaderWidth = width - 33 + 'px';     
     },
     info(item, index, button) {
       this.infoModal.title = `Row index: ${index}`;
