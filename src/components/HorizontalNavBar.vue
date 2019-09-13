@@ -6,7 +6,7 @@
                 <router-link
                   title = "КІЛЬКІСТЬ ПІДПИСАНИХ ДЕКЛАРАЦІЙ"
                   tag="img"
-                  src="img/declarations.png"
+                  src="img/white/declarations.png"
                   :to="{ name: 'horizontal-bar', params: { smth: 'hello_shit' } }"  
                 >Horizontal Bar</router-link>          
               </div>
@@ -21,7 +21,7 @@
                 <router-link
                   title = "КІЛЬКІСТЬ ПАЦІЄНТІВ НА ЛІКАРЯ"
                   tag="img"
-                  src="img/doctors.png"
+                  src="img/white/doctors+declarations.png"
                   :to="{ name: 'bar-plots', params: { smth: 'hello_shit' } }"
                 >Bar Plots</router-link>
               </div>
@@ -29,7 +29,7 @@
                 <router-link
                   title = "ТАБЛИЦЯ ЛІКАРІВ"
                   tag="img"
-                  src="img/doctors_table.png"
+                  src="img/white/table_doctors.png"
                   :to="{ name: 'doctors-table', params: { oblast: 'Київська' } }"
                 >Doctors Table</router-link>
              </div>
@@ -38,7 +38,7 @@
                 <router-link
                   title = "ТАБЛИЦЯ ЛІКАРЕНЬ"
                   tag="img"
-                  src="img/table.png"
+                  src="img/white/table_hospitals.png"
                   :to="{ name: 'med-table', params: { oblast: 'Київська' } }"
                 >Med Table</router-link>
              </div>
@@ -47,7 +47,7 @@
                 <router-link
                   title = "ЗАКУПІВЛІ"
                   tag="img"
-                  src="img/zakupivki.png"
+                  src="img/white/procurements.png"
                   :to="{ name: 'procurement_plots', params: { oblast: 'Київська' } }"
                 >ParallelPlot</router-link>
               </div>

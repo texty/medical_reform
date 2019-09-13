@@ -28,12 +28,14 @@
     <p style="margin-left:50px; font-size:13px">Отримує лікарня/ФОП за пацієнтів одного лікаря, грн/міс.</p>
     </div>
   </div>
+  <Footer></Footer>
 </div>
 </template>
 
 <script>
 import BarChart from "@/components/BarChart.vue";
 import Navigation from "@/components/Navigation.vue";
+import Footer from "@/components/Footer.vue";
 
 import doctorPayments from "@/assets/payments_to_doctors.json";
 
@@ -57,7 +59,8 @@ export default {
   },
   components: {
     BarChart,
-    Navigation
+    Navigation,
+    Footer
   },
 
   сreated: function(){

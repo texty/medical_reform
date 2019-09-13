@@ -8,16 +8,17 @@
       <div class="links">
         <router-link          
           tag="img"
-          src="img/text-blue.png"
+          src="img/blue/declarations.png"
           :to="{ name: 'horizontal-bar', params: { smth: 'hello_shit' } }"
         >Horizontal Bar</router-link>
+                
         <div class="icon-description">
-          <router-link
-            tag="p"
-            :to="{ name: 'horizontal-bar', params: { smth: 'hello_shit' } }"
+          <router-link tag="p"  :to="{ name: 'horizontal-bar', params: { smth: 'hello_shit' } }"
           >Кількість підписаних декларацій</router-link>
         </div>
       </div>
+      
+      
       <div class="links">
         <router-link          
           tag="img" 
@@ -27,10 +28,12 @@
           <router-link tag="p" :to="{ name: 'text-element' }">Стаття з поясненнями</router-link>
         </div>
       </div>
+      
+      
       <div class="links">
         <router-link
           tag="img"
-          src="img/doctors_blue.png"
+          src="img/blue/doctors+declarations.png"
           :to="{ name: 'bar-plots', params: { smth: 'hello_shit' } }"
         >Bar Plots</router-link>
         <div class="icon-description">
@@ -44,7 +47,7 @@
       <div class="links">
         <router-link
           tag="img"
-          src="img/doctors_table_blue.png"
+          src="img/blue/doctors_tab.png"
           :to="{ name: 'doctors-table', params: { oblast: 'Київська' } }"
         >Doctors Table</router-link>
         <div class="icon-description">
@@ -58,7 +61,7 @@
       <div class="links">
         <router-link
           tag="img"
-          src="img/table-blue.png"
+          src="img/blue/hospitals_tab.png"
           :to="{ name: 'med-table', params: { oblast: 'Київська' } }"
         >Med Table</router-link>
         <div class="icon-description">
@@ -69,7 +72,7 @@
       <div class="links">
         <router-link
           tag="img"
-          src="img/zakupivki_blue.png"
+          src="img/blue/procurement.png"
           :to="{ name: 'procurement_plots', params: { oblast: 'Київська' } }"
         >ParallelPlot</router-link>
         <div class="icon-description">
@@ -80,22 +83,24 @@
         </div>
       </div>
     </div>
+     <Footer></Footer>
   </div>
+ 
 </template>
 
 <script>
 import Header from "@/components/Header.vue";
+import Footer from "@/components/Footer.vue";
 export default {
   components: {
-    Header
+    Header,
+    Footer
   },
   data() {
     return {
       leftHeaderMargin: '',
       leftHeaderWidth: '',
-      color: "#184a77",
-      leftHeaderMargin: "245px",
-      leftHeaderWidth: "500px"
+      color: "#184a77"      
     };
   },
   mounted: function() {
@@ -245,7 +250,7 @@ div.navigation {
 
   img {
     width: 45px;
-    height: 45px;   
+    height: auto;   
     @media (max-width: 800px) {
       width: 35px;
       height: 35px;
@@ -364,10 +369,14 @@ div.selectorOblast {
     @media (max-width: 800px) {
       width: 90%;
       margin: 30px 0;
+      min-width:150px;
     }
 
     .multiselect__tags {
       min-width:250px;
+      @media (max-width: 800px) {        
+        min-width:150px;
+      }
     }
   }
   path {
@@ -446,7 +455,10 @@ div.procurements {
     .multiselect {
       margin-left: 20px;
       width:max-content;
-      min-width:250px;     
+      min-width:250px;    
+      @media (max-width: 800px) {        
+        min-width:150px;
+      } 
     }
 
   }

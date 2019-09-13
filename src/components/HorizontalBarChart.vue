@@ -71,6 +71,7 @@
       </svg>
     </div> 
   </div>
+  <Footer></Footer>
 </div>
 </template>
 
@@ -84,6 +85,8 @@ import { selectAll } from "d3-selection";
 import horizontalData from "@/assets/rajon_stats_new.json";
 
 import Navigation from "@/components/Navigation.vue";
+import Footer from "@/components/Footer.vue";
+
 
 
 export default {
@@ -116,7 +119,8 @@ export default {
   },
   components: {
     Multiselect,
-    Navigation
+    Navigation, 
+    Footer
   },
   watch: {
     toDraw: function (oldValue) {

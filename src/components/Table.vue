@@ -140,6 +140,7 @@
       <pre>{{ infoModal.content }}</pre>
     </b-modal>
   </b-container>
+  <Footer></Footer>
 </div>
 </template>
 
@@ -148,6 +149,7 @@ import * as d3 from "d3";
 import VueSlider from "vue-slider-component";
 import tooltip from "vue-simple-tooltip";
 import Navigation from "@/components/Navigation.vue";
+import Footer from "@/components/Footer.vue";
 
 
 import cpv from "@/assets/cpv.json";
@@ -213,7 +215,8 @@ export default {
   },
   components: {
     VueSlider,
-    Navigation
+    Navigation,
+    Footer
   },
   created(){
     /* this.filters.oblast_name = this.$route.params.oblast */

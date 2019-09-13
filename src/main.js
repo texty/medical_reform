@@ -22,6 +22,7 @@ import BarPlots from './components/BarPlots'
 import DoctorsTable from "./components/DoctorsTable.vue";
 import ProcurementPlots from './components/ProcurementPlots.vue'
 import Header from "./components/Header.vue"
+import Footer from "./components/Footer.vue"
 
 
 
@@ -41,6 +42,7 @@ Vue.use(BootstrapVue)
 Vue.config.productionTip = false
 
 Vue.component('text-element', Text)
+Vue.component('footer', Footer)
 Vue.component('med-table', Table)
 Vue.component('horizontal-bar', Bar)
 Vue.component('home', Home)
@@ -107,6 +109,11 @@ const router = new VueRouter({
       props: (route) => ({
         incomingOblast: route.query.obl || "Київська",
       }) 
+    },
+    {
+      path: '/footer',
+      name: 'footer',
+      component: Footer,
     }
   ]
 })

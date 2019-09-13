@@ -33,6 +33,7 @@
       />
     </div>
   </div>
+  <Footer></Footer>
 </div>
 </template>
 
@@ -40,6 +41,8 @@
 import ParallelPlot from "@/components/ParallelPlot.vue";
 import Multiselect from "vue-multiselect";
 import Navigation from "@/components/Navigation.vue";
+import Footer from "@/components/Footer.vue";
+
 
 import procuramentPivot from "@/assets/procurements_pivot_with_regions.json";
 
@@ -148,7 +151,8 @@ export default {
   components: {
     ParallelPlot,
     Multiselect,
-    Navigation
+    Navigation,
+    Footer
   }, 
   methods: {
     getPos: function() { //*Женя: додала фунцію
