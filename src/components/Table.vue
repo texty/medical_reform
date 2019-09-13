@@ -52,7 +52,7 @@
         :sort-direction="sortDirection"
         @filtered="onFiltered"
         empty-filtered-text="Таких даних у нас немає"
-        :fixed="true"
+        :fixed="false"
       >
 <!--         <template slot="top-row">
           <td role="cell" data-label="Назва лікарні" aria-colindex="1">
@@ -107,7 +107,7 @@
         </template>
 
         <template slot="overal_title" slot-scope="row">
-          <div v-tooltip:right="row.value">{{ `${ row.value.substring(0,30) + "..." }` }}</div>
+          <div v-tooltip:right="row.value">{{ `${ row.value.substring(0,60) + "..." }` }}</div>
         </template>
 <!-- 
         <template
