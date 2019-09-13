@@ -238,8 +238,8 @@ div.navigation {
     width: 45px;
     height: 45px;   
     @media (max-width: 800px) {
-      width: 40px;
-      height: 40px;
+      width: 35px;
+      height: 35px;
     }
     @media (max-width: 350px) {
       width: 25px;
@@ -288,7 +288,6 @@ div.main {
 //ІНШЕ
 // old styles from App.vue file
 .text {
-  //margin: 2em 25% 1em 25%;
   position: relative;
   line-height: 1.5;
   font-size: 1.15em;
@@ -296,9 +295,6 @@ div.main {
 
 ul {
   margin-bottom: 50px !important;
-  /*margin: 2em 25% 0 25%;
-    line-height: 1.5em;
-    font-size: 1.15em; */
 }
 
 a.linkToAnotherPage {
@@ -322,6 +318,9 @@ h3.text {
   margin-bottom: 3em;
 }
 
+
+
+//Horizontal bar plot
 div.selectorOblast {
   background-color: white;
   padding-bottom: 1em;
@@ -349,44 +348,25 @@ div.selectorOblast {
 
   div.multiselect {
     color: $blue;
-    width: auto;
+    width: max-content;
+    min-width:250px;
     height: max-content;
     margin-left: 1em;
     @media (max-width: 800px) {
       width: 90%;
       margin: 30px 0;
     }
-  }
-}
 
-path {
-  color: $blue;
-}
-
-div.parallelPlotOblast {
-  color: $blue;
-  fill: $blue;
-  display: flex;
-  @media (max-width: 800px) {
-    display: block;
-  }
-
-  p {
-    margin-left: 0;
-    font-size:18px;
-  }
-
-  div.multiselect {
-    width: auto;
-    height: auto;
-    margin-left: 1em;
-    @media (max-width: 800px) {
-      width: 90%;
-      margin: 30px 0;
+    .multiselect__tags {
+      min-width:250px;
     }
   }
+  path {
+    color: $blue;
+  }
 }
 
+//Таблиця
 div.tableAndName h4 {
   text-align: center;
   padding: 1em;
@@ -433,19 +413,32 @@ div.plot {
   }
 }
 
+//закупівлі
 div.procurements {
-
- h4 {
-    //padding: 0.5em 0;
+  h4 {
     margin: 0 0 20px 0;
     letter-spacing: 1px;
     text-transform: uppercase;
     @media (max-width: 800px) {
       width: 90%;
-      margin: auto;
+      margin: 0;
       padding: 0;
       
     }
+  }
+
+  div.parallelPlotOblast {
+    display:flex;
+
+
+    .multiselect {
+      margin-left: 20px;
+      width:max-content;
+      min-width:250px;
+      
+      
+    }
+
   }
 
   div.parallelPlot {
@@ -467,7 +460,7 @@ div.procurements {
       margin-left: -20px;
     }
   }
-
+  
   p {
     padding: 0.5em 0;
     @media (max-width: 800px) {
@@ -477,19 +470,10 @@ div.procurements {
     }
   }
 
-  h4 {
-    //padding: 0.5em 0;
-    margin: 0 0 20px 0;
-    letter-spacing: 1px;
-    @media (max-width: 800px) {
-      width: 90%;
-      margin: auto;
-      padding: 0;
-      
-    }
-  }
+
 }
 
+//загальні?
 #app {
   font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -518,9 +502,10 @@ div.line {
   display: inline-block;
 }
 
+
+//vertical bar chart
 div.finalBars {
   min-height:70vh;
-  //background-color: #4555bd;
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -554,6 +539,8 @@ div.finalBars {
   }
 }
 
+
+//інше
 rect.bar:hover {
   fill: "red";
 }
@@ -567,17 +554,12 @@ table {
   text-align: center;
 }
 
-/* @media (min-width: 960px)
-  {table tr th:nth-child(1)
-    width: 30%;} */
-
 .tableNavigation div.navigationRow {
   display: flex;
   justify-content: center;
 }
 
 // таблиця
-
 .multiselect__option--highlight {
   background: #7d7d7d !important;
 }

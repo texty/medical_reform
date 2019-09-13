@@ -6,7 +6,7 @@
       <b>Порівняння закупівель лікарень за 2017-2019 роки, грн</b>
     </h4>
 
-    <div class="parallelPlotOblast">
+    <div class="parallelPlotOblast" :style="{ 'width': leftHeaderWidth }">
       <p :style="{ 'color': color }">
         Графіка інтерактивна, ви можете обирати область зі списку
       </p>
@@ -50,8 +50,8 @@ export default {
   data() {
     return {
       color: '#184a77',
-      leftHeaderMargin: '245px', // *Женя: додала зміну
-      leftHeaderWidth: '500px', // *Женя: додала зміну     
+      leftHeaderMargin: '', // *Женя: додала зміну
+      leftHeaderWidth: '', // *Женя: додала зміну     
       loadProcurementPivot: procuramentPivot,
       selectetOblast: "",
       oblastNames: [

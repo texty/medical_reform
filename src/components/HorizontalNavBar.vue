@@ -4,6 +4,7 @@
         <div :style="{'margin-left': leftHeaderMargin, 'width': leftHeaderWidth }" id="navicons-container">
         <div id="tab1" class="links navicon" >
                 <router-link
+                  title = "КІЛЬКІСТЬ ПІДПИСАНИХ ДЕКЛАРАЦІЙ"
                   tag="img"
                   src="img/declarations.png"
                   :to="{ name: 'horizontal-bar', params: { smth: 'hello_shit' } }"  
@@ -11,12 +12,14 @@
               </div>
               <div class="links navicon">
                 <router-link 
+                title = "ПРО РЕФОРМУ"
                 tag="img" 
                 src="img/text.png" 
                 :to="{ name: 'text-element' }">Text</router-link>
              </div>
               <div class="links navicon" >
                 <router-link
+                  title = "КІЛЬКІСТЬ ПАЦІЄНТІВ НА ЛІКАРЯ"
                   tag="img"
                   src="img/doctors.png"
                   :to="{ name: 'bar-plots', params: { smth: 'hello_shit' } }"
@@ -24,6 +27,7 @@
               </div>
               <div class="links navicon">
                 <router-link
+                  title = "ТАБЛИЦЯ ЛІКАРІВ"
                   tag="img"
                   src="img/doctors_table.png"
                   :to="{ name: 'doctors-table', params: { oblast: 'Київська' } }"
@@ -32,6 +36,7 @@
 
               <div class="links navicon">
                 <router-link
+                  title = "ТАБЛИЦЯ ЛІКАРЕНЬ"
                   tag="img"
                   src="img/table.png"
                   :to="{ name: 'med-table', params: { oblast: 'Київська' } }"
@@ -40,6 +45,7 @@
 
               <div class="links navicon" >
                 <router-link
+                  title = "ЗАКУПІВЛІ"
                   tag="img"
                   src="img/zakupivki.png"
                   :to="{ name: 'procurement_plots', params: { oblast: 'Київська' } }"
