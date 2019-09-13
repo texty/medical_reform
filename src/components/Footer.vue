@@ -2,15 +2,15 @@
   <div>
       <section id="created_texty">
     <div>
-        <a href="https://www.facebook.com/sharer/sharer.php?u=http://http://texty.org.ua/d/2019/medical_reform/"
+        <a href="https://www.facebook.com/sharer/sharer.php?u=http://texty.org.ua/d/2019/medical_reform/"
            class="share-btn"><i class="fab fa-facebook-f"></i></a>
-        <a href="https://twitter.com/intent/tweet?text=http://http://texty.org.ua/d/2019/medical_reform/" class="share-btn"><i
+        <a href="https://twitter.com/intent/tweet?text=http://texty.org.ua/d/2019/medical_reform/" class="share-btn"><i
                 class="fab fa-twitter"></i></a>
         <!--<h3>Створено Текстами</h3>-->
-        <h3>Створено Текстами</h3>
+        <h3><b>Створено Текстами</b></h3>
     </div>
     <div>
-        <a href="http://texty.org.ua/" target="_blank"><img src="img/logo/black_logo.gif" alt="texty.org.ua"></a>
+       <a href="http://texty.org.ua/" target="_blank"><img src="img/logo/black_logo.gif" alt="texty.org.ua"></a>
     </div>
 </section>
 
@@ -86,7 +86,7 @@ $blue: #184a77;
     //border-bottom: 2px solid $blue;
     height: 150px;
     width: 100%;
-    margin:80px 0;
+    margin:80px 0 40px 0;
     display:flex;
     padding: 20px 10%;
     justify-content: space-between;
@@ -139,8 +139,8 @@ $blue: #184a77;
     transition: all 0.5s;
 
     &:hover {
-      border: 1px solid grey;
-      color: lighten(black, 15%);
+      border: 1px solid $blue;
+      color: $blue;
     }
   }
 
