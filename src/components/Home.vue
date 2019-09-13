@@ -430,13 +430,14 @@ div.procurements {
   div.parallelPlotOblast {
     display:flex;
 
+    p {
+      font-size: 18px;
+    }
 
     .multiselect {
       margin-left: 20px;
       width:max-content;
-      min-width:250px;
-      
-      
+      min-width:250px;     
     }
 
   }
