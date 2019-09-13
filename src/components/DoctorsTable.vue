@@ -1,7 +1,11 @@
 <template v-model="oblastModel">
 <div>
   <Navigation></Navigation>
-  <h4 class="subtitle" :style="{ 'margin-left': leftHeaderMargin, 'margin-bottom': '50px' }">Заголовок до таблиці </h4>
+  <div class="description"  :style="{ 'margin-left': leftHeaderMargin, 'margin-bottom': '50px','width': leftHeaderWidth }">
+    <h4 class="subtitle">Таблиця вибору лікаря</h4>
+    <p class="text">Якщо ви досі ще не обрали лікаря для себе та вашої родини. Ви можете зробити це за допомогою нашого інструменту. Ви можете знайти лікарів, що працюють у вашому місті в таблиці нижче. Та підібрати собі того хто ще не підписав максимум (дві тисячі) декларацій з пацієнтами.</p>
+  </div>
+
   <b-container fluid>
     <!-- User Interface controls -->
 

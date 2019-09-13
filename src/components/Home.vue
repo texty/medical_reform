@@ -1,10 +1,15 @@
 <template>
   <div>
     <Header></Header>
-    <div
-      class="main"
-      :style="{'margin-left': leftHeaderMargin, 'width': 'auto', 'margin-right':'10%' }"
-    >
+    <Navigation></Navigation>
+    <div class="main" :style="{'margin-left': leftHeaderMargin, 'width': leftHeaderWidth, 'text-align':'left' }">
+      <p class="text">Медична реформа — це важлива і водночас складна тема. Легко заплутатись у тому, звідки бере гроші лікарня, на що їх витрачає, скільки пацієнтів зазвичай обслуговує один лікар та як відрізняється прогрес медреформи по регіонах. До того ж, реформа ще не завершилась. У 2019 році закінчується перший етап — реформування первинної ланки, сімейної медицини.</p>
+      <p class="text">Щоб зрозуміти, які зміни відбулися в медичній сфері за два роки реформи, ми створили серію візуалізацій на основі відкритих даних.
+      З чого все починалось?</p>
+      <p class="text">10 жовтня 2017 Верховна Рада ухвалила закон, який дав старт медичній реформі. Головна його мета — змінити принципи фінансування охорони здоров’я. Відтоді лікарні та лікарі-підприємці отримують гроші за реально надані послуги — операції, аналізи та за пацієнтів, що підписали з ними декларації. Гроші йдуть до лікарень напряму, розподіляє їх Національна служба здоров’я України (НСЗУ). Служба отримує гроші з державного бюджету і визначає, скільки потрібно платити за ті чи інші послуги. Вартість послуг пізніше затверджує Кабінет Міністрів.</p>
+      <p class="text">Дані про реформу першого рівня медичного забезпечення стали доступними завдяки співпраці НСЗУ з Державним агентством з питань електронного урядування за підтримки проекту USAID/UK aid “Прозорість та підзвітність у публічному управлінні та послугах/TAPAS”. Завдяки цим даним і візуалізаціям на їхній основі ми можемо оцінити, як змінилась медицина від початку реформи.</p>
+      <p class="text" style="margin-top:50px"><b>Що розповідають дані про реформу?</b></p>
+
       <div class="links">
         <router-link          
           tag="img"
@@ -19,7 +24,7 @@
       </div>
       
       
-      <div class="links">
+<!--       <div class="links">
         <router-link          
           tag="img" 
           src="img/text_blue.png" 
@@ -27,7 +32,7 @@
         <div class="icon-description">
           <router-link tag="p" :to="{ name: 'text-element' }">Стаття з поясненнями</router-link>
         </div>
-      </div>
+      </div> -->
       
       
       <div class="links">
@@ -89,11 +94,14 @@
 </template>
 
 <script>
-import Header from "@/components/Header.vue";
+//import Header from "@/components/Header.vue";
+import Navigation from "@/components/Navigation.vue";
 import Footer from "@/components/Footer.vue";
+
 export default {
   components: {
-    Header,
+    Navigation,
+    //Header,
     Footer
   },
   data() {
@@ -119,7 +127,7 @@ export default {
         .querySelector("#headerBounding")
         .getBoundingClientRect();
       var left = headerBounding.left;
-      var width = headerBounding.width / 1.5;
+      var width = headerBounding.width ;
       that.leftHeaderMargin = left + 33 + "px";
       that.leftHeaderWidth = width - 50 + "px";
     },
@@ -217,7 +225,7 @@ div.navigation {
     margin: auto 2vw auto 0;
     text-decoration: none;
     padding-bottom: 1px;
-    border-bottom: 1px solid white;
+    
     color: white;
     font-weight: 600;
     @media (max-width: 1100px) {
@@ -227,6 +235,13 @@ div.navigation {
 
     a {
       color: white;
+      opacity:0.6;
+      border-bottom: 1px solid white;
+    }
+
+    a:hover {
+      text-decoration: none;
+      opacity:1;
     }
   }
 
@@ -268,7 +283,7 @@ div.main {
   width: 70%;
   margin: 50px auto;
   text-align: center;
-  color: #184a77;
+  //color: #184a77;
 
   .links {
     width: 100%;
@@ -302,6 +317,7 @@ div.main {
 //ІНШЕ
 // old styles from App.vue file
 .text {
+  text-align: left;
   position: relative;
   line-height: 1.5;
   font-size: 1.15em;
@@ -348,8 +364,7 @@ div.selectorOblast {
     letter-spacing: 1px;
   }
 
-  p {
-    color: $blue;
+  p {    
     padding: 0.5em 0;
     margin-left: 0;
     font-size:18px;
@@ -361,7 +376,8 @@ div.selectorOblast {
   }
 
   div.multiselect {
-    color: $blue;
+    border: 1px solid $blue;
+    //color: $blue;
     width: max-content;
     min-width:250px;
     height: max-content;
@@ -453,14 +469,17 @@ div.procurements {
     }
 
     .multiselect {
-      margin-left: 20px;
-      width:max-content;
-      min-width:250px;    
-      @media (max-width: 800px) {        
+      border: 1px solid $blue;    
+      width: max-content;
+      min-width:250px;
+      height: max-content;
+      margin-left: 1em;
+      @media (max-width: 800px) {
+        width: 90%;
+        margin: 30px 0;
         min-width:150px;
-      } 
+      }
     }
-
   }
 
   div.parallelPlot {
@@ -545,8 +564,9 @@ div.finalBars {
     h4 {
       font-weight: bold;
       margin: 0 0 20px 0;
-      letter-spacing: 1px;
-      text-transform: uppercase;
+      font-size:20px;
+      //letter-spacing: 1px;
+      //text-transform: uppercase;
       @media (max-width: 800px) {
         width: 90%;
         margin: auto;

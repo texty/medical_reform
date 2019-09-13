@@ -1,7 +1,13 @@
 <template  v-model="oblastModel">
 <div>
   <Navigation></Navigation>
-  <h4 class="subtitle" :style="{ 'margin-left': leftHeaderMargin, 'margin-bottom': '50px' }">Заголовок до таблиці </h4>
+  <div class="description"  :style="{ 'margin-left': leftHeaderMargin, 'margin-bottom': '50px','width': leftHeaderWidth }">
+    <h4 class="subtitle">Закупівлі лікарень </h4>
+    <p class="text">Також ви можете скористатися таблицею внизу, щоб самостійно перевірити, що купують лікарні. Введіть в поле пошуку назву лікарні або товару, який вас цікавить. У таблиці є 100 найбільших закупівель у кожній категорії. Категорії бувають дуже різними — наприклад, медичне обладнання, послуги з будівництва, меблі, комп’ютерна техніка та інші.</p>
+    <p class="text">Інструмент розроблено на основі даних НСЗУ, а саме:</p>
+    <p class="text">Набір даних про пацієнтів, лікарів та медичні заклади, доступний через відкритий АРІ Національної Служби Здоров’я;
+    Дані про тендери медичні закладів з системи публічних закупівель Prozorro.</p>   
+  </div>
   <b-container fluid>
     
     <!-- User Interface controls -->

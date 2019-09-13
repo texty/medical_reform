@@ -72,8 +72,9 @@ $blue: #184a77;
 
 #footer {
     background-color: white;
-    border-top: 6px solid $blue;
-    height: 100px;
+    border-top: 2px solid $blue;
+    border-bottom: 2px solid $blue;
+    height: 150px;
     width: 100%;
     margin:80px 0;
     display:flex;

@@ -10,13 +10,13 @@
                   :to="{ name: 'horizontal-bar', params: { smth: 'hello_shit' } }"  
                 >Horizontal Bar</router-link>          
               </div>
-              <div class="links navicon">
+              <!-- div class="links navicon">
                 <router-link 
                 title = "ПРО РЕФОРМУ"
                 tag="img" 
                 src="img/text.png" 
                 :to="{ name: 'text-element' }">Text</router-link>
-             </div>
+             </div> -->
               <div class="links navicon" >
                 <router-link
                   title = "КІЛЬКІСТЬ ПАЦІЄНТІВ НА ЛІКАРЯ"
