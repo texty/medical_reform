@@ -19,7 +19,7 @@
       v-bind:variable="'decl_count'"
     />
 
-    <p style="margin-left:50px; font-size:13px">Виплати на лікаря в місяць</p>
+    <p style="margin-left:50px; font-size:13px">Кількість декларацій у лікаря</p>
 
     
  </div>
