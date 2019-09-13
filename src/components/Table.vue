@@ -106,7 +106,7 @@
         </template>
 
         <template slot="overal_title" slot-scope="row">
-          <div v-tooltip:right="row.value">{{ `${ row.value.substring(0,30) + "..." }` }}</div>
+          <div v-tooltip:right="row.value">{{ `${ row.value.substring(0,60) + "..." }` }}</div>
         </template>
 <!-- 
         <template
@@ -126,7 +126,7 @@
           v-b-tooltip.hover
           :title="row.value"
         >
-          <div v-tooltip:right="(get_hospital_name.get(row.value).le_name + ', ' +  row.value)">{{ `${ (get_hospital_name.get(row.value).le_name + ', ' +  row.value).substring(0,60) + "..." }` }}</div>
+          <div v-tooltip:right="(get_hospital_name.get(row.value).le_name + ', ' +  row.value)">{{ `${ (get_hospital_name.get(row.value).le_name + ', ' +  row.value).substring(0,30) + "..." }` }}</div>
         </template>
 
 
