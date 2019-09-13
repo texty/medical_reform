@@ -6,7 +6,7 @@
     <p class="text">Якщо ви досі ще не обрали лікаря для себе та вашої родини. Ви можете зробити це за допомогою нашого інструменту. Ви можете знайти лікарів, що працюють у вашому місті в таблиці нижче. Та підібрати собі того хто ще не підписав максимум (дві тисячі) декларацій з пацієнтами.</p>
   </div>
 
-  <b-container fluid>
+  <b-container fluid >
     <!-- User Interface controls -->
 
     <div class="tableNavigation">
@@ -53,7 +53,7 @@
         <template slot="top-row">
           <td role="cell" data-label="Ім'я лікаря" aria-colindex="1">
             <div class="inputColumnName">
-              <input v-model="filters['doctor_full_name']" />
+              <input v-model="filters['doctor_full_name']" placeholder='шукати'/>
             </div>
           </td>
         </template>
@@ -61,7 +61,7 @@
         <template slot="top-row">
           <td role="cell" data-label="Лікарня" aria-colindex="1">
             <div class="inputColumnName">
-              <input v-model="filters['le_transfer']" />
+              <input v-model="filters['le_transfer']" placeholder='шукати'/>
             </div>
           </td>
         </template>
@@ -95,7 +95,7 @@
         <template slot="top-row">
           <td role="cell" data-label="Місто" aria-colindex="1">
             <div class="inputColumnName">
-              <input v-model="filters['division_settlement']" />
+              <input v-model="filters['division_settlement']" placeholder='шукати'/>
             </div>
           </td>
         </template>
@@ -103,7 +103,7 @@
         <template slot="top-row">
           <td role="cell" data-label="Область" aria-colindex="1">
             <div class="inputColumnName">
-              <input v-model="filters['da_area']" />
+              <input v-model="filters['da_area']" placeholder='шукати'/>
             </div>
           </td>
         </template>
@@ -111,7 +111,7 @@
         <template slot="top-row">
           <td role="cell" data-label="Адреса" aria-colindex="1">
             <div class="inputColumnName">
-              <input v-model="filters['division_address']" />
+              <input v-model="filters['division_address']" placeholder='шукати'/>
             </div>
           </td>
         </template>
@@ -203,18 +203,38 @@ export default {
       fields: [
         {
           key: "doctor_full_name",
-          label: "Ім'я лікаря"
+          label: "Ім'я лікаря",
+          thStyle: { width: '25%', maxWidth: '200px' },  
+          tdClass: "leftaligned"   
         },
-        { key: "le_transfer", label: "Лікарня" },
+        { key: "le_transfer", 
+          label: "Лікарня",
+          thStyle: { width: '250px', maxWidth: '250px' },  
+          tdClass: "centered"    
+          },
         {
           key: "total_decl_count",
           label: "Пацієнтів",
           sortable: true,
-          direction: "desc"
+          direction: "desc",
+          thStyle: { width: 'auto', maxWidth: '200px' },  
+          tdClass: "centered"  
         },
-        { key: "division_settlement", label: "Місто" },
-        { key: "da_area", label: "Область" },
-        { key: "division_address", label: "Адреса лікарні" }
+        { key: "division_settlement", 
+          label: "Місто",
+          thStyle: { width: 'auto', maxWidth: '200px' },  
+          tdClass: "centered"  
+        },
+        { key: "da_area", 
+          label: "Область",
+          thStyle: { width: 'auto', maxWidth: '200px' },  
+          tdClass: "centered"  
+          },
+        { key: "division_address", 
+          label: "Адреса лікарні",
+          thStyle: { width: '20%', maxWidth: '250px' },  
+          tdClass: "leftaligned"   
+        }
       ],
       totalRows: 1,
       currentPage: 1,
@@ -365,35 +385,5 @@ export default {
 @import "~vue-slider-component/lib/theme/default.scss";
 </style>
 
-<style lang="sass">
-  .mainTable
-    background-color: white
-
-  .background
-    background-color: white
-
-  div.tableNavigation
-    padding-left: 1em
-    padding-bottom: 0.5em
-
-    div.row
-      div.row
-        width: auto
-
-  .mainTable
-    padding: auto
-    /* text-align: center */
-
-  .tableNavigation div.navigationRow
-    display: flex
-    justify-content: center
-
-  div.vue-slider 
-    padding-top: 15px !important
-    width: 80% !important
-
-  div.inputColumnName input
-    width: 70%
-    height: 2rem
-
+<style lang="sass"> 
 </style>
