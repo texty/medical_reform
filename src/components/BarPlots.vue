@@ -88,8 +88,8 @@ export default {
       var width = headerBounding.width ;
       that.leftHeaderMargin = left + 33 - 50  + "px";
       that.titleLeft = left + 33 + "px";
-      that.leftHeaderWidth = window.innerWidth - left - (window.innerWidth * 0.2) + "px";
-      that.titleWidth =  width + 'px'
+      that.leftHeaderWidth = width  - 20 + "px";
+      that.titleWidth =  width -50 + 'px'
     }
   }
 };

@@ -453,6 +453,9 @@ div.plot {
 
   div.parallelPlotOblast {
     display:flex;
+    @media (max-width: 800px) {
+        display:block;
+      }
 
     p {
       font-size: 18px;
