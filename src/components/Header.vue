@@ -27,6 +27,9 @@
 </template>
 
 <script>
+import share from "@/plugins/share-behavior.js"
+
+
 export default {
   components: {
   },
