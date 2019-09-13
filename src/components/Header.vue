@@ -5,7 +5,7 @@
         <img src="img/plus.png" />
         <div class="headerText">
           <h1 style="font-weight:600">ВІДКРИТА МЕДИЦИНА</h1>
-          <h4>Проект на основі даних НСЗУ</h4>
+          <h4>Проект на основі відкритих даних НСЗУ</h4>
         </div>
       </div>
      </div>
