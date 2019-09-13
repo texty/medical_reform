@@ -243,6 +243,10 @@ div.navigation {
       text-decoration: none;
       opacity:1;
     }
+
+    a.router-link-exact-active.router-link-active {
+      opacity:0 !important;
+    }
   }
 
   #navicons-container {
@@ -260,7 +264,7 @@ div.navigation {
   }
 
   .router-link-exact-active.router-link-active {
-    opacity:1 !important;
+    opacity:1;
   }
 
   img {
