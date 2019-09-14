@@ -270,8 +270,7 @@ export default {
     maxSumValue() {
       return d3.max(this.rows.map(d => d.sum));
     },
-    filtered() {
-      
+    filtered() {   
 
       let filtered = this.rows.filter(item => {
         var keys = Object.keys(this.filters);
