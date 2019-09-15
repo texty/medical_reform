@@ -66,17 +66,6 @@
           </td>
         </template>
 
-        <!--         <template slot="top-row">
-          <td>
-            <input v-model="filters['doctor_speciality']" />
-          </td>
-        </template>
-
-        <template slot="top-row">
-          <td>
-            <input v-model="filters['owner_proprety_type']" />
-          </td>
-        </template>-->
 
         <template slot="top-row">
           <td role="cell" data-label="Пацієнтів" aria-colindex="1">
