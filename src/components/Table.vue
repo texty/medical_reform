@@ -385,6 +385,7 @@ export default {
 <style lang="scss">
 //@import "~vue-slider-component/lib/theme/default.scss";
 
+
   $blue: #184a77;  
 
   .mainTable {
