@@ -105,12 +105,22 @@
           </td>
         </template>
 
-        <template slot="le_transfer" slot-scope="row">
+          <template v-slot:cell(le_transfer)="data">
           <div
-            v-tooltip:right="(get_hospital_name.get(row.value).le_name + ', ' +  row.value)"
-          >{{ `${ (get_hospital_name.get(row.value).le_name + ', ' +  row.value).substring(0,60) + "..." }` }}</div>
+            v-tooltip:right="get_hospital_name.get(data.item.le_transfer).le_name + ', ' + data.item.le_transfer "
+          >{{ `${ get_hospital_name.get(data.item.le_transfer).le_name.substring(0,30) + "..."  }` }}</div>
+      
         </template>
+<!-- 
+          <template v-slot:cell(le_transfer)="data">
+            {{
+            formatNumber().format(data.item.sum)
+            }}
+          </template> -->
         
+        <template v-slot:cell()="data">{{ data.value }}</template>
+
+
         
 <!--         <template slot="le_transfer" slot-scope="row">
           {{
