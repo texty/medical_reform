@@ -12,9 +12,11 @@ cd dist
 # если вы публикуете на пользовательский домен
 # echo 'www.example.com' > CNAME
 
+current_date_time="`date +%Y%m%d%H%M%S`";
+
 git init
 git add -A
-git commit -m 'deploy'
+git commit -m 'deployed at $(date)'
 
 # если вы публикуете по адресу https://<USERNAME>.github.io
 # git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master

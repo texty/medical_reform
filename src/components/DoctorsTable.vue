@@ -190,7 +190,7 @@ import tooltip from "vue-simple-tooltip";
 import Navigation from "@/components/Navigation.vue";
 import Footer from "@/components/Footer.vue";
 
-import doctorsNames from "@/assets/doctors_for_table.json";
+import doctorsNames from "@/assets/doctors_for_table_newest.json";
 import hospitalNames from "@/assets/hospital_names.json";
 
 /* import 'vue-slider-component/theme/antd.css'; */
@@ -285,9 +285,14 @@ export default {
 
     const that = this
     this.rows.forEach(d => {
-      let t = JSON.parse(JSON.stringify(d));
+      try {
+        let t = JSON.parse(JSON.stringify(d));
       t['full_name'] = that.get_hospital_name.get(t.le_transfer).le_name + ", " + t.le_transfer   
       m.push(t)
+      }
+      catch {
+        
+      }
     })
 
     return m

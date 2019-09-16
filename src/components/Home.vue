@@ -490,7 +490,7 @@ div.plot {
 
 div.procurements {
 
-  margin-left: 5%;
+  // margin-left: 5%;
   @media (max-width: 800px) {
       margin-left: 3%;
     }
