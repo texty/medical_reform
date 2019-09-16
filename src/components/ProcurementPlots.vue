@@ -144,6 +144,11 @@ export default {
     }
   },
   mounted() {
+    d3.json('"@/assets/procurements_pivot_with_regions.json"')
+    .then(function(data, error) {
+      console.log(data)
+    })
+
     this.getPos()
     this.calculateMargin()
     this.$nextTick(function() {  // *Женя: щоб перемальовувалась на ресайзі     
