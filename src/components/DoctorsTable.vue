@@ -51,17 +51,17 @@
         :fixed="false"
       >
         <template slot="top-row">
-          <td role="cell" data-label="Ім'я лікаря" aria-colindex="1">
+          <td role="cell" data-label="Ім'я лікаря" aria-colindex="1" :style="{'border-radius': 0}">
             <div class="inputColumnName">
-              <input v-model="filters['doctor_full_name']" placeholder='шукати'/>
+              <input v-model="filters['doctor_full_name']" placeholder='шукати' :style="{'border': `1px solid #b2b2b2`}"/>
             </div>
           </td>
         </template>
 
         <template slot="top-row">
-          <td role="cell" data-label="Лікарня" aria-colindex="1">
+          <td role="cell" data-label="Лікарня" aria-colindex="1" :style="{'border-radius': 0}">
             <div class="inputColumnName">
-              <input v-model="filters['full_name']" placeholder='шукати'/>
+              <input v-model="filters['full_name']" placeholder='шукати' :style="{'border': `1px solid #b2b2b2`}"/>
             </div>
           </td>
         </template>
@@ -82,25 +82,25 @@
         </template>
 
         <template slot="top-row">
-          <td role="cell" data-label="Місто" aria-colindex="1">
+          <td role="cell" data-label="Місто" aria-colindex="1" :style="{'border-radius': 0}">
             <div class="inputColumnName">
-              <input v-model="filters['division_settlement']" placeholder='шукати'/>
+              <input v-model="filters['division_settlement']" placeholder='шукати' :style="{'border': `1px solid #b2b2b2`}" />
             </div>
           </td>
         </template>
 
         <template slot="top-row">
-          <td role="cell" data-label="Область" aria-colindex="1">
+          <td role="cell" data-label="Область" aria-colindex="1" :style="{'border-radius': 0}">
             <div class="inputColumnName">
-              <input v-model="filters['da_area']" placeholder='шукати'/>
+              <input v-model="filters['da_area']" placeholder='шукати' :style="{'border': `1px solid #b2b2b2`}" />
             </div>
           </td>
         </template>
 
         <template slot="top-row">
-          <td role="cell" data-label="Адреса" aria-colindex="1">
+          <td role="cell" data-label="Адреса" aria-colindex="1" :style="{'border-radius': 0}">
             <div class="inputColumnName">
-              <input v-model="filters['division_address']" placeholder='шукати'/>
+              <input v-model="filters['division_address']" placeholder='шукати' :style="{'border': `1px solid #b2b2b2`}" />
             </div>
           </td>
         </template>

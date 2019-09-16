@@ -436,9 +436,15 @@ div.tableNavigation .row {
     width: auto;
   }
 
+  .page-link {
+    border-radius: 0;
+    color: $blue;
+  }
+
   .page-item.active .page-link {
     background-color: $blue;
     border-color: $blue;
+    color: white;
   }
 }
 

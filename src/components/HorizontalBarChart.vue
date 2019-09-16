@@ -55,16 +55,20 @@
             :x="getScales().x(+d[variable]) + 10"
             :y="getScales().y(d.rajon_grouped) + 10"
             :width="1"
-            fill=color
+            :style="{
+              'font-size': '0.9em',
+              fill: color
+            }"
           >{{ Math.round(d[variable]) + '%' }}</text>
 
           <text
             v-for="(d,i) in staticData"
             v-bind:key="i+'a'"
             :x="0"
-            :y="getScales().y(d.rajon_grouped) - 5"
-            :width="2"
-            fill=color
+            :y="getScales().y(d.rajon_grouped) - 0"
+            :style="{
+              'font-size': '0.85em',
+            }"
           >{{ d.rajon_grouped }}</text>
 
           <circle

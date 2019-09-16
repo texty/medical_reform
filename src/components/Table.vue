@@ -60,9 +60,9 @@
           :fixed="true"
         >
           <template slot="top-row">
-            <td role="cell" data-label="Назва лікарні" aria-colindex="1">
+            <td role="cell" data-label="Назва лікарні" aria-colindex="1" :style="{'border-radius': 0}">
               <div class="inputColumnName">
-                <input v-model="filters['full_name']" />
+                <input v-model="filters['full_name']" :style="{'border': `1px solid #b2b2b2`}"/>
               </div>
             </td>
           </template>
@@ -76,17 +76,17 @@
           </template>-->
 
           <template slot="top-row">
-            <td role="cell" data-label="Опис" aria-colindex="1">
+            <td role="cell" data-label="Опис" aria-colindex="1" :style="{'border-radius': 0}">
               <div class="inputColumnName">
-                <input v-model="filters['overal_title']" />
+                <input v-model="filters['overal_title']" :style="{'border': `1px solid #b2b2b2`}" />
               </div>
             </td>
           </template>
 
           <template slot="top-row">
-            <td role="cell" data-label="Область" aria-colindex="1">
+            <td role="cell" data-label="Область" aria-colindex="1" :style="{'border-radius': 0}">
               <div class="inputColumnName">
-                <input v-model="filters['oblast_name']" />
+                <input v-model="filters['oblast_name']" :style="{'border': `1px solid #b2b2b2`}" />
               </div>
             </td>
           </template>
