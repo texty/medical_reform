@@ -110,6 +110,15 @@
             v-tooltip:right="(get_hospital_name.get(row.value).le_name + ', ' +  row.value)"
           >{{ `${ (get_hospital_name.get(row.value).le_name + ', ' +  row.value).substring(0,60) + "..." }` }}</div>
         </template>
+        
+        
+<!--         <template slot="le_transfer" slot-scope="row">
+          {{
+             "ggdg"
+          }}
+        </template> -->
+        
+        
         <!-- 
         <template slot="le_transfer" slot-scope="row">
           {{
