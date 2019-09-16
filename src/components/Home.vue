@@ -200,13 +200,23 @@ div.headers {
     letter-spacing: 2px;
     font-size: 3.6rem;
     @media (max-width: 800px) {
+      font-size: 2.8rem;
+    }
+    @media (max-width: 1000px) {
       font-size: 3rem;
     }
+    
   }
 
   h4 {
     letter-spacing: 1px;
     font-size: 2.3rem;
+    @media (max-width: 800px) {
+      font-size: 1.8rem;
+    }
+    @media (max-width: 1000px) {
+      font-size: 2rem;
+    }
   }
 }
 
@@ -543,19 +553,9 @@ div.procurements {
 }
 
 //загальні?
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-}
-/* margin-top: 60px */
-
-h1,
+h1
 .content {
   text-transform: uppercase;
-  /*   margin-left: 20px;
- */
 }
 
 label {
@@ -563,72 +563,6 @@ label {
   width: 150px;
 }
 
-// table.procurements {
-//   @media (min-width:768px){ 
-//   /* стовбчик 1 */  
-//   th:nth-child(1){
-//     width: 200px;
-//     max-width: 200px;
-//     text-align:center !important;
-//     padding: 0;
-//   }
-
-//   td:nth-child(1) {  
-//     width: 200px;
-//     max-width: 200px;
-//     text-align:center !important;
-//     padding: 0;
-//   }
-
-
-//   /* стовбчик 2 */  
-//   th:nth-child(2)  { 
-//     width: auto;
-//     text-align:center !important;
-//     padding: 0;
-//   }
-
-//   td:nth-child(2) {    
-//     width: auto;
-//     text-align:left !important;
-//     padding: 0;
-//   }
-
-//   /* стовбчик 3 */
-//   th:nth-child(3) {
-//     max-width: 150px;
-//     width: 20%;    
-//     text-align:center !important;
-//     padding: 0;
-//   }
-
-//   td:nth-child(3) {
-//     max-width: 150px;
-//     width: 20%;    
-//     text-align:center !important;
-//     padding: 0;
-
-//     input {
-//       width:100%;
-//       text-align: center;
-//       color: $blue;
-//     }
-//   }
- 
-//   /* стовбчик 4 */
-//   th:nth-child(4) {
-//     width: 150px;
-//     text-align:left !important;
-//     padding: 0;
-//   }
-
-//   td:nth-child(4) {
-//     width: 150px;
-//     text-align:left !important;
-//     padding: 0;   
-//   }  
-//  }
-// }
 
 .area-chart {
   height: 300px;
@@ -638,8 +572,6 @@ div.line {
   display: inline-block;
 }
 
-
-//vertical bar chart
 div.finalBars {
   min-height:70vh;
   width: 100%;
@@ -676,6 +608,12 @@ div.finalBars {
   }
 }
 
+#app {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #2c3e50;
+}
 
 //інше
 rect.bar:hover {
@@ -708,7 +646,9 @@ table {
 }
 .centered {
   text-align: center;
-  
+  @media(max-width:800px){
+     text-align: left;
+  }  
 }
 
 .leftaligned {
@@ -716,8 +656,4 @@ table {
   min-height:70px;
 }
 
-
-
-
 </style>
-

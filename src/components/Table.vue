@@ -62,7 +62,7 @@
           <template slot="top-row">
             <td role="cell" data-label="Назва лікарні" aria-colindex="1" :style="{'border-radius': 0}">
               <div class="inputColumnName">
-                <input v-model="filters['full_name']" :style="{'border': `1px solid #b2b2b2`}"/>
+                <input v-model="filters['full_name']" placeholder='шукати' :style="{'border': `1px solid #b2b2b2`}"/>
               </div>
             </td>
           </template>
@@ -78,7 +78,7 @@
           <template slot="top-row">
             <td role="cell" data-label="Опис" aria-colindex="1" :style="{'border-radius': 0}">
               <div class="inputColumnName">
-                <input v-model="filters['overal_title']" :style="{'border': `1px solid #b2b2b2`}" />
+                <input v-model="filters['overal_title']" placeholder='шукати' :style="{'border': `1px solid #b2b2b2`}" />
               </div>
             </td>
           </template>
@@ -86,7 +86,7 @@
           <template slot="top-row">
             <td role="cell" data-label="Область" aria-colindex="1" :style="{'border-radius': 0}">
               <div class="inputColumnName">
-                <input v-model="filters['oblast_name']" :style="{'border': `1px solid #b2b2b2`}" />
+                <input v-model="filters['oblast_name']" placeholder='шукати' :style="{'border': `1px solid #b2b2b2`}" />
               </div>
             </td>
           </template>
@@ -198,7 +198,7 @@ export default {
         {
           key: "hospital_name",
           label: "Назва лікарні",
-          thStyle: { width: "300px", maxWidth: "300px" },
+          thStyle: { width: "25%", maxWidth: "300px" },
           tdClass: "leftaligned"
         },
         // {
@@ -208,7 +208,7 @@ export default {
         {
           key: "overal_title",
           label: "Опис",
-          thStyle: { width: "auto", maxWidth: "auto" },
+          thStyle: { width: "25%", maxWidth: "auto" },
           tdClass: "leftaligned"
         },
         {

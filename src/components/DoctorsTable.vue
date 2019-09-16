@@ -217,7 +217,7 @@ export default {
         },
         { key: "le_transfer", 
           label: "Лікарня",
-          thStyle: { width: '250px', maxWidth: '250px' },  
+          thStyle: { width: '25%', maxWidth: '250px' },  
           tdClass: "leftaligned"    
           },
         {
