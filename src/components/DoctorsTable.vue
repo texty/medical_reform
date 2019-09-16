@@ -264,7 +264,7 @@ export default {
         full_name: "",
         total_decl_count: [0, 3000],
         division_settlement: "",
-        da_area: this.$route.params.oblast ? this.$route.params.oblast : "Київська",
+        da_area: "",
         division_address: ""
       }
     };

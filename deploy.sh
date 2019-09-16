@@ -13,7 +13,7 @@ cd dist
 # echo 'www.example.com' > CNAME
 
 
-# git init
+git init
 git add -A
 git commit -m "deployed at `date`"
 
@@ -26,6 +26,6 @@ git commit -m "deployed at `date`"
 # git push -f git@github.com:ptrBodnar/medical_reform.git master
 
 # для того, щоб показати
-git push git@github.com:texty/medical_reform.git master:gh-pages
+git push  -f git@github.com:texty/medical_reform.git master:gh-pages
 
 cd -

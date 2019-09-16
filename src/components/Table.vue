@@ -246,9 +246,7 @@ export default {
         full_name: "",
         hospital_edrpou: "",
         overal_title: "",
-        oblast_name: this.$route.params.oblast
-          ? this.$route.params.oblast
-          : "Київська",
+        oblast_name: "",
         sum: [0, 20000000]
       }
     };
