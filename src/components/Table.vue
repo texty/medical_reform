@@ -35,11 +35,10 @@
         </b-row>
       </b-row>
     </div>
-    
     <!-- Main table element -->
     <div class="background">
       <b-table
-        class="mainTable procurements"
+        class="mainTable"
         show-empty
         stacked="md"
         :items="filtered"
@@ -54,26 +53,26 @@
         empty-filtered-text="Таких даних у нас немає"
         :fixed="true"
       >
-<!--         <template slot="top-row">
+        <template slot="top-row">
           <td role="cell" data-label="Назва лікарні" aria-colindex="1">
             <div class="inputColumnName">
               <input v-model="filters['hospital_name']" />
             </div>
           </td>
-        </template> -->
-
+        </template>
+<!-- 
         <template slot="top-row">
-          <td role="cell" data-label="Назва лікарні" aria-colindex="1">
+          <td role="cell" data-label="Код ЄДРПОУ" aria-colindex="1">
             <div class="inputColumnName">
-              <input v-model="filters['hospital_edrpou']"  placeholder='шукати'/>
+              <input v-model="filters['hospital_edrpou']" />
             </div>
           </td>
-        </template>
+        </template> -->
 
         <template slot="top-row">
           <td role="cell" data-label="Опис" aria-colindex="1">
             <div class="inputColumnName">
-              <input v-model="filters['overal_title']" placeholder='шукати'/>
+              <input v-model="filters['overal_title']" />
             </div>
           </td>
         </template>
@@ -100,18 +99,28 @@
           </td>
         </template>
 
-        <template slot="sum" slot-scope="row">
+        <template v-slot:cell(sum)="data">
           {{
-          formatNumber().format(row.value)
+          formatNumber().format(data.item.sum)
           }}
         </template>
 
-        <template slot="overal_title" slot-scope="row">
-          <div v-tooltip:right="row.value">{{ `${ row.value.substring(0,60) + "..." }` }}</div>
-        </template>
-<!-- 
-        <template
-          slot="hospital_name"
+          <template v-slot:cell(overal_title)="data">
+                <div v-tooltip:right="data.item.overal_title">{{ data.item.overal_title.substring(0,30) + "..." }} </div>
+          </template>
+
+
+          <template v-slot:cell(hospital_name)="data">
+                <div v-tooltip:right="data.item.hospital_name + ', ' + data.item.hospital_edrpou">{{ data.item.hospital_name.substring(0,30) + "..." }} </div>
+          </template>
+
+
+      <template v-slot:cell()="data">
+        {{ data.value }}
+      </template>
+
+        <!-- <template
+          slot="hospital_edrpou"
           slot-scope="row"
           v-tooltip:right="row.value"
           v-b-tooltip.hover
@@ -119,20 +128,6 @@
         >
           <div v-tooltip:right="row.value">{{ `${ row.value.substring(0,30) + "..." }` }}</div>
         </template> -->
-
-        <template
-          slot="hospital_edrpou"
-          slot-scope="row"
-          v-tooltip:right="row.value"
-          v-b-tooltip.hover
-          :title="row.value"
-          class="justify-content-end"
-        >
-          <div v-tooltip:right="(get_hospital_name.get(row.value).le_name + ', ' +  row.value)">{{ `${ (get_hospital_name.get(row.value).le_name + ', ' +  row.value).substring(0,30) + "..." }` }}</div>
-        </template>
-
-
-        <!-- get_hospital_name -->
 
         <template slot="actions" slot-scope="row">
           <b-button
@@ -196,38 +191,20 @@ export default {
       cpv: cpv,
       hospitals: hospitalNames,
       fields: [
-     /*    { key: "hospital_name", 
-        label: "Назва лікарні", 
-        thStyle: { width: '30%', maxWidth: '300px' },  
-        tdClass: "leftaligned"
-        }, */
-        {
-          key: "hospital_edrpou",
-          label: "Назва лікарні",
-          thStyle: { width: '200px', maxWidth: '200px' },  
-          tdClass: "centered"      
-        },
-        { 
-          key: "overal_title", 
-          label: "Опис",
-          thStyle: { width: 'auto', maxWidth: 'auto' }, 
-          tdClass: "leftaligned"  
-        },
-        { 
-          key: "oblast_name", 
-          label: "Область",
-          thStyle: { width: '200px', maxWidth: '200px'},
-          tdClass: "centered"    
-         },
-
+        { key: "hospital_name", label: "Назва лікарні" },
+        // {
+        //   key: "hospital_edrpou",
+        //   label: "Код ЄДРПОУ"
+        // },
+        { key: "overal_title", label: "Опис" },
+        { key: "oblast_name", label: "Область" },
         {
           key: "sum",
           label: "Вартість, грн.",
           sortable: true,
-          direction: "desc",
-          thStyle: { width: '200px', maxWidth: '200px' },
-          tdClass: "centered"   
-        }
+          direction: "desc"
+        },
+        // { key: "full_name", label: "Повна назва" }
       ],
       totalRows: 1,
       currentPage: 1,
@@ -262,15 +239,11 @@ export default {
     /* this.filters.oblast_name = this.$route.params.oblast */
   },
   computed: {
-    get_hospital_name() {
-      return d3.map(this.hospitals, function(d) {
-        return d.le_transfer;
-      });
-    },
     maxSumValue() {
       return d3.max(this.rows.map(d => d.sum));
     },
-    filtered() {   
+    filtered() {
+      
 
       let filtered = this.rows.filter(item => {
         var keys = Object.keys(this.filters);
@@ -383,64 +356,38 @@ export default {
 </script>
 
 <style lang="scss">
-//@import "~vue-slider-component/lib/theme/default.scss";
-
-
-  $blue: #184a77;  
-
-  .mainTable {
-    max-width:1400px;
-    margin:auto;
-    background-color: white;
-   }
-
-  .background  {
-    background-color: white;
-    }
-
-  div.tableNavigation  {
-    padding-left: 1em;
-    padding-bottom: 0.5em;
-    }
-
-    div.row {
-      div.row { 
-        width: auto;
-      }
-    }
-
-  .mainTable{
-    padding: auto;
-  }
-
-  
-  .tableNavigation div.navigationRow {
-    display: flex;
-    justify-content: center;
-  }
-
-  div.vue-slider {
-    padding-top: 15px !important;
-    width: 70% !important;
-    margin:auto;
-  }
-
-  div.inputColumnName input {
-    width: 100%;
-    height: 2rem;
-    text-align: center;   
-  }
-
-  input::placeholder {    
-    padding-left:10px;
-    font-style: italic;
-    text-align:left;
-}
-
- 
+@import "~vue-slider-component/lib/theme/default.scss";
 </style>
 
-<style lang="scss">
+<style lang="sass">
+  .mainTable
+    background-color: white
 
+  .background
+    background-color: white
+
+  div.tableNavigation
+    padding-left: 1em
+    padding-bottom: 0.5em
+
+    div.row
+      div.row
+        width: auto
+
+  .mainTable
+    padding: auto
+   
+
+  .tableNavigation div.navigationRow
+    display: flex
+    justify-content: center
+
+  div.vue-slider 
+    padding-top: 15px !important
+    width: 80% !important
+
+  div.inputColumnName input
+    width: 70%
+    height: 2rem
     
 </style>
