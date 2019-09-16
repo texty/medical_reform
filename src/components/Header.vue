@@ -136,7 +136,7 @@ export default {
     }
 
     &:hover {
-      color: red;
+      color: #05e3f4;
     }
   }
 }
