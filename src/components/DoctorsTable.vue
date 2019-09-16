@@ -61,7 +61,7 @@
         <template slot="top-row">
           <td role="cell" data-label="Лікарня" aria-colindex="1">
             <div class="inputColumnName">
-              <input v-model="filters['le_transfer']" placeholder='шукати'/>
+              <input v-model="filters['full_name']" placeholder='шукати'/>
             </div>
           </td>
         </template>
@@ -218,7 +218,7 @@ export default {
         { key: "le_transfer", 
           label: "Лікарня",
           thStyle: { width: '250px', maxWidth: '250px' },  
-          tdClass: "centered"    
+          tdClass: "leftaligned"    
           },
         {
           key: "total_decl_count",
@@ -261,7 +261,7 @@ export default {
       },
       filters: {
         doctor_full_name: "",
-        le_transfer: "",
+        full_name: "",
         total_decl_count: [0, 3000],
         division_settlement: "",
         da_area: this.$route.params.oblast ? this.$route.params.oblast : "Київська",
@@ -280,6 +280,19 @@ export default {
         return d.le_transfer;
       });
     },
+    combinedData(){
+    let m = [];
+
+    const that = this
+    this.rows.forEach(d => {
+      let t = JSON.parse(JSON.stringify(d));
+      t['full_name'] = that.get_hospital_name.get(t.le_transfer).le_name + ", " + t.le_transfer   
+      m.push(t)
+    })
+
+    return m
+    
+    },
     maxSumValue() {
       return d3.max(this.rows.map(d => d.total_decl_count));
     },
@@ -294,7 +307,7 @@ export default {
     // },
     filtered() {
       const that = this;
-      let filtered = that.rows.filter(item => {
+      let filtered = that.combinedData.filter(item => {
         var keys = Object.keys(that.filters);
         keys = keys.filter(e => e !== "total_decl_count");
         return keys.every(function(key) {
@@ -357,6 +370,7 @@ export default {
     // Set the initial number of items
     this.totalRows = this.rows.length;
     this.filters.total_decl_count[1] = this.maxSumValue;
+
 
     this.getPos()
     this.$nextTick(function() {  // *Женя: щоб перемальовувалась на ресайзі     

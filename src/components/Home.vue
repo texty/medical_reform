@@ -117,7 +117,7 @@ export default {
       window.addEventListener("resize", this.getPos);
     });
 
-    $emit("size-event", this.leftHeaderMargin, this.leftHeaderWidth);
+    // $emit("size-event", this.leftHeaderMargin, this.leftHeaderWidth);
 
   },
   methods: {
