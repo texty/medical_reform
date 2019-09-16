@@ -525,7 +525,7 @@ div.procurements {
     fill: $blue;
     display: grid;
     grid-template-columns: repeat(auto-fill, 400px); 
-    @media (min-width: 801px) and (max-width: 1000px) {
+    @media (min-width: 801px) and (max-width: 1220px) {
       grid-template-columns: repeat(auto-fit, 300px) !important ;      
     }
     @media (min-width: 501px) and (max-width: 800px) {

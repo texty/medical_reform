@@ -180,10 +180,12 @@ export default {
     calculateMargin: function() {
       var that = this;
       var paralelplotChild = document.querySelector('.line').getBoundingClientRect();
-      var divAmounts = Math.floor(window.innerWidth / paralelplotChild.width) 
+      var onewidth = paralelplotChild.width + 10
+      var divAmounts = Math.floor(window.innerWidth / onewidth)       
       console.log(divAmounts)
-      var theMargin = (window.innerWidth - (paralelplotChild.width * divAmounts)) / 2
-      console.log(theMargin)
+      console.log(onewidth)
+      var theMargin = (window.innerWidth - (onewidth * divAmounts)) / 2
+      console.log(theMargin + "px")
       that.paralelPlotMargin =  theMargin + "px"
     }
   }
