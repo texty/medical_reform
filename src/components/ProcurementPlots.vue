@@ -30,7 +30,7 @@
 
     
 
-    <div class="parallelPlot">
+    <div class="parallelPlot" id="parallelPlotContainer" :style="{ 'margin-left': paralelPlotMargin }">
       <ParallelPlot
         class="line"
         v-for="(d,i) in selectedProcurement"
@@ -63,7 +63,8 @@ export default {
     return {
       color: '#184a77',
       leftHeaderMargin: '', // *Женя: додала зміну
-      leftHeaderWidth: '', // *Женя: додала зміну     
+      leftHeaderWidth: '', // *Женя: додала зміну  
+      paralelPlotMargin: '',   
       loadProcurementPivot: procuramentPivot,
       selectetOblast: "",
       oblastNames: [
@@ -145,12 +146,16 @@ export default {
   },
   mounted() {
     this.getPos()
+    this.calculateMargin()
     this.$nextTick(function() {  // *Женя: щоб перемальовувалась на ресайзі     
         window.addEventListener("resize", this.getPos);
         window.addEventListener("load", this.getPos);
+        window.addEventListener("resize", this.calculateMargin);
+        window.addEventListener("load", this.calculateMargin);
     })
 
       this.selectetOblast = this.incomingOblast
+      this.calculateMargin()
   },
   watch: {
     incomingOblast: function(newProp, oldProp) {
@@ -171,6 +176,15 @@ export default {
          var width = headerBounding.width 
          that.leftHeaderMargin = left  + 33 + "px";
          that.leftHeaderWidth = width - 33 + 'px';     
+    }, 
+    calculateMargin: function() {
+      var that = this;
+      var paralelplotChild = document.querySelector('.line').getBoundingClientRect();
+      var divAmounts = Math.floor(window.innerWidth / paralelplotChild.width) 
+      console.log(divAmounts)
+      var theMargin = (window.innerWidth - (paralelplotChild.width * divAmounts)) / 2
+      console.log(theMargin)
+      that.paralelPlotMargin =  theMargin + "px"
     }
   }
 };

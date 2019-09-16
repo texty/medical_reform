@@ -520,22 +520,19 @@ div.procurements {
 
   div.parallelPlot {
     margin: 0;
-    //margin: auto;
     background-color: white;
     color: $blue;
     fill: $blue;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, max-content));   
-    padding: 2em 0;
-    
-    //Для мобілки по 1 шт. в ряд
-    @media (max-width: 800px) {
-      grid-template-columns: repeat(auto-fit, minmax(350px, max-content));
-      
+    grid-template-columns: repeat(auto-fill, 400px); 
+    @media (min-width: 801px) and (max-width: 1000px) {
+      grid-template-columns: repeat(auto-fit, 300px) !important ;      
     }
-
+    @media (min-width: 501px) and (max-width: 800px) {
+      grid-template-columns: repeat(auto-fit, 250px) !important;      
+    }
     @media (max-width: 500px) {      
-      grid-template-columns: repeat(auto-fit, minmax(300px, max-content));
+      grid-template-columns: repeat(auto-fit, 300px) !important;
       
     }
   }
