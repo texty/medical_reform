@@ -426,11 +426,11 @@ export default {
   div.inputColumnName input {
     width: 100%;
     height: 2rem;
-    text-align: center;   
+    text-align: left;  
+    padding-left:20px; 
   }
 
-  input::placeholder {    
-    padding-left:10px;
+  input::placeholder {        
     font-style: italic;
     text-align:left;
 }
