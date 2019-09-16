@@ -114,13 +114,13 @@
           <template v-slot:cell(overal_title)="data">
             <div
               v-tooltip:right="data.item.overal_title"
-            >{{ data.item.overal_title.substring(0,30) + "..." }}</div>
+            >{{ data.item.overal_title.substring(0,80) + "..." }}</div>
           </template>
 
           <template v-slot:cell(hospital_name)="data">
             <div
               v-tooltip:right="data.item.hospital_name + ', ' + data.item.hospital_edrpou"
-            >{{ data.item.hospital_name.substring(0,30) + "..." }}</div>
+            >{{ data.item.hospital_name.substring(0,40) + "..." }}</div>
           </template>
 
           <template v-slot:cell()="data">{{ data.value }}</template>
@@ -199,7 +199,7 @@ export default {
           key: "hospital_name",
           label: "Назва лікарні",
           thStyle: { width: "300px", maxWidth: "300px" },
-          tdClass: "centered"
+          tdClass: "leftaligned"
         },
         // {
         //   key: "hospital_edrpou",
@@ -209,7 +209,7 @@ export default {
           key: "overal_title",
           label: "Опис",
           thStyle: { width: "auto", maxWidth: "auto" },
-          tdClass: "centered"
+          tdClass: "leftaligned"
         },
         {
           key: "oblast_name",
