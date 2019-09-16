@@ -273,6 +273,15 @@ export default {
     maxSumValue() {
       return d3.max(this.rows.map(d => d.total_decl_count));
     },
+    // dataUpdated() {
+    //   const that = this;
+
+    //   that.rows.forEach((d,i) => {
+    //     that.rows[i]['full_name'] = that.get_hospital_name.get(that.rows[i]['le_transfer'])
+    //   })
+
+    //   return 
+    // },
     filtered() {
       const that = this;
       let filtered = that.rows.filter(item => {

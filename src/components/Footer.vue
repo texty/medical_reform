@@ -14,7 +14,7 @@
     </div>
 </section>
 
-    <div id="footer" :style="{  }">
+    <div id="footerPage" :style="{  }">
         <div class="logoContainer">
             <img src="img/logo/Mindigital_white.png"/>
         </div>
@@ -80,7 +80,7 @@ export default {
 
 $blue: #184a77;
 
-#footer {
+#footerPage {
     background-color: white;
     //border-top: 2px solid $blue;
     //border-bottom: 2px solid $blue;

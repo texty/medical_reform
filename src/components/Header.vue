@@ -35,7 +35,7 @@ export default {
   },
   data() {
     return {
-      payments: doctorPayments,
+      // payments: doctorPayments,
       selectedOblast: "Київська",
          
     }
