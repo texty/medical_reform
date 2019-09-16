@@ -19,7 +19,7 @@
              </div> -->
               <div class="links navicon" >
                 <router-link
-                  title = "КІЛЬКІСТЬ ПАЦІЄНТІВ НА ЛІКАРЯ"
+                  title = "Навантаження лікарів"
                   tag="img"
                   src="img/white/doctors+declarations.png"
                   :to="{ name: 'bar-plots', params: { smth: 'hello_shit' } }"
@@ -27,7 +27,7 @@
               </div>
               <div class="links navicon">
                 <router-link
-                  title = "ТАБЛИЦЯ ЛІКАРІВ"
+                  title = "ТАБЛИЦЯ ДЛЯ ВИБОРУ ЛІКАРІВ"
                   tag="img"
                   src="img/white/table_doctors.png"
                   :to="{ name: 'doctors-table', params: { oblast: 'Київська' } }"
@@ -36,7 +36,7 @@
 
               <div class="links navicon">
                 <router-link
-                  title = "ТАБЛИЦЯ ЛІКАРЕНЬ"
+                  title = "ТАБЛИЦЯ ЗАКУПІВЕЛЬ ЛІКАРЕНЬ"
                   tag="img"
                   src="img/white/table_hospitals.png"
                   :to="{ name: 'med-table', params: { oblast: 'Київська' } }"
@@ -45,7 +45,7 @@
 
               <div class="links navicon" >
                 <router-link
-                  title = "ЗАКУПІВЛІ"
+                  title = "Лікарні вкладають гроші у свій розвиток"
                   tag="img"
                   src="img/white/procurements.png"
                   :to="{ name: 'procurement_plots', params: { oblast: 'Київська' } }"

@@ -2,7 +2,7 @@
 <div>
   <Navigation></Navigation>
   <div class="description"  :style="{ 'margin-left': leftHeaderMargin, 'margin-bottom': '50px','width': leftHeaderWidth }">
-    <h4 class="subtitle">Таблиця вибору лікаря</h4>
+    <h4 class="subtitle">ТАБЛИЦЯ ДЛЯ ВИБОРУ ЛІКАРІВ</h4>
     <p class="text">Якщо ви досі ще не обрали лікаря для себе та вашої родини. Ви можете зробити це за допомогою нашого інструменту. Ви можете знайти лікарів, що працюють у вашому місті в таблиці нижче. Та підібрати собі того хто ще не підписав максимум (дві тисячі) декларацій з пацієнтами.</p>
   </div>
 
