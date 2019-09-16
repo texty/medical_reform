@@ -215,7 +215,7 @@ rect.bar
   fill: $blue
 
 rect.bar:hover
-  fill: #ff61ef
+  fill: #05e3f4
 
 
 text.yearLabel

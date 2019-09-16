@@ -14,11 +14,11 @@
         <router-link          
           tag="img"
           src="img/blue/declarations.png"
-          :to="{ name: 'horizontal-bar', params: { smth: 'hello_shit' } }"
+          :to="{ name: 'horizontal-bar' }"
         >Horizontal Bar</router-link>
                 
         <div class="icon-description">
-          <router-link tag="p"  :to="{ name: 'horizontal-bar', params: { smth: 'hello_shit' } }"
+          <router-link tag="p"  :to="{ name: 'horizontal-bar' }"
           >Кількість підписаних декларацій</router-link>
         </div>
       </div>
@@ -39,12 +39,12 @@
         <router-link
           tag="img"
           src="img/blue/doctors+declarations.png"
-          :to="{ name: 'bar-plots', params: { smth: 'hello_shit' } }"
+          :to="{ name: 'bar-plots' }"
         >Bar Plots</router-link>
         <div class="icon-description">
           <router-link
             tag="p"
-            :to="{ name: 'bar-plots', params: { smth: 'hello_shit' } }"
+            :to="{ name: 'bar-plots' }"
           >Кількість декларацій по регіонах</router-link>
         </div>
       </div>
@@ -679,7 +679,7 @@ div.finalBars {
 
 //інше
 rect.bar:hover {
-  fill: "red";
+  fill: #05e3f4;
 }
 
 .resize-observer {
