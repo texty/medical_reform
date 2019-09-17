@@ -458,7 +458,7 @@ div.tableNavigation .row {
 }
 
 a {
-  color: black;
+  color: $blue;
 }
 
 div.plot {
