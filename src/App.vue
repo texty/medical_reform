@@ -366,8 +366,7 @@ div.header
   margin: 2em 25% 1em 25%
   line-height: 1.5
   font-size: 1.15em
-  a
-    color: #4555bd
+  
   ul
     margin: 2em 25% 0 25%
     line-height: 1.5
@@ -440,10 +439,7 @@ div.tableNavigation .row
     background-color: #4555bd
     border-color: #4555bd
   
-  a
-    color: black
-
-
+  
 div.plot
   background-color: #4555bd
   text-aligh: center
