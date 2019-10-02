@@ -1,58 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title>Відкрита медицина</title>
+
+<head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width,initial-scale=1.0">
+      <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+      <title>Відкрита медреформа</title>
 
 
-    <!-- OpenGraph Meta Tags -->
-    <meta property="og:site_name"
-          content="Відкрита медреформа"/>
-    <meta property="og:type" content="website"/>
-    <meta property="og:title"
-          content="Відкрита медреформа"/>
-    <meta property="og:image" content="http://texty.org.ua/d/2019/medical_reform/img/cover.jpg"/>
-    <meta property="og:description"
-          content='Проект про зміни, що відбулися в медичній сфері за два роки реформи'/>
-    <meta property="og:url" content="http://texty.org.ua/d/2019/medical_reform/"/>
+      <!-- OpenGraph Meta Tags -->
+      <meta property="og:site_name" content="Відкрита медреформа" />
+      <meta property="og:type" content="website" />
+      <meta property="og:title" content="Відкрита медреформа" />
+      <meta property="og:image" content="http://texty.org.ua/d/2019/medical_reform/img/cover.jpg" />
+      <meta property="og:description" content='Проект про зміни, що відбулися в медичній сфері за два роки реформи' />
+      <meta property="og:url" content="http://texty.org.ua/d/2019/medical_reform/" />
 
 
-    <!-- Twitter Card Meta Tags -->
-    <meta name="twitter:site" content="@textyorgua"/>
-    <meta property="twitter:account_id" content="49572937"/>
-    <meta name="twitter:card" content="summary_large_image"/>
-    <meta name="twitter:url" content="http://texty.org.ua/d/2019/medical_reform/"/>
-    <meta name="twitter:title"
-          content="Відкрита медреформа"/>
-    <meta name="twitter:description"
-          content='Проект про зміни, що  відбулися в медичній сфері за два роки реформи'/>
-    <meta name="twitter:image:src" content="http://texty.org.ua/d/2019/medical_reform/img/cover.jpg"/>
-    <meta name="twitter:image:width" content="1200"/>
-    <meta name="twitter:image:height" content="630"/>
+      <!-- Twitter Card Meta Tags -->
+      <meta name="twitter:site" content="@textyorgua" />
+      <meta property="twitter:account_id" content="49572937" />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:url" content="http://texty.org.ua/d/2019/medical_reform/" />
+      <meta name="twitter:title" content="Відкрита медреформа" />
+      <meta name="twitter:description" content='Проект про зміни, що  відбулися в медичній сфері за два роки реформи' />
+      <meta name="twitter:image:src" content="http://texty.org.ua/d/2019/medical_reform/img/cover.jpg" />
+      <meta name="twitter:image:width" content="1200" />
+      <meta name="twitter:image:height" content="630" />
 
 
-    <!-- Other Meta Tags -->
-    <meta name="title"
-          content="Відкрита медреформа">
-    <meta name="description"
-          content='Проект про зміни, що відбулися в медичній сфері за два роки реформи'>
+      <!-- Other Meta Tags -->
+      <meta name="title" content="Відкрита медреформа">
+      <meta name="description" content='Проект про зміни, що відбулися в медичній сфері за два роки реформи'>
 
 
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+            integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
 
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but med doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <main id="main">
-        <router-view></router-view>
-    </main>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.9.2/d3.js"></script>
-   <!-- built files will be auto injected -->
-  </body>
+</head>
+
+<body>
+      <noscript>
+            <strong>We're sorry but med doesn't work properly without JavaScript enabled. Please enable it to
+                  continue.</strong>
+      </noscript>
+      <main id="main">
+            <router-view></router-view>
+      </main>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.9.2/d3.js"></script>
+      <!-- built files will be auto injected -->
+      <!--google analytics -->
+      <script type="text/javascript">
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-18136548-1']);
+            _gaq.push(['_trackPageview']);
+            (function () {
+                  var ga = document.createElement('script');
+                  ga.type = 'text/javascript';
+                  ga.async = true;
+                  ga.src = ('https:' == document.location.protocol ? 'https://' : 'http://') + 'stats.g.doubleclick.net/dc.js';
+                  var s = document.getElementsByTagName('script')[0];
+                  s.parentNode.insertBefore(ga, s);
+            })();
+      </script>
+</body>
+
 </html>
