@@ -49,8 +49,8 @@ import Footer from "@/components/Footer.vue";
 
 import doctorPayments from "@/assets/payments_to_doctors.json";
 
-import money_per_month from '@/assets/money_per_month.json'
-import decl_count from '@/assets/decl_count.json'
+import money_per_month from '@/assets/money_per_month_update.json'
+import decl_count from '@/assets/decl_count_update.json'
 
 
 export default {

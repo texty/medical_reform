@@ -3,7 +3,7 @@
   <Navigation></Navigation>
   <div class="description"  :style="{ 'margin-left': leftHeaderMargin, 'margin-bottom': '50px','width': leftHeaderWidth }">
     <h4 class="subtitle">Лікарні вкладають гроші у свій розвиток</h4>
-    <p class="text">Ми перевірили, що купували медичні заклади до реформи та після неї — й побачили, що лікарні почали купувати більше комп’ютерних систем, медичного обладнання, а також меблів, протипожежних систем і кондиціонерів. Найбільше зросли витрати на комп’ютерні системи. Національна Служба Здоров’я України та Міністерство Охорони Здоров’я вимагають від лікарень перевести в електронну форму всю адміністративну роботу. А отже, їм потрібно купувати обладнання і програми. Завдяки реформі паперові картки й талони відійдуть у минуле. І ми можемо побачити, що цей процес вже почався.
+    <p class="text">Ми перевірили, що купували медичні заклади до реформи та після неї — й побачили, що лікарні почали купувати більше комп’ютерних систем, медичного обладнання, а також меблів, протипожежних систем і кондиціонерів. Найбільше зросли витрати на комп’ютерні системи. Національна Служба Здоров’я України та Міністерство Охорони Здоров’я вимагають від лікарень перевести в електронну форму всю адміністративну роботу. А отже, їм потрібно купувати обладнання і програми. Завдяки реформі паперові картки й талони відійдуть у минуле. І ми можемо побачити, що цей процес вже почався. На графіці ми порівнюємо дані зразу перед початком реформи у 2017, з аналогічним періодом у 2019 році.
 </p>   
 
 <div class="parallelPlotOblast" :style="{ 'width': leftHeaderWidth }">
@@ -52,7 +52,7 @@ import Navigation from "@/components/Navigation.vue";
 import Footer from "@/components/Footer.vue";
 
 
-import procuramentPivot from "@/assets/procurements_pivot_with_regions.json";
+import procuramentPivot from "@/assets/procurements_pivot_with_regions_update.json";
 
 export default {
   props: {
@@ -98,8 +98,8 @@ export default {
     nestedProcurement: function() {
       let nest = d3
         .nest()
-        .key(d => d.id_item_short)
-        .key(d => d.oblast)
+        .key(d => d.item_id_short)
+        .key(d => d.division_area)
         .rollup(function(leaves) {
           return {
             2017: d3.sum(leaves, function(d) {
@@ -110,7 +110,7 @@ export default {
             })
           };
         })
-        .entries(this.loadProcurementPivot.filter(d => d.oblast != null));
+        .entries(this.loadProcurementPivot.filter(d => d.division_area != null));
 
       return nest;
     },
@@ -119,6 +119,7 @@ export default {
       let data = this.nestedProcurement.filter(function(d) {
         return d.values.length > 10;
       });
+      // return data
 
       let selectedData = data.filter(function(d) {
         return [

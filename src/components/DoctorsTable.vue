@@ -190,7 +190,7 @@ import tooltip from "vue-simple-tooltip";
 import Navigation from "@/components/Navigation.vue";
 import Footer from "@/components/Footer.vue";
 
-import doctorsNames from "@/assets/doctors_for_table_newest.json";
+import doctorsNames from "@/assets/doctors_for_table_update.json";
 import hospitalNames from "@/assets/hospital_names.json";
 
 /* import 'vue-slider-component/theme/antd.css'; */

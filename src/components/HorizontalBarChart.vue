@@ -41,9 +41,9 @@
             v-for="(d,i) in staticData"
             v-bind:key="i"
             x="0"
-            :y="getScales().y(d.rajon_grouped) + 5"
+            :y="getScales().y(d.rajon) + 5"
             :height="heightOfbar/2"
-            :width="drawIfTrue(getScales().x(+d[variable]))"
+            :width="drawIfTrue(getScales().x( +d[variable] <= 100 ? +d[variable] : 100 ))"
             :fill="color"
             :class="{ active: hover === i }"
           />
@@ -51,30 +51,30 @@
           <text
             v-for="(d,i) in staticData"
             v-bind:key="i+'c'"
-            :x="getScales().x(+d[variable]) + 10"
-            :y="getScales().y(d.rajon_grouped) + 10"
+            :x="getScales().x(+d[variable] < 100 ? +d[variable] : 100) + 10"
+            :y="getScales().y(d.rajon) + 10"
             :width="1"
             :style="{
               'font-size': '0.9em',
               fill: color
             }"
-          >{{ Math.round(d[variable]) + '%' }}</text>
+          >{{ (d[variable] < 100 ) ? Math.round(d[variable]) + '%' : "100+%"}}</text>
 
           <text
             v-for="(d,i) in staticData"
             v-bind:key="i+'a'"
             :x="0"
-            :y="getScales().y(d.rajon_grouped) - 0"
+            :y="getScales().y(d.rajon) - 0"
             :style="{
               'font-size': '0.85em',
             }"
-          >{{ d.rajon_grouped }}</text>
+          >{{ d.rajon }}</text>
 
           <circle
             v-for="(d,i) in staticData"
             v-bind:key="i+'b'"
-            :cx="getScales().x(+d[variable])"
-            :cy="getScales().y(d.rajon_grouped) + 7"
+            :cx="getScales().x(+d[variable] < 100 ? +d[variable] : 100 )"
+            :cy="getScales().y(d.rajon) + 7"
             :r="6"
             :fill="color"
           />
@@ -95,7 +95,7 @@ import { TweenLite } from "gsap";
 import { selectAll } from "d3-selection";
 /*import { transition } from "d3-transition";*/
 
-import horizontalData from "@/assets/rajon_stats_new.json";
+import horizontalData from "@/assets/rajon_stats_update.json";
 
 import Navigation from "@/components/Navigation.vue";
 import Footer from "@/components/Footer.vue";
@@ -120,7 +120,7 @@ export default {
       heightOfbar: 5,
       checker: false,
       tempData: horizontalData,
-      staticData: [{ rajon_grouped: "", declarations_ratio: 0 }],
+      staticData: [{ rajon: "", declarations_ratio: 0 }],
       mountedWidth: 0,
       margin: {
         top: 20,
@@ -166,7 +166,7 @@ export default {
       function renewData(newData) {
         let temp = [];
         for (var i = 0; i < newData.length; i++) {
-          temp.push({ rajon_grouped: "", declarations_ratio: 0 });
+          temp.push({ rajon: "", declarations_ratio: 0 });
         }
         return temp;
       }
@@ -176,7 +176,7 @@ export default {
           var element = dataToChang[i];
           TweenLite.to(element, 3, {
             declarations_ratio: newData[i]["declarations_ratio"],
-            rajon_grouped: newData[i]["rajon_grouped"]
+            rajon: newData[i]["rajon"]
           });
         }
 
@@ -207,7 +207,7 @@ export default {
 
       let out = this.data.map(d => {
         return {
-          height: getScales.y(d.rajon_grouped),
+          height: getScales.y(d.rajon),
           width: getScales.x(d[variable])
         };
       });
@@ -265,7 +265,7 @@ export default {
     function renewData(newData) {
         let temp = [];
         for (var i = 0; i < newData.length; i++) {
-          temp.push({ rajon_grouped: "", declarations_ratio: 0 });
+          temp.push({ rajon: "", declarations_ratio: 0 });
         }
         return temp;
       } */
@@ -310,7 +310,7 @@ export default {
         }) */
         .duration(1000)
         .attr("y", d => {
-          return this.getScales().y(d.rajon_grouped) + 5;
+          return this.getScales().y(d.rajon) + 5;
         })
         .attr("width", d => {
           return this.getScales().x(+d[this.variable]);
@@ -329,7 +329,7 @@ export default {
         .scaleBand()
         .domain(
           this.data.map(function(d) {
-            return d.rajon_grouped;
+            return d.rajon;
           })
         )
         .rangeRound([this.height, 0])
@@ -337,7 +337,7 @@ export default {
 
       let x = d3
         .scaleLinear()
-        .domain([0, 120])
+        .domain([0, 110])
         .range([1, this.width]);
 
       return { x, y };

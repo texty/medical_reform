@@ -174,7 +174,7 @@ import Footer from "@/components/Footer.vue";
 
 import cpv from "@/assets/cpv.json";
 import hospitalNames from "@/assets/hospital_names.json";
-import tableData from "@/assets/top_100_per_category.json";
+import tableData from "@/assets/top_100_per_category_update.json";
 
 /* import 'vue-slider-component/theme/antd.css'; */
 
