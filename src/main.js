@@ -23,6 +23,8 @@ import DoctorsTable from "./components/DoctorsTable.vue";
 import ProcurementPlots from './components/ProcurementPlots.vue'
 import Header from "./components/Header.vue"
 import Footer from "./components/Footer.vue"
+import RoseChart from "./components/RoseChart.vue"
+
 
 
 
@@ -33,6 +35,7 @@ import Footer from "./components/Footer.vue"
 
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import { RoughEase } from 'gsap';
 
 Vue.use(VueRouter)
 Vue.use(BootstrapVue)
@@ -50,6 +53,8 @@ Vue.component('bar-plots', BarPlots)
 Vue.component('doctors-table', DoctorsTable)
 Vue.component('procurement-plots', ProcurementPlots)
 Vue.component('app', Header)
+Vue.component('rose-chart', RoseChart)
+
 
 
 
@@ -61,6 +66,11 @@ const router = new VueRouter({
       path: '/',
       name: 'home',
       component: Home
+    },
+    {
+      path: '/pharmacy',
+      name: 'rose-chart',
+      component: RoseChart,
     },
     {
       path: '/header',
