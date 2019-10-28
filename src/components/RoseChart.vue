@@ -1,6 +1,40 @@
-<template>
-  <div>
-    <p>Here</p>
+
+
+
+<template v-model="usersOblast">
+<div>
+  <Navigation></Navigation>
+  <div class="description"  :style="{ 'margin-left': leftHeaderMargin, 'margin-bottom': '50px','width': leftHeaderWidth }">
+    <h4 class="subtitle">Кількість підписаних декларацій</h4>
+    <p class="text">Більшість людей підписали декларацію зі своїм сімейним лікарем. Ми розрахували відсоток людей від населення районів і міст України, які підписали декларації у лікарнях на своїй території проживання. Середній показник тих, хто підписав декларації, становить близько 70% по країні. Найменша кількість підписаних декларацій — на півдні країни, в середньому — 65%. На графіку нижче ви можете вибрати область і досліджувати статистику по регіонах самостійно.
+</p>   
+    <p class="text">Більшість людей звертається по допомогу до комунальних лікарень. Таких закладів найбільше, вони мають відділення навіть у невеликих селах. Але також люди підписують декларації з лікарями-ФОП і приватними лікарнями. Тож ми також проаналізували, скільки пацієнтів підписали декларації з лікарем у приватних клініках і в комунальних медзакладах.
+</p> 
+    <p class="text">На одного лікаря в приватних клініках припадає в середньому п’ятсот пацієнтів, тоді як у комунальних — більше тисячі. Це може мати  кілька пояснень. Перше: люди частіше звертаються в ті лікарні, в які звикли ходити до реформи. Друге: в приватних медзакладах лікарі менше залежать від грошей НСЗУ, бо паралельно надають платні послуги.
+</p> 
+  </div>
+
+  <div class="horizontalPlot" :style="{ 'margin-left': leftHeaderMargin, 'width': leftHeaderWidth }">
+    
+    <article></article>
+    <!-- <div class="selectorOblast">      
+      <div class="oblast">
+        <p>Оберіть область:</p>
+        <multiselect
+          :hide-selected="true"
+          placeholder="Виберіть область"
+          deselect-label
+          select-label
+          :allow-empty="false"
+          v-model="oblast"
+          :options="oblast_names"
+        ></multiselect>
+      </div>
+    </div> -->
+
+     <div class="plot" >
+        <div>
+    <!-- <p>Here</p> -->
     <Rose 
     v-for="(d, i) in network"
     v-bind:key="i"
@@ -13,29 +47,59 @@
       {{ d.aptekaObjects[0] }}
     </p> -->
   </div>
+    </div> 
+  </div>
+  <Footer></Footer>
+</div>
 </template>
 
 <script>
 import Rose from "./Rose.vue";
 import * as d3 from "d3";
-// import pmd from '@/assets/pmd_all_contracted_legal_entities.csv'
-// import apteka from '@/assets/pharmacy_all_contracted_legal_entities.csv'
-// import network from '@/assets/hospitals_and_pharmacies.json'
+import Multiselect from "vue-multiselect";
+
+
+import Navigation from "@/components/Navigation.vue";
+import Footer from "@/components/Footer.vue";
+
+
 
 export default {
+  name: "vue-bar-chart",
+  props: {
+
+  },
   data() {
     return {
       pmd: null,
       apteka: null,
       network: null,
       aptekyNested: null
-      //   roseWidth: 100,
-      //   roseHeight: 100,
     };
   },
-  computed: {},
   components: {
+    Multiselect,
+    Navigation, 
+    Footer,
     Rose
+  },
+  watch: {
+
+  },
+  computed: {
+
+  },
+  directives: {
+
+  },
+  created() {},
+  mounted() {
+    this.getPos();
+    this.$nextTick(function() {
+      window.addEventListener("resize", this.getPos);
+      window.addEventListener("load", this.getPos);
+    });
+
   },
   methods: {
     project(lat, lng) {
@@ -47,7 +111,15 @@ export default {
       var y = this.roseHeight / 2 - (this.roseWidth * mercN) / (2 * Math.PI);
 
       return x, y;
-    }
+    },
+    getPos: function() {
+      var that = this;
+      var headerBounding = document.querySelector("#headerBounding").getBoundingClientRect();
+      var left = headerBounding.left;
+      var width = headerBounding.width ;
+      that.leftHeaderMargin = left + 33  + "px";
+      that.leftHeaderWidth = width - 50 + "px";
+    },
   },
   created() {
     let that = this;
@@ -90,5 +162,40 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="sass" scoped>
+
+/* div.holder
+  width: 75%
+  margin: 0 auto */
+
+div.selectorOblast div
+  display: flex
+
+div.plot
+  padding-top: 1.5em
+  padding-bottom: 1.5em
+
+div.multiselect
+  margin: 0px 25px
+  width: auto
+
+svg
+  margin-right: 0
+  display: inline-block
+
+path.domain
+  display: none
+
+tick
+  line
+    display: none
+path
+  fill: none
+  stroke: #76BF8A
+  stroke-width: 3px
+
+rect.active
+  fill: green
+
+
 </style>

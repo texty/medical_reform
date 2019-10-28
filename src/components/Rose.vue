@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>{{hospital.division_name + " " + hospital.division_residence_addresses}}</div>
+    <!-- <div>{{hospital.division_name + " " + hospital.division_residence_addresses}}</div> -->
 
     <!--       <p >
       {{ hospital }}
