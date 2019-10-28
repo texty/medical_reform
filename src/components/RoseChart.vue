@@ -20,82 +20,80 @@
       >На одного лікаря в приватних клініках припадає в середньому п’ятсот пацієнтів, тоді як у комунальних — більше тисячі. Це може мати кілька пояснень. Перше: люди частіше звертаються в ті лікарні, в які звикли ходити до реформи. Друге: в приватних медзакладах лікарі менше залежать від грошей НСЗУ, бо паралельно надають платні послуги.</p>
     </div>
 
-    <div
-      class="rosePlot">
-    <!-- :style="{ 'margin-left': leftHeaderMargin, 'width': leftHeaderWidth }" -->
-
+    <div class="rosePlot">
+      <!-- :style="{ 'margin-left': leftHeaderMargin, 'width': leftHeaderWidth }" -->
 
       <!-- <article></article> -->
 
       <div class="filters">
-      <div class="selectorOblast">
-        <p>Виберіть:</p>
-        <div class="oblast">
-          <multiselect
-            :hide-selected="true"
-            placeholder="Виберіть область"
-            deselect-label
-            select-label
-            :allow-empty="false"
-            v-model="oblast"
-            :options="oblastNames"
-          ></multiselect>
+        <div class="selectorOblast">
+          <p>Виберіть:</p>
+          <div class="oblast">
+            <multiselect
+              :hide-selected="true"
+              placeholder="Виберіть область"
+              deselect-label
+              select-label
+              :allow-empty="false"
+              v-model="oblast"
+              :options="oblastNames"
+            ></multiselect>
+          </div>
+        </div>
+        <div class="selectorOblast">
+          <div class="oblast">
+            <multiselect
+              :hide-selected="true"
+              placeholder="Виберіть район"
+              deselect-label
+              select-label
+              :allow-empty="false"
+              v-model="oblast"
+              :options="rajonNames"
+            ></multiselect>
+          </div>
+        </div>
+        <div class="selectorOblast">
+          <div class="oblast">
+            <multiselect
+              :hide-selected="true"
+              placeholder="Населений пункт"
+              deselect-label
+              select-label
+              :allow-empty="false"
+              v-model="city"
+              :options="cityNames"
+            ></multiselect>
+          </div>
+        </div>
+        <div class="selectorOblast">
+          <div class="oblast">
+            <multiselect
+              :hide-selected="true"
+              placeholder="Назва лікарні"
+              deselect-label
+              select-label
+              :allow-empty="false"
+              v-model="adress"
+              :options="adressNames"
+            ></multiselect>
+          </div>
+        </div>
+        <div class="selectorOblast">
+          <div class="oblast">
+            <multiselect
+              :hide-selected="true"
+              placeholder="Адреса"
+              deselect-label
+              select-label
+              :allow-empty="false"
+              v-model="hospital"
+              :options="hospitalNames"
+            ></multiselect>
+          </div>
         </div>
       </div>
-      <div class="selectorOblast">
-        <div class="oblast">
-          <multiselect
-            :hide-selected="true"
-            placeholder="Виберіть район"
-            deselect-label
-            select-label
-            :allow-empty="false"
-            v-model="oblast"
-            :options="rajonNames"
-          ></multiselect>
-        </div>
-      </div>
-      <div class="selectorOblast">
-        <div class="oblast">
-          <multiselect
-            :hide-selected="true"
-            placeholder="Населений пункт"
-            deselect-label
-            select-label
-            :allow-empty="false"
-            v-model="city"
-            :options="cityNames"
-          ></multiselect>
-        </div>
-      </div>
-      <div class="selectorOblast">
-        <div class="oblast">
-          <multiselect
-            :hide-selected="true"
-            placeholder="Назва лікарні"
-            deselect-label
-            select-label
-            :allow-empty="false"
-            v-model="adress"
-            :options="adressNames"
-          ></multiselect>
-        </div>
-      </div>
-      <div class="selectorOblast">
-        <div class="oblast">
-          <multiselect
-            :hide-selected="true"
-            placeholder="Адреса"
-            deselect-label
-            select-label
-            :allow-empty="false"
-            v-model="hospital"
-            :options="hospitalNames"
-          ></multiselect>
-        </div>
-      </div>
-      </div>
-      
+
       <div class="plotRose">
         <!-- <div> -->
         <!-- <p>Here</p> -->
@@ -104,7 +102,7 @@
           :roseWidth="200"
           :roseHeight="200"
           :hospital=""
-        /> -->
+        />-->
 
         <Rose
           class="rose-chart"
@@ -148,8 +146,8 @@ export default {
       network: null,
       aptekyNested: null,
       oblast: "Київська",
-      city: "Фастів",
-      adress: "Незалежності 1",
+      city: "",
+      adress: "",
       rajon: "",
       hospital: "",
       cityNames: [],
@@ -157,12 +155,9 @@ export default {
       rajonNames: [],
       oblastNames: [],
       hospitalNames: []
-
     };
   },
-  computed: {
-
-  },
+  computed: {},
   components: {
     Multiselect,
     Navigation,
@@ -202,62 +197,83 @@ export default {
       that.leftHeaderWidth = width - 50 + "px";
     }
   },
-  created() {
+  async mounted() {
+    const files = await Promise.all([
+      // d3.csv("data/pmd_all_contracted_legal_entities.csv"),
+      d3.csv("data/pharmacy_all_contracted_legal_entities.csv"),
+      d3.json("data/hospitals_and_pharmacies.json")
+    ]);
 
+    const that = this
+
+    that.apteka = files[0];
+    /* that.network = files[2]; */
+
+    that.aptekyNested = d3
+      .nest()
+      .key(function(d) {
+        return d.division_id;
+      })
+      .map(that.apteka);
+
+    that.network = files[1]
+      .map(d => {
+        return {
+          ...d,
+          ...{
+            aptekaObjects: d.pharmas.map(dd => {
+              return that.aptekyNested.get(dd)[0];
+            })
+          }
+        };
+      })
+      .slice(0, 10);
+
+
+    that.oblastNames = [
+      ...new Set(
+        that.network.map(d => {
+          return d.division_area;
+        })
+      )
+    ];
+    that.cityNames = [
+      ...new Set(
+        that.network.map(d => {
+          return d.division_settlement;
+        })
+      )
+    ];
+    that.rajonNames = [
+      ...new Set(
+        that.network.map(d => {
+          return d.division_region;
+        })
+      )
+    ];
+    that.adressNames = [
+      ...new Set(
+        that.network.map(d => {
+          return d.division_residence_addresses;
+        })
+      )
+    ];
+    that.hospitalNames = [
+      ...new Set(
+        that.network.map(d => {
+          return d.legal_entity_name;
+        })
+      )
+    ];
+  },
+  created() {
     this.getPos();
     this.$nextTick(function() {
       window.addEventListener("resize", this.getPos);
       window.addEventListener("load", this.getPos);
     });
 
-
     let that = this;
-    Promise.all([
-      // d3.csv("data/pmd_all_contracted_legal_entities.csv"),
-      d3.csv("data/pharmacy_all_contracted_legal_entities.csv"),
-      d3.json("data/hospitals_and_pharmacies.json")
-    ])
-      .then(function(files) {
-        // files[0] will contain file1.csv
-        // files[1] will contain file2.csv
-        // that.pmd = files[0];
-        that.apteka = files[0];
-        /* that.network = files[2]; */
-
-        that.aptekyNested = d3
-          .nest()
-          .key(function(d) {
-            return d.division_id;
-          })
-          .map(that.apteka);
-
-        that.network = files[1]
-          .map(d => {
-            return {
-              ...d,
-              ...{
-                aptekaObjects: d.pharmas.map(dd => {
-                  return that.aptekyNested.get(dd)[0];
-                })
-              }
-            };
-          })
-          .slice(0, 10);
-
-      that.oblastNames = [...new Set(that.network.map(d => { return d.division_area}))]
-      that.cityNames = [...new Set(that.network.map(d => { return d.division_settlement}))]
-      that.rajonNames = [...new Set(that.network.map(d => { return d.division_region}))]
-      that.adressNames = [...new Set(that.network.map(d => { return d.division_residence_addresses}))]
-      that.hospitalNames = [...new Set(that.network.map(d => { return d.legal_entity_name}))]
-      
-
-      })
-      .catch(function(err) {
-        console.log(err)
-      });
-
-      
-
   }
 };
 </script>
@@ -276,7 +292,6 @@ div.rosePlot {
   display: grid;
   grid-template-columns: 40vh auto;
 }
-
 </style>
 
 

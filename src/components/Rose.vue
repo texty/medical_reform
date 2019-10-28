@@ -10,7 +10,7 @@
 {{buffered}}
     </p>-->
 
-    <p>{{ hospital.division_name.substring(0,40) + "..."  }}</p>
+    <p class="names">{{ hospital.division_name.substring(0,40) + "..."  }}</p>
 
     <svg viewBox="0 0 200 200" :width="roseWidth" :height="roseHeight">
       <defs>
@@ -150,7 +150,7 @@ export default {
 </script>
 
 <style lang="scss">
-p {
+p.names {
   font-size: 0.7em;
 }
 svg {
