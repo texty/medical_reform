@@ -20,6 +20,8 @@
       >На одного лікаря в приватних клініках припадає в середньому п’ятсот пацієнтів, тоді як у комунальних — більше тисячі. Це може мати кілька пояснень. Перше: люди частіше звертаються в ті лікарні, в які звикли ходити до реформи. Друге: в приватних медзакладах лікарі менше залежать від грошей НСЗУ, бо паралельно надають платні послуги.</p>
     </div>
 
+    <!-- <p> {{ filtered.division_id }} </p> -->
+
     <div class="rosePlot">
       <!-- :style="{ 'margin-left': leftHeaderMargin, 'width': leftHeaderWidth }" -->
 
@@ -35,7 +37,7 @@
               deselect-label
               select-label
               :allow-empty="false"
-              v-model="oblast"
+              v-model="filters.oblast"
               :options="oblastNames"
             ></multiselect>
           </div>
@@ -48,7 +50,7 @@
               deselect-label
               select-label
               :allow-empty="false"
-              v-model="oblast"
+              v-model="filters.rajon"
               :options="rajonNames"
             ></multiselect>
           </div>
@@ -61,7 +63,7 @@
               deselect-label
               select-label
               :allow-empty="false"
-              v-model="city"
+              v-model="filters.city"
               :options="cityNames"
             ></multiselect>
           </div>
@@ -74,22 +76,23 @@
               deselect-label
               select-label
               :allow-empty="false"
-              v-model="adress"
+              v-model="filters.adress"
               :options="adressNames"
             ></multiselect>
           </div>
         </div>
         <div class="selectorOblast">
           <div class="oblast">
-            <multiselect
+            <!-- <multiselect
               :hide-selected="true"
               placeholder="Адреса"
               deselect-label
               select-label
               :allow-empty="false"
-              v-model="hospital"
+              v-model="filters.hospital"
               :options="hospitalNames"
-            ></multiselect>
+            ></multiselect> -->
+            <input>
           </div>
         </div>
       </div>
@@ -106,7 +109,7 @@
 
         <Rose
           class="rose-chart"
-          v-for="(d, i) in network"
+          v-for="(d, i) in filtered"
           v-bind:key="i"
           :roseWidth="200"
           :roseHeight="200"
@@ -145,11 +148,13 @@ export default {
       apteka: null,
       network: null,
       aptekyNested: null,
-      oblast: "Київська",
-      city: "",
-      adress: "",
-      rajon: "",
-      hospital: "",
+      filters: {
+        oblast: "Київська",
+        city: "",
+        adress: "",
+        rajon: "",
+        hospital: ""
+      },
       cityNames: [],
       adressNames: [],
       rajonNames: [],
@@ -157,7 +162,44 @@ export default {
       hospitalNames: []
     };
   },
-  computed: {},
+  computed: {
+    filtered() {
+      if (!this.network) {
+        return [];
+      } else {
+        let filtered = this.network.filter(item => {
+          const that = this;
+
+          var namesOfVar = {
+            oblast: "division_area",
+            city: "division_settlement",
+            adress: "division_residence_addresses",
+            rajon: "division_region",
+            hospital: "legal_entity_name"
+          };
+
+          // debugger;
+
+          var keys = Object.keys(that.filters);
+          // keys = keys.filter(e => e !== "sum");
+          return keys.every(key => {
+            const s = String(item[namesOfVar[key]]).toUpperCase();
+            return s !== "" ? s.includes(that.filters[key].toUpperCase()) : s;
+          });
+        });
+
+
+        return filtered.length > 0
+          ? filtered
+          : [
+              Object.keys(that.names[0]).reduce(function(obj, value) {
+                obj[value] = "";
+                return obj;
+              }, {})
+            ];
+      }
+    }
+  },
   components: {
     Multiselect,
     Navigation,
@@ -198,13 +240,19 @@ export default {
     }
   },
   async mounted() {
+    this.getPos();
+    this.$nextTick(function() {
+      window.addEventListener("resize", this.getPos);
+      window.addEventListener("load", this.getPos);
+    });
+
     const files = await Promise.all([
       // d3.csv("data/pmd_all_contracted_legal_entities.csv"),
       d3.csv("data/pharmacy_all_contracted_legal_entities.csv"),
       d3.json("data/hospitals_and_pharmacies.json")
     ]);
 
-    const that = this
+    const that = this;
 
     that.apteka = files[0];
     /* that.network = files[2]; */
@@ -227,8 +275,7 @@ export default {
           }
         };
       })
-      .slice(0, 10);
-
+      // .slice(0, 10);
 
     that.oblastNames = [
       ...new Set(
@@ -267,11 +314,11 @@ export default {
     ];
   },
   created() {
-    this.getPos();
-    this.$nextTick(function() {
-      window.addEventListener("resize", this.getPos);
-      window.addEventListener("load", this.getPos);
-    });
+    // this.getPos();
+    // this.$nextTick(function() {
+    //   window.addEventListener("resize", this.getPos);
+    //   window.addEventListener("load", this.getPos);
+    // });
 
     let that = this;
   }
