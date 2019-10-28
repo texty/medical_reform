@@ -2,7 +2,7 @@
 
 
 <template v-model="usersOblast">
-  <div>
+  <div class="roseElements">
     <Navigation></Navigation>
     <div
       class="description"
@@ -28,7 +28,13 @@
       <!-- <article></article> -->
 
       <div class="filters">
-        <div class="selectorOblast">
+        <input v-model="filters.oblast" />
+        <input />
+        <input />
+        <input />
+        <input />
+
+        <!-- <div class="selectorOblast">
           <p>Виберіть:</p>
           <div class="oblast">
             <multiselect
@@ -83,7 +89,7 @@
         </div>
         <div class="selectorOblast">
           <div class="oblast">
-            <!-- <multiselect
+            <multiselect
               :hide-selected="true"
               placeholder="Адреса"
               deselect-label
@@ -91,10 +97,10 @@
               :allow-empty="false"
               v-model="filters.hospital"
               :options="hospitalNames"
-            ></multiselect> -->
-            <input>
+            ></multiselect>
+            
           </div>
-        </div>
+        </div>-->
       </div>
 
       <div class="plotRose">
@@ -188,7 +194,6 @@ export default {
           });
         });
 
-
         return filtered.length > 0
           ? filtered
           : [
@@ -264,18 +269,17 @@ export default {
       })
       .map(that.apteka);
 
-    that.network = files[1]
-      .map(d => {
-        return {
-          ...d,
-          ...{
-            aptekaObjects: d.pharmas.map(dd => {
-              return that.aptekyNested.get(dd)[0];
-            })
-          }
-        };
-      })
-      // .slice(0, 10);
+    that.network = files[1].map(d => {
+      return {
+        ...d,
+        ...{
+          aptekaObjects: d.pharmas.map(dd => {
+            return that.aptekyNested.get(dd)[0];
+          })
+        }
+      };
+    });
+    // .slice(0, 10);
 
     that.oblastNames = [
       ...new Set(
@@ -338,6 +342,12 @@ div.plotRose {
 div.rosePlot {
   display: grid;
   grid-template-columns: 40vh auto;
+}
+
+div.roseElements input {
+  border: 1px solid rgb(178, 178, 178);
+  margin: 10px 25px;
+  width: auto;
 }
 </style>
 
