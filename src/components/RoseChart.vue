@@ -28,13 +28,14 @@
       <!-- <article></article> -->
 
       <div class="filters">
-        <input v-model="filters.oblast" />
+        <!-- <input v-model="filters.oblast" />
         <input />
         <input />
         <input />
-        <input />
+        <input /> -->
 
-        <!-- <div class="selectorOblast">
+
+         <div class="selectorOblast">
           <p>Виберіть:</p>
           <div class="oblast">
             <multiselect
@@ -100,7 +101,7 @@
             ></multiselect>
             
           </div>
-        </div>-->
+        </div>
       </div>
 
       <div class="plotRose">
@@ -115,7 +116,7 @@
 
         <Rose
           class="rose-chart"
-          v-for="(d, i) in filtered"
+          v-for="(d, i) in oblast.slice(10)"
           v-bind:key="i"
           :roseWidth="200"
           :roseHeight="200"
@@ -169,41 +170,51 @@ export default {
     };
   },
   computed: {
-    filtered() {
+    oblast() {
       if (!this.network) {
         return [];
       } else {
-        let filtered = this.network.filter(item => {
-          const that = this;
-
-          var namesOfVar = {
-            oblast: "division_area",
-            city: "division_settlement",
-            adress: "division_residence_addresses",
-            rajon: "division_region",
-            hospital: "legal_entity_name"
-          };
-
-          // debugger;
-
-          var keys = Object.keys(that.filters);
-          // keys = keys.filter(e => e !== "sum");
-          return keys.every(key => {
-            const s = String(item[namesOfVar[key]]).toUpperCase();
-            return s !== "" ? s.includes(that.filters[key].toUpperCase()) : s;
-          });
-        });
-
-        return filtered.length > 0
-          ? filtered
-          : [
-              Object.keys(that.names[0]).reduce(function(obj, value) {
-                obj[value] = "";
-                return obj;
-              }, {})
-            ];
+      const that = this
+      return that.network.filter(item => {
+        return item.division_area == that.filters.oblast
+      })
       }
-    }
+    },
+    // filtered() {
+    //   if (!this.network) {
+    //     return [];
+    //   } else {
+    //     let filtered = this.network.filter(item => {
+    //       const that = this;
+
+    //       var namesOfVar = {
+    //         oblast: "division_area",
+    //         city: "division_settlement",
+    //         adress: "division_residence_addresses",
+    //         rajon: "division_region",
+    //         hospital: "legal_entity_name"
+    //       };
+
+    //       // debugger;
+
+    //       var keys = Object.keys(that.filters);
+    //       // keys = keys.filter(e => e !== "sum");
+    //       return keys.every(key => {
+    //         const s = String(item[namesOfVar[key]]).toUpperCase();
+    //         return s !== "" ? s.includes(that.filters[key].toUpperCase()) : s;
+    //       });
+    //     });
+
+    //     return filtered.length > 0
+    //       ? filtered
+    //       : [
+    //           Object.keys(that.names[0]).reduce(function(obj, value) {
+    //             obj[value] = "";
+    //             return obj;
+    //           }, {})
+    //         ];
+    //   }
+    // }
   },
   components: {
     Multiselect,
@@ -281,41 +292,41 @@ export default {
     });
     // .slice(0, 10);
 
-    that.oblastNames = [
-      ...new Set(
-        that.network.map(d => {
-          return d.division_area;
-        })
-      )
-    ];
-    that.cityNames = [
-      ...new Set(
-        that.network.map(d => {
-          return d.division_settlement;
-        })
-      )
-    ];
-    that.rajonNames = [
-      ...new Set(
-        that.network.map(d => {
-          return d.division_region;
-        })
-      )
-    ];
-    that.adressNames = [
-      ...new Set(
-        that.network.map(d => {
-          return d.division_residence_addresses;
-        })
-      )
-    ];
-    that.hospitalNames = [
-      ...new Set(
-        that.network.map(d => {
-          return d.legal_entity_name;
-        })
-      )
-    ];
+    // that.oblastNames = [
+    //   ...new Set(
+    //     that.network.map(d => {
+    //       return d.division_area;
+    //     })
+    //   )
+    // ];
+    // that.cityNames = [
+    //   ...new Set(
+    //     that.network.map(d => {
+    //       return d.division_settlement;
+    //     })
+    //   )
+    // ];
+    // that.rajonNames = [
+    //   ...new Set(
+    //     that.network.map(d => {
+    //       return d.division_region;
+    //     })
+    //   )
+    // ];
+    // that.adressNames = [
+    //   ...new Set(
+    //     that.network.map(d => {
+    //       return d.division_residence_addresses;
+    //     })
+    //   )
+    // ];
+    // that.hospitalNames = [
+    //   ...new Set(
+    //     that.network.map(d => {
+    //       return d.legal_entity_name;
+    //     })
+    //   )
+    // ];
   },
   created() {
     // this.getPos();
@@ -344,11 +355,11 @@ div.rosePlot {
   grid-template-columns: 40vh auto;
 }
 
-div.roseElements input {
-  border: 1px solid rgb(178, 178, 178);
-  margin: 10px 25px;
-  width: auto;
-}
+// div.roseElements input {
+//   border: 1px solid rgb(178, 178, 178);
+//   margin: 10px 25px;
+//   width: auto;
+// }
 </style>
 
 
