@@ -13,13 +13,21 @@
       <h4 class="subtitle">Кількість підписаних декларацій</h4>
       <p
         class="text"
-      >Більшість людей підписали декларацію зі своїм сімейним лікарем. Ми розрахували відсоток людей від населення районів і міст України, які підписали декларації у лікарнях на своїй території проживання. Середній показник тих, хто підписав декларації, становить близько 70% по країні. Найменша кількість підписаних декларацій — на півдні країни, в середньому — 65%. На графіку нижче ви можете вибрати область і досліджувати статистику по регіонах самостійно.</p>
+      >
+      В Україні стартувала програма повернення вартості ліків (реімбурсації). Це означає, що громадяни можуть отримувати деякі ліки в аптеці безоплатно. Замість них аптеці платитиме Національна Служба Здоров’я, що фінансується за рахунок податків. Ліки за цією програмою можна отримати тільки за рецептом сімейного лікаря з яким людина підписала декларацію. </p>
       <p
         class="text"
-      >Більшість людей звертається по допомогу до комунальних лікарень. Таких закладів найбільше, вони мають відділення навіть у невеликих селах. Але також люди підписують декларації з лікарями-ФОП і приватними лікарнями. Тож ми також проаналізували, скільки пацієнтів підписали декларації з лікарем у приватних клініках і в комунальних медзакладах.</p>
+      >
+        Зараз в Україні близько 6 тисяч відділень лікарень та кабінетів сімейних лікарів, що включилися до реформи. В програмі реімбурсації бере участь також 7 тисяч аптек по всій країні. Однак, доступність аптек різна. У великих містах працюють десятки різних мереж, а в деяких мережах немає жодної.</p>
       <p
         class="text"
-      >На одного лікаря в приватних клініках припадає в середньому п’ятсот пацієнтів, тоді як у комунальних — більше тисячі. Це може мати кілька пояснень. Перше: люди частіше звертаються в ті лікарні, в які звикли ходити до реформи. Друге: в приватних медзакладах лікарі менше залежать від грошей НСЗУ, бо паралельно надають платні послуги.</p>
+      >
+        На цій візуалізації ми показали скільки аптек є в радіусі 7 кілометрів від кожного лікарняного пункту з пацієнтами. А також інформацію про те, що це за аптеки, де вони знаходяться та скільки компенсації отримали за ті ліки, які вони надали за рецептом лікаря. Ця візуалізація допоможе пацієнту знайти аптеку, що працює за програмою реімбурсації </p>
+          <p
+        class="text"
+      >
+      Також, вона дозволить зробити прозорими рекомендації лікарів. Медичні послуги все, ще сфера з високими корупційними ризиками. Лікарі можуть рекомендувати купувати певні ліки або звертатися в певні аптеки не лише піклуючись не тому, що вони будуть найкраще підходити пацієнтам. А тому, що вони отримують від цього вигоду у вигляді неформальних платежів від представників аптечних мереж і виробників ліків. Прозорість рішень лікарів дозволить подолати цю проблему. </p>
+
     </div>
 
     <!-- <p> {{ filtered.division_id }} </p> -->
@@ -37,18 +45,20 @@
         <input placeholder="лікарня" v-model="filters.hospital" />
         <input placeholder="адреса" v-model="filters.adress" />
 
+        <p class="comment"> <i>{{`За пошуком знайдено ${filtered.length} лікарень. На графіку зображено перші 10.`  }}</i> </p>
+
         <div class="details" v-if="selectedHospital">
           <div class="hospitalDetails">
             <!-- <p>{{ selectedHospital.legal_entity_name }}</p> -->
-            <p>{{ selectedHospital.division_name }}</p>
-            <p>{{ selectedHospital.division_residence_addresses }}</p>
-            <p>{{ "Кількість пацієнтів: " + selectedHospital.division_decl_sum }}</p>
-            <p>{{ "Кількість аптек довкола: " + selectedHospital.pharmas.length }}</p>
+            <p> <b>Назва лікарні: </b> {{selectedHospital.division_name }}</p>
+            <p><b>Адреса: </b>{{selectedHospital.division_residence_addresses }}</p>
+            <p><b>Кількість пацієнтів: </b>{{selectedHospital.division_decl_sum }}</p>
+            <p><b>Кількість аптек довкола: </b>{{ selectedHospital.pharmas.length }}</p>
           </div>
 
 
           <div class="aptekyDetails">
-            <div class="aptekyList" v-for="(d, i) in selectedHospital.aptekaObjects" v-bind:key="i" 
+            <div :class="selectedApteka == d.division_id ? 'aptekyList selected' : 'aptekyList'" v-for="(d, i) in selectedHospital.aptekaObjects" v-bind:key="i" 
             @mouseover="mouseOver(d)" >
               <p>{{ (i + 1) + ". " + d.division_name }}</p>
               <p>{{ "Відстань: in progress" }}</p>
@@ -78,8 +88,9 @@
           class="rose-chart"
           v-for="(d, i) in filtered.slice(0, 10)"
           v-bind:key="i"
-          v-tooltip="d.division_name"
+          
           :selected="selectedApteka"
+          :selectedHospital="selectedHospitalID"
           :roseWidth="200"
           :roseHeight="200"
           :hospital="d"
@@ -133,6 +144,7 @@ export default {
       aptekyNested: null,
       page: null,
       selectedHospital: null,
+      selectedHospitalID: null,
       selectedApteka: null,
       filters: {
         oblast: "Київська",
@@ -257,6 +269,7 @@ export default {
     },
     pathDataFromRose(value) {
       this.selectedHospital = value;
+      this.selectedHospitalID = value.division_name
     },
     filterOut(previous, model, nameOfVariabe) {
       const that = this;
@@ -378,9 +391,17 @@ export default {
 </script>
 
 <style lang="scss">
+
+p.comment {
+  margin: 10px 25px;
+  font-size: 0.8em;
+  width: 60%;
+}
+
 .rose-chart {
   width: 250px;
   height: 250px;
+  cursor: pointer;
 }
 div.plotRose {
   display: grid;
@@ -389,7 +410,7 @@ div.plotRose {
 
 div.rosePlot {
   display: grid;
-  grid-template-columns: 30vw 70vw;
+  grid-template-columns: 1.5fr 3fr;
 }
 
 div.roseElements input {
@@ -412,6 +433,7 @@ div.details {
     width: 80%;
 
   div.hospitalDetails {
+    border-top: 0.8px solid grey;
     margin: 10px 25px;
     font-size: 0.8em;
     
@@ -421,8 +443,10 @@ div.details {
 
 }
 
+
+
 div.aptekyDetails {
-  border-top: 0.8px solid black;
+  border-top: 0.8px solid grey;
   margin: 10px 25px;
   padding-top: 10px;
   font-size: 0.8em;
@@ -436,7 +460,13 @@ div.aptekyDetails {
 
   div.aptekyList {
     margin-bottom: 1em; 
+    cursor: pointer;
   }
+
+  div.aptekyList.selected {
+    background-color: #184a77;
+     color:white;
+    }
 }
 }
 
@@ -448,6 +478,7 @@ div.aptekyDetails {
 
 rose-chart
   width: 200px
+  cursor: pointer;
 
 /* div.holder
   width: 75%

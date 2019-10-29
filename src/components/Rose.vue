@@ -12,8 +12,10 @@
 {{buffered}}
     </p>-->
 
-    <!-- <p class="names">{{ hospital.division_name.substring(0,40) + "..."  }}</p> -->
+    <p :class="(selectedHospital ==  hospital.division_name) ? 'names selectedNames' : 'names'">{{ name }}</p>
 
+<!--     <p> {{selectedHospital ==  hospital.division_name  }}</p>
+ -->
     <svg viewBox="0 0 200 200" :width="roseWidth" :height="roseHeight">
       <defs>
         <marker id="head" orient="auto" viewBox="0 0 50 50" markerWidth="150" markerHeight="150"
@@ -39,9 +41,9 @@
         <!-- cross -->
 
         <path d="M100 10 L100 190" marker-end="url(#head)" marker-start="url(#tail)" 
-        stroke-width="1" stroke="black" />
+        stroke-width="0.5" stroke="grey" />
         <path d="M10 100 L190 100" marker-end="url(#head)" marker-start="url(#tail)"
-         stroke-width="1" stroke="black" />
+         stroke-width="0.5" stroke="grey" />
 
 
         <!-- <path d="M0 0 L190 190 M200 0 L0 200 M100 0 L100 200 M0 100 L200 100" marker-end='url(#head)' stroke="black" /> -->
@@ -50,9 +52,9 @@
         <circle
           :cx="project(hospital.nszu_geocoding_google_api_lng, hospital.nszu_geocoding_google_api_lat)[0]"
           :cy="project(hospital.nszu_geocoding_google_api_lng, hospital.nszu_geocoding_google_api_lat)[1]"
-          r="15"
+          r="12"
           :class="hospital.nszu_geocoding_google_api_lng + ' ' + hospital.nszu_geocoding_google_api_lat"
-          fill="red"
+          fill="#184a77"
         />
 
         <!--       <circle 
@@ -72,9 +74,10 @@
           v-bind:key="i"
           :cx="project(d.nszu_geocoding_google_api_lng, d.nszu_geocoding_google_api_lat)[0]"
           :cy="project(d.nszu_geocoding_google_api_lng, d.nszu_geocoding_google_api_lat)[1]"
-          :r="selected == d.division_id ? 3 : 1"
-          :fill="selected == d.division_id ? 'green' : 'black'"
-          :class="d.nszu_geocoding_google_api_lng + ' ' + d.nszu_geocoding_google_api_lat"
+          :r="selected == d.division_id ? 5 : 2.5"
+          :fill="selected == d.division_id ? '#0a83ee' : 'grey'"
+          v-tooltip="d.division_name"
+          :class="selected == d.division_id ? '' : 'selectedCircle'"
         />
         <!--       <circle :cx="60" :cy="60" r="5" />
         <circle :cx="60" :cy="60" r="5" />
@@ -91,20 +94,29 @@
 
 <script>
 import * as turf from "@turf/turf";
+import tooltip from "vue-simple-tooltip";
+
 
 export default {
   props: {
     roseWidth: Number,
     roseHeight: Number,
     hospital: Object,
-    selected: Boolean
+    selected: Boolean,
+    selectedHospital: Boolean
   },
   data() {
     return {
       buffered: null
     };
   },
+  components: {
+    tooltip,
+  },
   computed: {
+    name() {
+      return this.hospital.division_name.length < 35 ? this.hospital.division_name :  this.hospital.division_name.substring(0,35) + "..."
+    },
     projection() {
       var point = turf.point([
         this.hospital.nszu_geocoding_google_api_lng,
@@ -156,8 +168,18 @@ export default {
 </script>
 
 <style lang="scss">
+.selectedNames {
+  background-color: #184a77;
+  color: white;
+}
+
+.selectedCircle {
+  z-index: 999;
+}
 p.names {
   font-size: 0.7em;
+  margin: 0;
+  text-align: center;
   /* margin: 10px 25px; */
 }
 svg {
