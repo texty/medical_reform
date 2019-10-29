@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-on:click="onClick">
     <!-- <div>{{hospital.division_name + " " + hospital.division_residence_addresses}}</div> -->
 
     <!--       <p >
@@ -48,7 +48,7 @@
         <circle
           :cx="project(hospital.nszu_geocoding_google_api_lng, hospital.nszu_geocoding_google_api_lat)[0]"
           :cy="project(hospital.nszu_geocoding_google_api_lng, hospital.nszu_geocoding_google_api_lat)[1]"
-          r="5"
+          r="15"
           :class="hospital.nszu_geocoding_google_api_lng + ' ' + hospital.nszu_geocoding_google_api_lat"
           fill="red"
         />
@@ -130,6 +130,9 @@ export default {
     }
   },
   methods: {
+    onClick (event) {
+      this.$emit('clicked', this.hospital)
+    },
     project(lat, lng) {
       let coords = this.projection([lat, lng]);
 
@@ -145,6 +148,7 @@ export default {
     // var buffered = turf.buffer(point, 7, {units:'kilometers'});
     // var bbox = turf.bbox(buffered);
     // console.log(turf.bboxPolygon(bbox));
+    
   }
 };
 </script>
@@ -152,6 +156,7 @@ export default {
 <style lang="scss">
 p.names {
   font-size: 0.7em;
+  /* margin: 10px 25px; */
 }
 svg {
   display: block;

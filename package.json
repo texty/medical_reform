@@ -38,6 +38,7 @@
     "vue-slider-component": "^3.0.40",
     "vue-svg-textwrap": "0.0.21",
     "vue-svg-transition": "^0.2.1",
+    "vuejs-paginate": "^2.1.0",
     "vuex": "^3.1.1"
   },
   "devDependencies": {
