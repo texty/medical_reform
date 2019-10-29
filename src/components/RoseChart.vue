@@ -5,7 +5,6 @@
   <div class="roseElements">
     <Navigation></Navigation>
 
-
     <!-- <p> {{ oblast.map(d => d.division_area) }} </p> -->
     <div
       class="description"
@@ -31,8 +30,6 @@
       <!-- <article></article> -->
 
       <div class="filters">
-
-
         <h5>Фільтри:</h5>
         <input placeholder="область" v-model="filters.oblast" />
         <input placeholder="район" v-model="filters.rajon" />
@@ -40,88 +37,28 @@
         <input placeholder="лікарня" v-model="filters.hospital" />
         <input placeholder="адреса" v-model="filters.adress" />
 
+        <div class="details" v-if="selectedHospital">
+          <div class="hospitalDetails">
+            <!-- <p>{{ selectedHospital.legal_entity_name }}</p> -->
+            <p>{{ selectedHospital.division_name }}</p>
+            <p>{{ selectedHospital.division_residence_addresses }}</p>
+            <p>{{ "Кількість пацієнтів: " + selectedHospital.division_decl_sum }}</p>
+            <p>{{ "Кількість аптек довкола: " + selectedHospital.pharmas.length }}</p>
+          </div>
 
-        <div v-if="selectedHospital">
-        <p 
-        v-for="(d, i) in selectedHospital.aptekaObjects"
-        v-bind:key="i">
-          {{ d }}</p>
-        </div>
 
-
-        <!--  <div class="selectorOblast">
-          <p>Виберіть:</p>
-          <div class="oblast">
-            <multiselect
-              :hide-selected="true"
-              placeholder="Виберіть область"
-              deselect-label
-              select-label
-              :allow-empty="false"
-              v-model="filters.oblast"
-              :options="oblastNames"
-            ></multiselect>
+          <div class="aptekyDetails">
+            <div class="aptekyList" v-for="(d, i) in selectedHospital.aptekaObjects" v-bind:key="i" 
+            @mouseover="mouseOver(d)" >
+              <p>{{ (i + 1) + ". " + d.division_name }}</p>
+              <p>{{ "Відстань: in progress" }}</p>
+              <p>{{ "Повернуто коштів: in progress" }}</p>
+            </div>
           </div>
         </div>
-        <div class="selectorOblast">
-          <div class="oblast">
-            <multiselect
-              :hide-selected="true"
-              placeholder="Виберіть район"
-              deselect-label
-              select-label
-              :allow-empty="false"
-              v-model="filters.rajon"
-              :options="rajon.map(d => d.division_region)"
-            ></multiselect>
-          </div>
-        </div>
-        <div class="selectorOblast">
-          <div class="oblast">
-            <multiselect
-              :hide-selected="true"
-              placeholder="Населений пункт"
-              deselect-label
-              select-label
-              :allow-empty="false"
-              v-model="filters.city"
-              :options="city.map(d => d.division_settlement)"
-            ></multiselect>
-          </div>
-        </div>
-        <div class="selectorOblast">
-          <div class="oblast">
-            <multiselect
-              :hide-selected="true"
-              placeholder="Назва лікарні"
-              deselect-label
-              select-label
-              :allow-empty="false"
-              v-model="filters.hospital"
-              :options="hospital.map(d => d.legal_entity_name)"
-            ></multiselect>
-          </div>
-        </div>
-         <div class="selectorOblast">
-          <div class="oblast">
-            <multiselect
-              :hide-selected="true"
-              placeholder="Адреса"
-              deselect-label
-              select-label
-              :allow-empty="false"
-              v-model="filters.adress"
-              :options="adress.map(d => d.division_residence_addresses)"
-            ></multiselect>
-          </div>
-        </div> -->
       </div>
 
-
-
-      <div
-
-       class="plotRose">
+      <div class="plotRose">
         <!-- <div> -->
         <!-- <p>Here</p> -->
         <!-- <Legend
@@ -131,17 +68,24 @@
           :hospital=""
         />-->
 
+        <!-- <p          v-for="(d, i) in filtered.slice(0, 10)"
+          v-bind:key="i"> {{
+            d.division_name
+          }}</p> -->
+
         <Rose
           v-on:clicked="pathDataFromRose"
           class="rose-chart"
           v-for="(d, i) in filtered.slice(0, 10)"
           v-bind:key="i"
+          v-tooltip="d.division_name"
+          :selected="selectedApteka"
           :roseWidth="200"
           :roseHeight="200"
           :hospital="d"
         />
 
-<!--           <paginate
+        <!--           <paginate
           v-model="page"
           :page-count="20"
           :page-range="3"
@@ -150,7 +94,7 @@
           :next-text="'Next'"
           :container-class="'pagination'"
           :page-class="'page-item'">
-        </paginate> -->
+        </paginate>-->
 
         <!--     <p 
     v-for="(d, i) in network.slice(0,1)"
@@ -171,11 +115,12 @@ import Legend from "./RoseLegend.vue";
 
 import * as d3 from "d3";
 import Multiselect from "vue-multiselect";
-import Paginate from 'vuejs-paginate'
+import Paginate from "vuejs-paginate";
+import tooltip from "vue-simple-tooltip";
+
 
 import Navigation from "@/components/Navigation.vue";
 import Footer from "@/components/Footer.vue";
-
 
 export default {
   name: "vue-bar-chart",
@@ -188,13 +133,14 @@ export default {
       aptekyNested: null,
       page: null,
       selectedHospital: null,
+      selectedApteka: null,
       filters: {
         oblast: "Київська",
         city: "",
         adress: "",
         rajon: "",
         hospital: ""
-      },
+      }
       /* cityNames: [],
       adressNames: [],
       rajonNames: [],
@@ -203,32 +149,32 @@ export default {
     };
   },
   computed: {
-       filtered() {
-       if (!this.network) {
-         return [];
-       } else {
-         let filtered = this.network.filter(item => {
-           const that = this;
+    filtered() {
+      if (!this.network) {
+        return [];
+      } else {
+        let filtered = this.network.filter(item => {
+          const that = this;
 
-           var namesOfVar = {
-             oblast: "division_area",
-             city: "division_settlement",
-             adress: "division_residence_addresses",
-             rajon: "division_region",
-             hospital: "legal_entity_name"
-           };
+          var namesOfVar = {
+            oblast: "division_area",
+            city: "division_settlement",
+            adress: "division_residence_addresses",
+            rajon: "division_region",
+            hospital: "legal_entity_name"
+          };
 
-           // debugger;
+          // debugger;
 
-           var keys = Object.keys(that.filters);
-           // keys = keys.filter(e => e !== "sum");
-           return keys.every(key => {
-             const s = String(item[namesOfVar[key]]).toUpperCase();
-             return s !== "" ? s.includes(that.filters[key].toUpperCase()) : s;
-           });
-         });
+          var keys = Object.keys(that.filters);
+          // keys = keys.filter(e => e !== "sum");
+          return keys.every(key => {
+            const s = String(item[namesOfVar[key]]).toUpperCase();
+            return s !== "" ? s.includes(that.filters[key].toUpperCase()) : s;
+          });
+        });
 
-         return filtered/* .length > 0
+        return filtered; /* .length > 0
            ? filtered
            : [
                Object.keys(that.names[0]).reduce(function(obj, value) {
@@ -236,8 +182,8 @@ export default {
                  return obj;
                }, {})
              ]; */
-       }
-     },/* 
+      }
+    } /* 
     oblast() {
       return this.filterOut(this.network, this.filters.oblast, "division_area")
     },
@@ -300,26 +246,30 @@ export default {
     Footer,
     Rose,
     Legend,
-    Paginate
+    Paginate,
+    tooltip
   },
   watch: {},
   directives: {},
   methods: {
+    mouseOver(value) {
+      this.selectedApteka = value.division_id
+    },
     pathDataFromRose(value) {
       this.selectedHospital = value;
     },
     filterOut(previous, model, nameOfVariabe) {
-      const that = this
+      const that = this;
       if (!previous) {
         return [];
       } else {
-      return previous.filter(item => {
-        const s = (item[nameOfVariabe] ? item[nameOfVariabe] : "").toUpperCase()
-        return (s !== "")
-            ? s.includes(model.toUpperCase())
-            : s;
-         
-      })
+        return previous.filter(item => {
+          const s = (item[nameOfVariabe]
+            ? item[nameOfVariabe]
+            : ""
+          ).toUpperCase();
+          return s !== "" ? s.includes(model.toUpperCase()) : s;
+        });
       }
     },
     project(lat, lng) {
@@ -377,7 +327,7 @@ export default {
           })
         }
       };
-    })//.slice(0, 100);
+    }); //.slice(0, 100);
 
     // that.oblastNames = [
     //   ...new Set(
@@ -429,8 +379,8 @@ export default {
 
 <style lang="scss">
 .rose-chart {
-  width: 300px;
-  height: 300px;
+  width: 250px;
+  height: 250px;
 }
 div.plotRose {
   display: grid;
@@ -442,20 +392,54 @@ div.rosePlot {
   grid-template-columns: 30vw 70vw;
 }
 
- div.roseElements input {
-   border: 1px solid rgb(178, 178, 178);
-   margin: 10px 25px;
-   width: auto;
-   width: 70%;
+div.roseElements input {
+  border: 1px solid rgb(178, 178, 178);
+  margin: 10px 25px;
+  width: auto;
+  width: 70%;
   height: 2rem;
   text-align: left;
   padding-left: 20px;
- }
+}
 
 
- div.filters h5 {
-   margin: 10px 25px;
- }
+
+div.filters h5 {
+  margin: 10px 25px;
+}
+
+div.details {
+    width: 80%;
+
+  div.hospitalDetails {
+    margin: 10px 25px;
+    font-size: 0.8em;
+    
+    p {
+      margin: 0.2em;
+    }
+
+}
+
+div.aptekyDetails {
+  border-top: 0.8px solid black;
+  margin: 10px 25px;
+  padding-top: 10px;
+  font-size: 0.8em;
+  height: 215px;
+  overflow:hidden; 
+  overflow-y:scroll;
+
+  p {
+    margin: 0.2em;
+  }
+
+  div.aptekyList {
+    margin-bottom: 1em; 
+  }
+}
+}
+
 </style>
 
 

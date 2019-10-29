@@ -1,5 +1,7 @@
 <template>
   <div v-on:click="onClick">
+
+    <!-- <p> {{selected}} </p> -->
     <!-- <div>{{hospital.division_name + " " + hospital.division_residence_addresses}}</div> -->
 
     <!--       <p >
@@ -10,19 +12,19 @@
 {{buffered}}
     </p>-->
 
-    <p class="names">{{ hospital.division_name.substring(0,40) + "..."  }}</p>
+    <!-- <p class="names">{{ hospital.division_name.substring(0,40) + "..."  }}</p> -->
 
     <svg viewBox="0 0 200 200" :width="roseWidth" :height="roseHeight">
       <defs>
         <marker id="head" orient="auto" viewBox="0 0 50 50" markerWidth="150" markerHeight="150"
          refX="1" refY="2">
           <!-- triangle pointing right (+x) -->
-          <path d="M0,0 V4 L2,2 Z"  fill="red" />
+          <path d="M0,0 V4 L2,2 Z"  fill="black" />
         </marker>
           <marker id="tail" orient="auto-start-reverse" viewBox="0 0 50 50"
            markerWidth="150" markerHeight="150" refX="1" refY="2">
           <!-- triangle pointing right (-x) -->
-          <path d="M0,0 V4 L2,2 Z" fill="red" />
+          <path d="M0,0 V4 L2,2 Z" fill="black" />
         </marker>
       </defs>
       <g>
@@ -70,9 +72,8 @@
           v-bind:key="i"
           :cx="project(d.nszu_geocoding_google_api_lng, d.nszu_geocoding_google_api_lat)[0]"
           :cy="project(d.nszu_geocoding_google_api_lng, d.nszu_geocoding_google_api_lat)[1]"
-          r="1"
-          fill="black"
-          stroke="black"
+          :r="selected == d.division_id ? 3 : 1"
+          :fill="selected == d.division_id ? 'green' : 'black'"
           :class="d.nszu_geocoding_google_api_lng + ' ' + d.nszu_geocoding_google_api_lat"
         />
         <!--       <circle :cx="60" :cy="60" r="5" />
@@ -95,7 +96,8 @@ export default {
   props: {
     roseWidth: Number,
     roseHeight: Number,
-    hospital: Object
+    hospital: Object,
+    selected: Boolean
   },
   data() {
     return {
