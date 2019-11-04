@@ -1,4 +1,4 @@
-<template v-model="oblastModel">
+<template v-on:nav-event="getPos" v-model="oblastModel">
   <div>
     <Navigation></Navigation>
     <div
@@ -212,7 +212,7 @@
 import * as d3 from "d3";
 import VueSlider from "vue-slider-component";
 import tooltip from "vue-simple-tooltip";
-// import Navigation from "@/components/Navigation.vue";
+import Navigation from "@/components/Navigation.vue";
 import Footer from "@/components/Footer.vue";
 
 import doctorsNames from "@/assets/doctors_for_table_update.json";
@@ -300,7 +300,7 @@ export default {
   },
   components: {
     VueSlider,
-    Navigation: () => import("@/components/Navigation.vue"),
+    Navigation,
     Footer
   },
   computed: {
@@ -400,11 +400,15 @@ export default {
   async mounted() {
     // to do!!!
 
-    const files = await Promise.all([
-      d3.csv("data/pmd_all_contracted_legal_entities.csv"),
-      d3.csv("data/pharmacy_all_contracted_legal_entities.csv"),
-      d3.json("data/hospitals_and_pharmacies.json")
-    ]);
+    const that = this;
+
+    //const files = await Promise.all([
+    //  d3.json("data/doctors_for_table_update.json"),
+    //  d3.json("data/hospital_names.json"),
+    //]);
+
+    //this.rows = files[0];
+    //this.hospitals = files[1];
 
     // import doctorsNames from "@/assets/doctors_for_table_update.json";
     // import hospitalNames from "@/assets/hospital_names.json";
@@ -412,6 +416,8 @@ export default {
     // Set the initial number of items
     this.totalRows = this.rows.length;
     this.filters.total_decl_count[1] = this.maxSumValue;
+
+    
 
     this.getPos();
     this.$nextTick(function() {
@@ -422,11 +428,15 @@ export default {
   },
   methods: {
     getPos: function() {
+      console.log('pos')
+      document.querySelector("#headerBounding").getBoundingClientRect().width
+
       //*Женя: додала фунцію
       var that = this;
       var headerBounding = document
         .querySelector("#headerBounding")
         .getBoundingClientRect();
+
       var left = headerBounding.left;
       var width = headerBounding.width;
       that.leftHeaderMargin = left + 33 + "px";

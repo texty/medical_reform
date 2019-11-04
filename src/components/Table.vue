@@ -160,7 +160,7 @@
 import * as d3 from "d3";
 import VueSlider from "vue-slider-component";
 import tooltip from "vue-simple-tooltip";
-//import Navigation from "@/components/Navigation.vue";
+import Navigation from "@/components/Navigation.vue";
 import Footer from "@/components/Footer.vue";
 
 import cpv from "@/assets/cpv.json";
@@ -243,7 +243,7 @@ export default {
   },
   components: {
     VueSlider,
-    Navigation: () => import("@/components/Navigation.vue"),
+    Navigation,
     Footer
   },
   created() {
@@ -340,10 +340,6 @@ export default {
       var headerBounding = document
         .querySelector("#headerBounding")
         .getBoundingClientRect();
-
-      
-
-      
 
       var left = headerBounding.left;
       var width = headerBounding.width;

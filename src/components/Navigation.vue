@@ -13,6 +13,6 @@ export default {
   components: {
     HorizontalNavBar,
     Header
-  }
+  },
 };
 </script>

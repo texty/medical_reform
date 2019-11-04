@@ -11,7 +11,7 @@ import store from './store'
 // import router from './router'
 import VueRouter from 'vue-router'
 
-// import Table from './components/Table.vue'
+import Table from './components/Table.vue'
 import Bar from './components/HorizontalBarChart.vue'
 // import App from './App.vue'
 
@@ -19,7 +19,7 @@ import Bar from './components/HorizontalBarChart.vue'
 // import Text from '@/components/Text.vue'
 import Home from './components/Home.vue'
 // import BarPlots from './components/BarPlots'
-// import DoctorsTable from "./components/DoctorsTable.vue";
+import DoctorsTable from "./components/DoctorsTable.vue";
 // import ProcurementPlots from './components/ProcurementPlots.vue'
 import Header from "./components/Header.vue"
 import Nagivation from "@/components/Navigation.vue"
@@ -47,14 +47,14 @@ Vue.use(BootstrapVue)
 Vue.config.productionTip = false
 
 // Vue.component('text-element', Text)
-Vue.component('footer', Footer)
-// Vue.component('med-table', Table)
+Vue.component('footerM', Footer)
+Vue.component('med-table', Table)
 // Vue.component('horizontal-bar', Bar)
 Vue.component('home', Home)
 // Vue.component('bar-plots', BarPlots)
-// Vue.component('doctors-table', DoctorsTable)
+Vue.component('doctors-table', DoctorsTable)
 // Vue.component('procurement-plots', ProcurementPlots)
-Vue.component('header', Header)
+Vue.component('headerM', Header)
 Vue.component('navigation', Nagivation)
 
 // Vue.component('rose-chart', RoseChart)
@@ -89,7 +89,7 @@ const router = new VueRouter({
     {
       path: '/med-table',
       name: 'med-table',
-      component: () => import('@/components/Table.vue'),
+      component: Table,
     },
     {
       path: '/horizontal/',
@@ -114,7 +114,7 @@ const router = new VueRouter({
     {
       path: '/doctors-table',
       name: "doctors-table", 
-      component: () => import("./components/DoctorsTable.vue")
+      component: DoctorsTable
 
     },
     {

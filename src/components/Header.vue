@@ -45,6 +45,7 @@ export default {
     this.$nextTick(function() {         
               window.addEventListener("resize", this.getPos);
     })
+    this.$emit('nav-event')
   },
   methods: {
     getPos: function() {
