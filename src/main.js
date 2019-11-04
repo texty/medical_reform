@@ -11,19 +11,21 @@ import store from './store'
 // import router from './router'
 import VueRouter from 'vue-router'
 
-import Table from './components/Table.vue'
+// import Table from './components/Table.vue'
 import Bar from './components/HorizontalBarChart.vue'
 // import App from './App.vue'
 
 
-import Text from '@/components/Text.vue'
+// import Text from '@/components/Text.vue'
 import Home from './components/Home.vue'
-import BarPlots from './components/BarPlots'
-import DoctorsTable from "./components/DoctorsTable.vue";
-import ProcurementPlots from './components/ProcurementPlots.vue'
+// import BarPlots from './components/BarPlots'
+// import DoctorsTable from "./components/DoctorsTable.vue";
+// import ProcurementPlots from './components/ProcurementPlots.vue'
 import Header from "./components/Header.vue"
+import Nagivation from "@/components/Navigation.vue"
+
 import Footer from "./components/Footer.vue"
-import RoseChart from "./components/RoseChart.vue"
+// import RoseChart from "./components/RoseChart.vue"
 
 
 
@@ -44,16 +46,18 @@ Vue.use(BootstrapVue)
 
 Vue.config.productionTip = false
 
-Vue.component('text-element', Text)
+// Vue.component('text-element', Text)
 Vue.component('footer', Footer)
-Vue.component('med-table', Table)
-Vue.component('horizontal-bar', Bar)
+// Vue.component('med-table', Table)
+// Vue.component('horizontal-bar', Bar)
 Vue.component('home', Home)
-Vue.component('bar-plots', BarPlots)
-Vue.component('doctors-table', DoctorsTable)
-Vue.component('procurement-plots', ProcurementPlots)
-Vue.component('app', Header)
-Vue.component('rose-chart', RoseChart)
+// Vue.component('bar-plots', BarPlots)
+// Vue.component('doctors-table', DoctorsTable)
+// Vue.component('procurement-plots', ProcurementPlots)
+Vue.component('header', Header)
+Vue.component('navigation', Nagivation)
+
+// Vue.component('rose-chart', RoseChart)
 
 
 
@@ -70,22 +74,22 @@ const router = new VueRouter({
     {
       path: '/pharmacy',
       name: 'rose-chart',
-      component: RoseChart,
+      component: () => import("./components/RoseChart.vue"),
     },
-    {
-      path: '/header',
-      name: 'header',
-      component: Header
-    },
+    // {
+    //   path: '/header',
+    //   name: 'header',
+    //   component: Header
+    // },
     {
       path: '/text-element',
       name: 'text-element',
-      component: Text
+      component: () => import('@/components/Text.vue')
     },
     {
       path: '/med-table',
       name: 'med-table',
-      component: Table,
+      component: () => import('@/components/Table.vue'),
     },
     {
       path: '/horizontal/',
@@ -105,26 +109,27 @@ const router = new VueRouter({
     {
       path: '/doctors',
       name: 'bar-plots',
-      component: BarPlots
+      component: () => import("./components/BarPlots.vue")
     },
     {
       path: '/doctors-table',
       name: "doctors-table", 
-      component: DoctorsTable
+      component: () => import("./components/DoctorsTable.vue")
+
     },
     {
       path: '/procurement_plots',
       name: "procurement_plots", 
-      component: ProcurementPlots,
+      component: () => import("./components/ProcurementPlots.vue"),
       props: (route) => ({
         incomingOblast: route.query.obl || "Київська",
       }) 
     },
-    {
-      path: '/footer',
-      name: 'footer',
-      component: Footer,
-    }
+    // {
+    //   path: '/footer',
+    //   name: 'footer',
+    //   component: Footer,
+    // }
   ]
 })
 

@@ -124,15 +124,6 @@
 
           <template v-slot:cell()="data">{{ data.value }}</template>
 
-          <!-- <template
-          slot="hospital_edrpou"
-          slot-scope="row"
-          v-tooltip:right="row.value"
-          v-b-tooltip.hover
-          :title="row.value"
-        >
-          <div v-tooltip:right="row.value">{{ `${ row.value.substring(0,30) + "..." }` }}</div>
-          </template>-->
 
           <template slot="actions" slot-scope="row">
             <b-button
@@ -169,7 +160,7 @@
 import * as d3 from "d3";
 import VueSlider from "vue-slider-component";
 import tooltip from "vue-simple-tooltip";
-import Navigation from "@/components/Navigation.vue";
+//import Navigation from "@/components/Navigation.vue";
 import Footer from "@/components/Footer.vue";
 
 import cpv from "@/assets/cpv.json";
@@ -252,7 +243,7 @@ export default {
   },
   components: {
     VueSlider,
-    Navigation,
+    Navigation: () => import("@/components/Navigation.vue"),
     Footer
   },
   created() {
@@ -328,6 +319,7 @@ export default {
       d['full_name'] = d.hospital_name + ", " + d.hospital_edrpou      
     })
 
+ 
     this.getPos();
     this.$nextTick(function() {
       // *Женя: щоб перемальовувалась на ресайзі
@@ -348,6 +340,11 @@ export default {
       var headerBounding = document
         .querySelector("#headerBounding")
         .getBoundingClientRect();
+
+      
+
+      
+
       var left = headerBounding.left;
       var width = headerBounding.width;
       that.leftHeaderMargin = left + 33 + "px";
@@ -379,7 +376,7 @@ export default {
 </script>
 
 <style lang="scss">
-// @import "~vue-slider-component/lib/theme/default.scss";
+@import "~vue-slider-component/lib/theme/default.scss";
 
 
   $blue: #184a77;  

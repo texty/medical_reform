@@ -62,6 +62,10 @@ export default {
 </script>
 
 <style lang="scss">
+$blue: #184a77;
+
+
+
 #logo-soc {
   width:100%;
   position:absolute;
@@ -70,6 +74,15 @@ export default {
   display:flex;
   justify-content: space-between;
 
+}
+
+div#top {
+  padding: 30px 0;
+  background-color: $blue;
+  color: white;
+  @media (max-width: 350px) {
+    padding: 30px 0;
+  }
 }
 
 .logo {

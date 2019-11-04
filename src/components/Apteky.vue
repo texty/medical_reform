@@ -254,7 +254,7 @@ export default {
   },
   components: {
     Multiselect,
-    Navigation,//() => import('@/components/Navigation.vue') ,
+    Navigation,
     Footer,
     Rose,
     Legend,

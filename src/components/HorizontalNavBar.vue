@@ -113,4 +113,73 @@ export default {
 </script>
 
 <style lang="scss">
+div.navigation {
+  background-color: #133c61;
+  display: flex;
+  margin-bottom: 50px;
+  justify-content: space-between;
+  @media (max-width: 1100px) {
+    display: block;
+  }
+
+  #to-main {
+    padding: 5 0 20px 0 !important;
+    margin: auto 2vw auto 0;
+    text-decoration: none;
+    padding-bottom: 1px;
+    
+    color: white;
+    font-weight: 600;
+    @media (max-width: 1100px) {
+      text-align: center;
+      padding-bottom: 20px;
+    }
+
+    a {
+      color: white;
+      opacity:0.6;
+      border-bottom: 1px solid white;
+    }
+
+    a:hover {
+      text-decoration: none;
+      opacity:1;
+    }
+
+    a.router-link-exact-active.router-link-active {
+      opacity:0 !important;
+    }
+  }
+
+  #navicons-container {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .links {
+    padding: 20px 0;
+    cursor: pointer;    
+  }
+
+  .navicon img {
+    opacity: 0.6;
+  }
+
+  .router-link-exact-active.router-link-active {
+    opacity:1;
+  }
+
+  img {
+    width: 45px;
+    height: auto;   
+    @media (max-width: 800px) {
+      width: 35px;
+      height: 35px;
+    }
+    @media (max-width: 350px) {
+      width: 25px;
+      height: 25px;
+    }
+  }
+}
 </style>
