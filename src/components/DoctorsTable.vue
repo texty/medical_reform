@@ -214,6 +214,7 @@ import VueSlider from "vue-slider-component";
 import tooltip from "vue-simple-tooltip";
 import Navigation from "@/components/Navigation.vue";
 import Footer from "@/components/Footer.vue";
+import {bus} from "../main";
 
 import doctorsNames from "@/assets/doctors_for_table_update.json";
 import hospitalNames from "@/assets/hospital_names.json";
@@ -418,7 +419,7 @@ export default {
     this.filters.total_decl_count[1] = this.maxSumValue;
 
     
-
+    bus.$on('nav-event', () => this.getPos());
     this.getPos();
     this.$nextTick(function() {
       // *Женя: щоб перемальовувалась на ресайзі

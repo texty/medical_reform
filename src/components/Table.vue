@@ -1,6 +1,6 @@
 <template  v-model="oblastModel">
   <div>
-    <Navigation></Navigation>
+    <Navigation @nav-event="alert('gg')"></Navigation>
     <div
       class="description"
       :style="{ 'margin-left': leftHeaderMargin, 'margin-bottom': '50px','width': leftHeaderWidth }"
@@ -162,6 +162,7 @@ import VueSlider from "vue-slider-component";
 import tooltip from "vue-simple-tooltip";
 import Navigation from "@/components/Navigation.vue";
 import Footer from "@/components/Footer.vue";
+import {bus} from "../main"
 
 import cpv from "@/assets/cpv.json";
 import hospitalNames from "@/assets/hospital_names.json";
@@ -319,6 +320,7 @@ export default {
       d['full_name'] = d.hospital_name + ", " + d.hospital_edrpou      
     })
 
+    bus.$on('nav-event', () => this.getPos());
  
     this.getPos();
     this.$nextTick(function() {

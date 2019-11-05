@@ -28,6 +28,7 @@
 
 <script>
 import share from "@/plugins/share-behavior.js"
+import {bus} from "../main"
 
 
 export default {
@@ -45,7 +46,7 @@ export default {
     this.$nextTick(function() {         
               window.addEventListener("resize", this.getPos);
     })
-    this.$emit('nav-event')
+    bus.$emit('nav-event')
   },
   methods: {
     getPos: function() {

@@ -1,317 +1,372 @@
-
-
-
-<template v-model="usersOblast">
-  <div class="roseElements">
+<template  v-model="oblastModel" >
+  <div>
     <Navigation></Navigation>
-
-    <!-- <p> {{ oblast.map(d => d.division_area) }} </p> -->
     <div
       class="description"
       :style="{ 'margin-left': leftHeaderMargin, 'margin-bottom': '50px','width': leftHeaderWidth }"
     >
-      <h4 class="subtitle">Кількість підписаних декларацій</h4>
+      <h4 class="subtitle">ТАБЛИЦЯ ЗАКУПІВЕЛЬ ЛІКАРЕНЬ</h4>
       <p
         class="text"
-      >
-      В Україні стартувала програма повернення вартості ліків (реімбурсації). Це означає, що громадяни можуть отримувати деякі ліки в аптеці безоплатно. Замість них аптеці платитиме Національна Служба Здоров’я, що фінансується за рахунок податків. Ліки за цією програмою можна отримати тільки за рецептом сімейного лікаря з яким людина підписала декларацію. </p>
-      <p
-        class="text"
-      >
-        Зараз в Україні близько 6 тисяч відділень лікарень та кабінетів сімейних лікарів, що включилися до реформи. В програмі реімбурсації бере участь також 7 тисяч аптек по всій країні. Однак, доступність аптек різна. У великих містах працюють десятки різних мереж, а в деяких мережах немає жодної.</p>
-      <p
-        class="text"
-      >
-        На цій візуалізації ми показали скільки аптек є в радіусі 7 кілометрів від кожного лікарняного пункту з пацієнтами. А також інформацію про те, що це за аптеки, де вони знаходяться та скільки компенсації отримали за ті ліки, які вони надали за рецептом лікаря. Ця візуалізація допоможе пацієнту знайти аптеку, що працює за програмою реімбурсації </p>
-          <p
-        class="text"
-      >
-      Також, вона дозволить зробити прозорими рекомендації лікарів. Медичні послуги все, ще сфера з високими корупційними ризиками. Лікарі можуть рекомендувати купувати певні ліки або звертатися в певні аптеки не лише піклуючись не тому, що вони будуть найкраще підходити пацієнтам. А тому, що вони отримують від цього вигоду у вигляді неформальних платежів від представників аптечних мереж і виробників ліків. Прозорість рішень лікарів дозволить подолати цю проблему. </p>
+      >Ви можете скористатися таблицею внизу, щоб самостійно перевірити, що купують лікарні. Введіть в поле пошуку назву лікарні або товару, який вас цікавить. У таблиці є 100 найбільших закупівель у кожній категорії за 2019 рік. Категорії бувають дуже різними — наприклад, медичне обладнання, послуги з будівництва, меблі, комп’ютерна техніка та інші.</p>
+      <!-- <p class="text">Інструмент розроблено на основі даних НСЗУ та системи публічних закупівель Prozorro, а саме:</p> -->
+      <!-- <p class="text">
+        Набори даних Національної Служби Здоров’я, які опубліковані на Єдиному державному веб-порталі відкритих даних; Дані про тендери медичних закладів із системи публічних закупівель Prozorro.
+      </p>-->
 
+      <!-- <p> {{ apteky[0] }} </p>   -->
     </div>
+    <b-container fluid>
+      <!-- User Interface controls -->
 
-    <!-- <p> {{ filtered.division_id }} </p> -->
+      <div class="tableNavigation">
+        <b-row class="navigationRow">
+          <!-- <b-col md="4" class="my-1">
+            <b-input-group>
+              <b-form-input v-model="filter" placeholder="Пошук"></b-form-input>
+              <b-input-group-append>
+                <b-button :disabled="!filter" @click="filter = ''">Очистити </b-button>
+              </b-input-group-append>
+            </b-input-group>
+          </b-col>-->
 
-    <div class="rosePlot">
-      <!-- :style="{ 'margin-left': leftHeaderMargin, 'width': leftHeaderWidth }" -->
-
-      <!-- <article></article> -->
-
-      <div class="filters">
-        <h5>Фільтри:</h5>
-        <input placeholder="область" v-model="filters.oblast" />
-        <input placeholder="район" v-model="filters.rajon" />
-        <input placeholder="місто" v-model="filters.city" />
-        <input placeholder="лікарня" v-model="filters.hospital" />
-        <input placeholder="адреса" v-model="filters.adress" />
-
-        <p class="comment"> <i>{{`За пошуком знайдено ${filtered.length} лікарень. На графіку зображено перші 10.`  }}</i> </p>
-
-        <div class="details" v-if="selectedHospital">
-          <div class="hospitalDetails">
-            <!-- <p>{{ selectedHospital.legal_entity_name }}</p> -->
-            <p> <b>Назва лікарні: </b> {{selectedHospital.division_name }}</p>
-            <p><b>Адреса: </b>{{selectedHospital.division_residence_addresses }}</p>
-            <p><b>Кількість пацієнтів: </b>{{selectedHospital.division_decl_sum }}</p>
-            <p><b>Кількість аптек довкола: </b>{{ selectedHospital.pharmas.length }}</p>
-          </div>
-
-
-          <div class="aptekyDetails">
-            <div :class="selectedApteka == d.division_id ? 'aptekyList selected' : 'aptekyList'" v-for="(d, i) in selectedHospital.aptekaObjects" v-bind:key="i" 
-            @mouseover="mouseOver(d)" >
-              <p>{{ (i + 1) + ". " + d.division_name }}</p>
-              <p>{{ "Відстань: in progress" }}</p>
-              <p>{{ "Повернуто коштів: in progress" }}</p>
+          <b-row>
+            <b-col md="6" class="my-1">
+              <b-pagination
+                v-model="currentPage"
+                :total-rows="totalRows"
+                :per-page="perPage"
+                class="my-0"
+              ></b-pagination>
+            </b-col>
+          </b-row>
+        </b-row>
+      </div>
+      <!-- Main table element -->
+      <div class="background">
+        <b-table
+          class="mainTable procurements"
+          show-empty
+          stacked="md"
+          :items="filtered"
+          :fields="fields"
+          :current-page="currentPage"
+          :per-page="perPage"
+          :filter="filter"
+          :sort-by.sync="sortBy"
+          :sort-desc.sync="sortDesc"
+          :sort-direction="sortDirection"
+          @filtered="onFiltered"
+          empty-filtered-text="Таких даних у нас немає"
+          :fixed="true"
+        >
+          <template slot="top-row">
+            <td
+              role="cell"
+              data-label="Назва лікарні"
+              aria-colindex="1"
+              :style="{'border-radius': 0}"
+            >
+              <div class="inputColumnName">
+                <input
+                  v-model="filters['division_name']"
+                  placeholder="шукати"
+                  :style="{'border': `1px solid #b2b2b2`}"
+                />
+              </div>
+            </td>
+          </template>
+          <!-- 
+        <template slot="top-row">
+          <td role="cell" data-label="Код ЄДРПОУ" aria-colindex="1">
+            <div class="inputColumnName">
+              <input v-model="filters['hospital_edrpou']" />
             </div>
-          </div>
-        </div>
+          </td>
+          </template>-->
+
+          <template slot="top-row">
+            <td role="cell" data-label="Опис" aria-colindex="1" :style="{'border-radius': 0}">
+              <div class="inputColumnName">
+                <input
+                  v-model="filters['division_residence_addresses']"
+                  placeholder="шукати"
+                  :style="{'border': `1px solid #b2b2b2`}"
+                />
+              </div>
+            </td>
+          </template>
+
+          <template slot="top-row">
+            <td role="cell" data-label="Область" aria-colindex="1" :style="{'border-radius': 0}">
+              <div class="inputColumnName">
+                <input
+                  v-model="filters['division_settlement']"
+                  placeholder="шукати"
+                  :style="{'border': `1px solid #b2b2b2`}"
+                />
+              </div>
+            </td>
+          </template>
+
+          <template slot="top-row">
+            <td role="cell" data-label="Область" aria-colindex="1" :style="{'border-radius': 0}">
+              <div class="inputColumnName">
+                <input
+                  v-model="filters['division_area']"
+                  placeholder="шукати"
+                  :style="{'border': `1px solid #b2b2b2`}"
+                />
+              </div>
+            </td>
+          </template>
+
+          <!-- Slider if I'll need to show money -->
+          <!-- <template slot="top-row">
+            <td role="cell" data-label="	Вартість, грн." aria-colindex="1">
+              <div class="inputColumnName">
+                <vue-slider
+                  v-model="filters['sum']"
+                  :min="0"
+                  :max="maxSumValue"
+                  :enable-cross="false"
+                  :tooltip-formatter="formaterTooltip"
+                />
+              </div>
+            </td>
+          </template>-->
+
+          <template v-slot:cell(sum)="data">
+            {{
+            formatNumber().format(data.item.sum)
+            }}
+          </template>
+
+          <template v-slot:cell(overal_title)="data">
+            <div
+              v-tooltip:top="data.item.overal_title"
+            >{{ data.item.overal_title.substring(0,80) + "..." }}</div>
+          </template>
+
+          <template v-slot:cell(hospital_name)="data">
+            <div
+              v-tooltip:top="data.item.hospital_name + ', ' + data.item.hospital_edrpou"
+            >{{ data.item.hospital_name.substring(0,40) + "..." }}</div>
+          </template>
+
+          <template v-slot:cell()="data">{{ data.value }}</template>
+
+          <template slot="actions" slot-scope="row">
+            <b-button
+              size="sm"
+              @click="info(row.item, row.index, $event.target)"
+              class="mr-1"
+            >Info modal</b-button>
+            <b-button
+              size="sm"
+              @click="row.toggleDetails"
+            >{{ row.detailsShowing ? 'Hide' : 'Show' }} Details</b-button>
+          </template>
+
+          <template slot="row-details" slot-scope="row">
+            <b-card>
+              <ul>
+                <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
+              </ul>
+            </b-card>
+          </template>
+        </b-table>
       </div>
 
-      <div class="plotRose">
-        <!-- <div> -->
-        <!-- <p>Here</p> -->
-        <!-- <Legend
-          class="rose-legend"  
-          :roseWidth="200"
-          :roseHeight="200"
-          :hospital=""
-        />-->
+      <!-- Info modal -->
+      <b-modal :id="infoModal.id" :title="infoModal.title" ok-only @hide="resetInfoModal">
+        <pre>{{ infoModal.content }}</pre>
+      </b-modal>
+    </b-container>
 
-        <!-- <p          v-for="(d, i) in filtered.slice(0, 10)"
-          v-bind:key="i"> {{
-            d.division_name
-          }}</p> -->
-
-        <Rose
-          v-on:clicked="pathDataFromRose"
-          class="rose-chart"
-          v-for="(d, i) in filtered.slice(0, 10)"
-          v-bind:key="i"
-          
-          :selected="selectedApteka"
-          :selectedHospital="selectedHospitalID"
-          :roseWidth="200"
-          :roseHeight="200"
-          :hospital="d"
-        />
-
-        <!--           <paginate
-          v-model="page"
-          :page-count="20"
-          :page-range="3"
-          :margin-pages="2"
-          :prev-text="'Prev'"
-          :next-text="'Next'"
-          :container-class="'pagination'"
-          :page-class="'page-item'">
-        </paginate>-->
-
-        <!--     <p 
-    v-for="(d, i) in network.slice(0,1)"
-    v-bind:key="i"
+    <div
+      class="description"
+      :style="{ 'margin-left': leftHeaderMargin, 'margin-bottom': '50px','width': leftHeaderWidth }"
     >
-      {{ d.aptekaObjects[0] }}
-        </p>-->
-        <!-- </div> -->
-      </div>
+      <h4 class="subtitle">Ну а далі карта</h4>
     </div>
+
+    <Map
+    :style="{ 'margin-left': leftHeaderMargin, 'margin-bottom': '50px','width': leftHeaderWidth }" 
+    :apteky="apteky" :hospitals="network"></Map>
+
+
+
     <Footer></Footer>
   </div>
 </template>
 
 <script>
-import Rose from "./Rose.vue";
-import Legend from "./RoseLegend.vue";
-
 import * as d3 from "d3";
-import Multiselect from "vue-multiselect";
-import Paginate from "vuejs-paginate";
+import VueSlider from "vue-slider-component";
 import tooltip from "vue-simple-tooltip";
-
-
 import Navigation from "@/components/Navigation.vue";
 import Footer from "@/components/Footer.vue";
+import Map from "@/components/Map.vue"
+import { bus } from "../main";
+
+import cpv from "@/assets/cpv.json";
+import hospitalNames from "@/assets/hospital_names.json";
+import tableData from "@/assets/top_100_per_category_update.json";
+
+/* import 'vue-slider-component/theme/antd.css'; */
 
 export default {
-  name: "vue-bar-chart",
-  props: {},
+  name: "med-table",
+  props: {
+    /*     rows: Array,
+    cpv: Array,
+    hospitals: Array,
+    oblast: String */
+  },
   data() {
     return {
-      pmd: null,
-      apteka: null,
+      leftHeaderMargin: "", // *Женя: додала зміну
+      leftHeaderWidth: "", // *Женя: додала зміну
+      apteky: null,
       network: null,
-      aptekyNested: null,
-      page: null,
-      selectedHospital: null,
-      selectedHospitalID: null,
-      selectedApteka: null,
+      rows: tableData,
+      cpv: cpv,
+      hospitals: hospitalNames,
+      fields: [
+        {
+          key: "division_name",
+          label: "Назва аптеки",
+          thStyle: { width: "25%", maxWidth: "300px" },
+          tdClass: "leftaligned"
+        },
+        {
+          key: "division_residence_addresses",
+          label: "Адреса"
+          // thStyle: { width: "35%", maxWidth: "300px" }
+        },
+        {
+          key: "division_settlement",
+          label: "Місто",
+          thStyle: { width: "15%", maxWidth: "auto" },
+          tdClass: "leftaligned"
+        },
+        {
+          key: "division_area",
+          label: "Область",
+          thStyle: { width: "200px", maxWidth: "200px" },
+          tdClass: "centered"
+        }
+        // {
+        //   key: "sum",
+        //   label: "Вартість, грн.",
+        //   sortable: true,
+        //   direction: "desc",
+        //   thStyle: { width: '200px', maxWidth: '200px' },
+        //   tdClass: "centered"
+        // }
+        // { key: "full_name", label: "Повна назва" }
+      ],
+      totalRows: 1,
+      currentPage: 1,
+      perPage: 10,
+      pageOptions: [5, 10, 15],
+      formaterTooltip: v => `${d3.format(",")(v)}, грн`,
+      sortBy: null,
+      sortDesc: false,
+      sortDirection: "asc",
+      filter: null,
+      oblastModel: "",
+      infoModal: {
+        id: "info-modal",
+        title: "",
+        content: ""
+      },
       filters: {
-        oblast: "Київська",
-        city: "",
-        adress: "",
-        rajon: "",
-        hospital: ""
+        division_name: "",
+        division_residence_addresses: "",
+        division_settlement: "",
+        division_area: ""
+        //sum: [0, 20000000]
       }
-      /* cityNames: [],
-      adressNames: [],
-      rajonNames: [],
-      oblastNames: [],
-      hospitalNames: [] */
     };
   },
-  computed: {
-    filtered() {
-      if (!this.network) {
-        return [];
-      } else {
-        let filtered = this.network.filter(item => {
-          const that = this;
-
-          var namesOfVar = {
-            oblast: "division_area",
-            city: "division_settlement",
-            adress: "division_residence_addresses",
-            rajon: "division_region",
-            hospital: "legal_entity_name"
-          };
-
-          // debugger;
-
-          var keys = Object.keys(that.filters);
-          // keys = keys.filter(e => e !== "sum");
-          return keys.every(key => {
-            const s = String(item[namesOfVar[key]]).toUpperCase();
-            return s !== "" ? s.includes(that.filters[key].toUpperCase()) : s;
-          });
-        });
-
-        return filtered; /* .length > 0
-           ? filtered
-           : [
-               Object.keys(that.names[0]).reduce(function(obj, value) {
-                 obj[value] = "";
-                 return obj;
-               }, {})
-             ]; */
-      }
-    } /* 
-    oblast() {
-      return this.filterOut(this.network, this.filters.oblast, "division_area")
-    },
-    oblastNames() {
-      if (!this.network) {
-        return []
-      }
-      else {
-        return [...new Set(this.network.map(d => d.division_area))]
-      }
-    },
-   rajon() {
-      return this.filterOut(this.oblast, this.filters.rajon, "division_region")
-    },
-    rajonNames() {
-      if (!this.oblast) {
-        return []
-      }
-      else {
-        return [...new Set(this.oblast.map(d => d.division_region))]
-      }
-    }, 
-    city() {
-      const that = this
-      if (!that.rajon) {
-        return [];
-      } else {
-      const that = this
-      return that.rajon.filter(item => {
-        return item.division_settlement == that.filters.city
-      })
-      }
-    },
-    hospital() {
-      const that = this
-      if (!that.city) {
-        return [];
-      } else {
-      const that = this
-      return that.city.filter(item => {
-        return item.legal_entity_name == that.filters.hospital
-      })
-      }
-    },
-    adress() {
-      const that = this
-      if (!that.hospital) {
-        return [];
-      } else {
-      const that = this
-      return that.hospital.filter(item => {
-        return item.division_residence_addresses == that.filters.adress
-      })
-      }
-    }, */
-  },
   components: {
-    Multiselect,
+    VueSlider,
     Navigation,
     Footer,
-    Rose,
-    Legend,
-    Paginate,
-    tooltip
+    Map
   },
-  watch: {},
-  directives: {},
-  methods: {
-    mouseOver(value) {
-      this.selectedApteka = value.division_id
+  created() {
+    /* this.filters.oblast_name = this.$route.params.oblast */
+  },
+  computed: {
+    maxSumValue() {
+      return d3.max(this.rows.map(d => d.sum));
     },
-    pathDataFromRose(value) {
-      this.selectedHospital = value;
-      this.selectedHospitalID = value.division_name
-    },
-    filterOut(previous, model, nameOfVariabe) {
-      const that = this;
-      if (!previous) {
+    filtered() {
+      if (!this.apteky) {
         return [];
-      } else {
-        return previous.filter(item => {
-          const s = (item[nameOfVariabe]
-            ? item[nameOfVariabe]
-            : ""
-          ).toUpperCase();
-          return s !== "" ? s.includes(model.toUpperCase()) : s;
-        });
       }
-    },
-    project(lat, lng) {
-      var x = (lng + 180) * (this.roseWidth / 360);
-      // convert from degrees to radians
-      var latRad = (lat * Math.PI) / 180;
-      // get y value
-      var mercN = Math.log(Math.tan(Math.PI / 4 + latRad / 2));
-      var y = this.roseHeight / 2 - (this.roseWidth * mercN) / (2 * Math.PI);
 
-      return x, y;
+      let filtered = this.apteky.filter(item => {
+        var keys = Object.keys(this.filters);
+        keys = keys.filter(e => e !== "sum");
+        return keys.every(key => {
+          const s = String(item[key]).toUpperCase();
+          return s !== "" ? s.includes(this.filters[key].toUpperCase()) : s;
+        });
+      });
+
+      // filtered = filtered
+      //   .filter(
+      //     e => (e.sum >= this.filters.sum[0]) & (e.sum <= this.filters.sum[1])
+      //   )
+      //   .sort((a, b) => Number(b.sum) - Number(a.sum));
+
+      /* here we changed number of pages in pagination according to number of elements filtered */
+      this.onFiltered(filtered);
+
+      return filtered.length > 0
+        ? filtered
+        : [
+            Object.keys(this.names[0]).reduce(function(obj, value) {
+              obj[value] = "";
+              return obj;
+            }, {})
+          ];
     },
-    getPos: function() {
-      var that = this;
-      var headerBounding = document
-        .querySelector("#headerBounding")
-        .getBoundingClientRect();
-      var left = headerBounding.left;
-      var width = headerBounding.width;
-      that.leftHeaderMargin = left + 33 + "px";
-      that.leftHeaderWidth = width - 50 + "px";
+    getCPV: function() {
+      let a = d3
+        .nest()
+        .key(d => d.id_item_short)
+        .map(this.cpv);
+      return a;
+    },
+    names: function() {
+      let getCPV = this.getCPV;
+      return this.rows.map(d => {
+        return {
+          hospital_name: d.hospital_name,
+          hospital_edrpou: d.hospital_edrpou,
+          overal_title: d.overal_title,
+          oblast_name: d.oblast_name,
+          sum: d.sum,
+          description: getCPV.get(d.id_item_short)[0].description
+        };
+      });
+    },
+    sortOptions() {
+      // Create an options list from our fields
+      return this.fields
+        .filter(f => f.sortable)
+        .map(f => {
+          return { text: f.label, value: f.key };
+        });
     }
   },
-  async mounted() {
-    this.getPos();
-    this.$nextTick(function() {
-      window.addEventListener("resize", this.getPos);
-      window.addEventListener("load", this.getPos);
-    });
+  async created() {
+    bus.$on("nav-event", () => this.getPos());
 
     const files = await Promise.all([
       // d3.csv("data/pmd_all_contracted_legal_entities.csv"),
@@ -319,199 +374,153 @@ export default {
       d3.json("data/hospitals_and_pharmacies.json")
     ]);
 
-    const that = this;
-
-    that.apteka = files[0];
-    /* that.network = files[2]; */
-
-    that.aptekyNested = d3
-      .nest()
-      .key(function(d) {
-        return d.division_id;
-      })
-      .map(that.apteka);
-
-    that.network = files[1].map(d => {
-      return {
-        ...d,
-        ...{
-          aptekaObjects: d.pharmas.map(dd => {
-            return that.aptekyNested.get(dd)[0];
-          })
-        }
-      };
-    }); //.slice(0, 100);
-
-    // that.oblastNames = [
-    //   ...new Set(
-    //     that.network.map(d => {
-    //       return d.division_area;
-    //     })
-    //   )
-    // ];
-    // that.cityNames = [
-    //   ...new Set(
-    //     that.network.map(d => {
-    //       return d.division_settlement;
-    //     })
-    //   )
-    // ];
-    // that.rajonNames = [
-    //   ...new Set(
-    //     that.network.map(d => {
-    //       return d.division_region;
-    //     })
-    //   )
-    // ];
-    // that.adressNames = [
-    //   ...new Set(
-    //     that.network.map(d => {
-    //       return d.division_residence_addresses;
-    //     })
-    //   )
-    // ];
-    // that.hospitalNames = [
-    //   ...new Set(
-    //     that.network.map(d => {
-    //       return d.legal_entity_name;
-    //     })
-    //   )
-    // ];
+    this.apteky = files[0];
+    this.network = files[1];
   },
-  created() {
-    // this.getPos();
-    // this.$nextTick(function() {
-    //   window.addEventListener("resize", this.getPos);
-    //   window.addEventListener("load", this.getPos);
-    // });
+  mounted() {
+    // Set the initial number of items
+    this.totalRows = this.rows.length;
+    // this.filters.sum[1] = this.maxSumValue;
 
-    let that = this;
+    this.rows.map(d => {
+      d["full_name"] = d.hospital_name + ", " + d.hospital_edrpou;
+    });
+
+    this.getPos();
+    this.$nextTick(function() {
+      // *Женя: щоб перемальовувалась на ресайзі
+      window.addEventListener("resize", this.getPos);
+      window.addEventListener("load", this.getPos);
+    });
+  },
+  watch: {
+    // oblast() {
+    /*       this.filters.oblast_name = this.oblast;
+     */
+    // }
+  },
+  methods: {
+    getPos: function() {
+      //*Женя: додала фунцію
+      var that = this;
+      var headerBounding = document
+        .querySelector("#headerBounding")
+        .getBoundingClientRect();
+
+      var left = headerBounding.left;
+      var width = headerBounding.width;
+      that.leftHeaderMargin = left + 33 + "px";
+      that.leftHeaderWidth = width - 33 + "px";
+    },
+    info(item, index, button) {
+      this.infoModal.title = `Row index: ${index}`;
+      this.infoModal.content = JSON.stringify(item, null, 2);
+      this.$root.$emit("bv::show::modal", this.infoModal.id, button);
+    },
+    resetInfoModal() {
+      this.infoModal.title = "";
+      this.infoModal.content = "";
+    },
+    onFiltered(filteredItems) {
+      // Trigger pagination to update the number of buttons/pages due to filtering
+      this.totalRows = filteredItems.length;
+      this.currentPage = 1;
+    },
+    formatNumber() {
+      let format = d3.format(",");
+      return { format };
+    }
+  },
+  directives: {
+    tooltip
   }
 };
 </script>
 
 <style lang="scss">
+@import "~vue-slider-component/lib/theme/default.scss";
+// @import "~leaflet/dist/leaflet.css";
 
-p.comment {
-  margin: 10px 25px;
-  font-size: 0.8em;
-  width: 60%;
+$blue: #184a77;
+
+.mainTable {
+  max-width: 1400px;
+  margin: auto;
+  background-color: white;
 }
 
-.rose-chart {
-  width: 250px;
-  height: 250px;
-  cursor: pointer;
-}
-div.plotRose {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, 300px);
+.background {
+  background-color: white;
 }
 
-div.rosePlot {
-  display: grid;
-  grid-template-columns: 1.5fr 3fr;
+div.tableNavigation {
+  padding-left: 1em;
+  padding-bottom: 0.5em;
 }
 
-div.roseElements input {
-  border: 1px solid rgb(178, 178, 178);
-  margin: 10px 25px;
-  width: auto;
-  width: 70%;
+div.row {
+  div.row {
+    width: auto;
+  }
+}
+
+.mainTable {
+  padding: auto;
+}
+
+.tableNavigation div.navigationRow {
+  display: flex;
+  justify-content: center;
+}
+
+div.vue-slider {
+  padding-top: 15px !important;
+  width: 70% !important;
+  margin: auto;
+}
+
+div.inputColumnName input {
+  width: 100%;
   height: 2rem;
   text-align: left;
   padding-left: 20px;
 }
 
-
-
-div.filters h5 {
-  margin: 10px 25px;
+input::placeholder {
+  font-style: italic;
+  text-align: left;
 }
+</style>
 
-div.details {
-    width: 80%;
+// <style lang="sass">
+//   .mainTable
+//     background-color: white
 
-  div.hospitalDetails {
-    border-top: 0.8px solid grey;
-    margin: 10px 25px;
-    font-size: 0.8em;
+//   .background
+//     background-color: white
+
+//   div.tableNavigation
+//     padding-left: 1em
+//     padding-bottom: 0.5em
+
+//     div.row
+//       div.row
+//         width: auto
+
+//   .mainTable
+//     padding: auto
+   
+
+//   .tableNavigation div.navigationRow
+//     display: flex
+//     justify-content: center
+
+//   div.vue-slider 
+//     padding-top: 15px !important
+//     width: 80% !important
+
+//   div.inputColumnName input
+//     width: 70%
+//     height: 2rem
     
-    p {
-      margin: 0.2em;
-    }
-
-}
-
-
-
-div.aptekyDetails {
-  border-top: 0.8px solid grey;
-  margin: 10px 25px;
-  padding-top: 10px;
-  font-size: 0.8em;
-  height: 215px;
-  overflow:hidden; 
-  overflow-y:scroll;
-
-  p {
-    margin: 0.2em;
-  }
-
-  div.aptekyList {
-    margin-bottom: 1em; 
-    cursor: pointer;
-  }
-
-  div.aptekyList.selected {
-    background-color: #184a77;
-     color:white;
-    }
-}
-}
-
-</style>
-
-
-
-<style lang="sass" scoped>
-
-rose-chart
-  width: 200px
-  cursor: pointer;
-
-/* div.holder
-  width: 75%
-  margin: 0 auto */
-
-div.selectorOblast div
-  display: flex
-
-div.plot
-  padding-top: 1.5em
-  padding-bottom: 1.5em
-
-div.multiselect
-  margin: 0px 25px
-  width: auto
-
-svg
-  margin-right: 0
-  display: inline-block
-
-path.domain
-  display: none
-
-tick
-  line
-    display: none
-path
-  fill: none
-  stroke: #76BF8A
-  stroke-width: 3px
-
-rect.active
-  fill: green
-
-
-</style>
+// </style>

@@ -60,6 +60,8 @@ Vue.component('navigation', Nagivation)
 // Vue.component('rose-chart', RoseChart)
 
 
+export const bus = new Vue();
+
 
 
 
@@ -70,6 +72,11 @@ const router = new VueRouter({
       path: '/',
       name: 'home',
       component: Home
+    },
+    {
+      path: '/apteky',
+      name: 'apteky',
+      component: () => import("@/components/Apteky.vue")
     },
     {
       path: '/pharmacy',
