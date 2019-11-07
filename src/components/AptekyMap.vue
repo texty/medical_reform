@@ -1,31 +1,37 @@
 <template>
   <div>
-    <v-map :zoom="zoom" :center="l" ref="myMap" style="height: 850px; width: auto">
+    <v-map :zoom="zoom" :center="location" ref="myMap" :style="`height: ${900}; width: 100%`">
       <!-- <v-protobuf url="https://basemaps.arcgis.com/v1/arcgis/rest/services/World_Basemap/VectorTileServer/tile/{z}/{y}/{x}.pbf" :options="opts"></v-protobuf> -->
       <v-geosearch :options="geosearchOptions"></v-geosearch>
       <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
-      <l-circle-marker
+      <!-- :style="`height: ${height}; width: ${width}`" -->
+      <l-circle
         v-for="(d,i) in apteky"
         v-bind:key="i"
         :lat-lng="[d.nszu_geocoding_google_api_lat, d.nszu_geocoding_google_api_lng]"
-        :radius="1"
-        :color="'red'"
+        :radius="10"
+        :color="'#77184a'"
         :fill="true"
-        :fillColor="'red'"
-        :style="{'fillColor': 'red'}"
-      ></l-circle-marker>
-      <l-circle-marker
+        :fillColor="'#77184a'"
+        :style="{'fillColor': '#77184a'}"
+      >
+      <l-popup :content="`<p>Назва мережі: ${d.legal_entity_name}</p><p>Відділення: ${d.division_name}</p></p><p>Адреса: ${d.division_residence_addresses.split(', ').slice(2).join(', ')}</p>`"></l-popup>
+      </l-circle>
+      <l-circle
         v-for="(d,i) in hospitals"
         v-bind:key="i+'b'"
         :lat-lng="[d.nszu_geocoding_google_api_lat, d.nszu_geocoding_google_api_lng]"
-        :radius="3"
-        :color="'blue'"
+        :radius="sizeScale(d.division_decl_sum)"
+        :color="'#184a77'"
+        :stroke="true"
+        :wight="0.00005"
         :fill="true"
-        :fillColor="'red'"
-        :style="{'fillColor': 'red'}"
+        :fillColor="'#184a77'"
+        :fillOpacity="0"
+        :style="{'fillColor': '#184a77'}"
       >
         <l-popup :content="`<p>Лікарня: ${d.division_name}</p><p>Пацієнтів: <b>${Math.trunc(d.division_decl_sum)}</b></p>`"></l-popup>
-      </l-circle-marker>
+      </l-circle>
     </v-map>
 
     <!-- <p>{{hospitals[0]}}</p> -->
@@ -45,7 +51,8 @@
 </template>
 
 <script>
-import { LMap, LTileLayer, LCircleMarker, LPopup } from "vue2-leaflet";
+import * as d3 from "d3";
+import { LMap, LTileLayer, LCircleMarker, LPopup, LCircle } from "vue2-leaflet";
 import { OpenStreetMapProvider } from "leaflet-geosearch";
 import Multiselect from "vue-multiselect";
 // import Vue2Leaflet from 'vue2-leaflet'
@@ -73,12 +80,14 @@ export default {
   },
   data() {
     return {
+      // width: 1000,
+      // height: 500,
       opts: vectorTileOptions,
       options: {
         vectorTileLayerStyles: {}
       },
       search: "",
-      l: location,
+      l: [50.31322, 30.319482],
       result: [],
       geosearchOptions: {
         // Important part Here
@@ -95,18 +104,48 @@ export default {
     };
   },
   mounted() {
-    bus.$on('zoom-map', function(data) {
-      this.l = data;
-      // alert(data)
-      alert(this.$refs.myMap.mapObject.getCenter())
-    })
+    // this.width = window.innerWidth
+    // this.height = window.innerHeight
+    // bus.$on('zoom-map', function(data) {
+
+    // })
+
+    var legend = L.control({ position: "topright" });
+
+    legend.onAdd = function(map) {
+      var div = L.DomUtil.create("div", "legend");
+      div.innerHTML += '<i style="background: #184a77"></i><span>Лікарні</span><br>';
+      div.innerHTML += '<i style="background: #77184a"></i><span>Аптеки</span><br>';
+      
+      
+
+      return div;
+    };
+
+    legend.addTo(this.$refs.myMap.mapObject);
   },
   computed: {
+    width: function() {
+      return window.innerWidth
+    },
+    height: function() {
+      return window.innerHeight
+    },
     names: function() {
       return this.result.map(d => d.input);
+    },
+    maxPeople: function() {
+      return d3.max(this.hospitals.map(d => d.division_decl_sum));
     }
   },
   methods: {
+    sizeScale(x) {
+      const that = this
+      var scale = d3.scaleLinear().domain([1, that.maxPeople])
+        .range([20, 150]);
+
+      return scale(x)  
+    },
     async searchResult(searchQuery) {
       const provider = new OpenStreetMapProvider();
       const that = this;
@@ -119,7 +158,7 @@ export default {
   components: {
     "v-map": LMap,
     LTileLayer,
-    LCircleMarker,
+    LCircle,
     LPopup,
     Multiselect,
     VGeosearch,
@@ -138,6 +177,23 @@ export default {
 
 // <style lang="scss">
 // @import "~leaflet/dist/leaflet.css";
+
+.legend {
+  background: rgba(255,255,255,0.8);
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  border-radius: 5px;
+  padding: 6px 8px;
+
+  i {
+    width: 15px;
+    height: 15px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.7;
+    border-radius: 50%;
+  }
+}
+
 div.results.active {
     width: 200px
 }

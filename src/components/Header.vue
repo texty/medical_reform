@@ -115,7 +115,7 @@ div#top {
   right:0;
   display:flex;
   justify-content: flex-end;
-  margin-right:20px;
+  margin-right:30px;
 
   div#translate {
     display:flex;

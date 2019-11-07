@@ -5,10 +5,24 @@
       class="description"
       :style="{ 'margin-left': leftHeaderMargin, 'margin-bottom': '50px','width': leftHeaderWidth }"
     >
-      <h4 class="subtitle">ТАБЛИЦЯ ЗАКУПІВЕЛЬ ЛІКАРЕНЬ</h4>
+      <h4 class="subtitle">Таблиця аптек-учасників програми "Доступні ліки"</h4>
       <p
         class="text"
-      >Ви можете скористатися таблицею внизу, щоб самостійно перевірити, що купують лікарні. Введіть в поле пошуку назву лікарні або товару, який вас цікавить. У таблиці є 100 найбільших закупівель у кожній категорії за 2019 рік. Категорії бувають дуже різними — наприклад, медичне обладнання, послуги з будівництва, меблі, комп’ютерна техніка та інші.</p>
+      >Ми розробили інструмент, який дозволить кожному українцю знайти найближчу аптеку, що працює за програмою “Доступні ліки”. Програма передбачає, що пацієнт, який уклав декларацію з сімейним лікарем, може за його рецептом отримувати ліки, частково або повністю оплачені державою. Вартість ліків оплачується Національною службою здоров’я України коштом платників податків.
+</p>
+      <p
+        class="text" >
+Не в кожному населеному пункті є така аптека — наприклад, якщо йдеться про маленькі населені пункти. Інструмент дозволить користувачу знайти відповідний аптечний заклад у розташованих поблизу містах або селах. 
+</p>
+      <p
+        class="text" >
+У великих містах ситуація буває протилежною. Навколо лікарні може бути багато аптек, але далеко не кожна з них долучена до програми “Доступні ліки”. Наш інструмент дозволить користувачу швидко знайти потрібну аптеку — для цього потрібен лише доступ до інтернету.
+</p>
+
+      <p
+        class="text" >
+В таблиці нижче вам потрібно почати вводити назву населеного пункту чи регіону, який вас цікавить. Інші фільтри — назви аптек, а також вулиці, на яких вони розташовані. Таблиця автоматично оновлюється і підкаже вам найбільш відповідні варіанти. Також ви можете скористатись інтерактивною картою нижче, якщо хочете отримати детальнішу інформацію про аптеки.
+</p>
       <!-- <p class="text">Інструмент розроблено на основі даних НСЗУ та системи публічних закупівель Prozorro, а саме:</p> -->
       <!-- <p class="text">
         Набори даних Національної Служби Здоров’я, які опубліковані на Єдиному державному веб-порталі відкритих даних; Дані про тендери медичних закладів із системи публічних закупівель Prozorro.
@@ -50,6 +64,7 @@
           stacked="md"
           :items="filtered"
           :fields="fields"
+          :busy="isBusy"
           :current-page="currentPage"
           :per-page="perPage"
           :filter="filter"
@@ -58,8 +73,16 @@
           :sort-direction="sortDirection"
           @filtered="onFiltered"
           empty-filtered-text="Таких даних у нас немає"
+          empty-text="На жаль, ми нічого не знайшли. Спробуйте змінити ваш запит"
           :fixed="true"
         >
+
+      <template v-slot:table-busy>
+        <div class="text-center text-danger my-2">
+          <b-spinner class="align-middle spinner"></b-spinner>
+        </div>
+      </template>
+
           <template slot="top-row">
             <td
               role="cell"
@@ -217,12 +240,18 @@
       class="description"
       :style="{ 'margin-left': leftHeaderMargin, 'margin-bottom': '50px','width': leftHeaderWidth }"
     >
-      <h4 class="subtitle">Ну а далі карта</h4>
+      <h4 class="subtitle">Інтерактивна карта лікарень та аптек</h4>
+      <p
+        class="text"
+      >
+        Інтерактивна карта показує розташування аптек та лікарень сімейної медицини в Україні. Ви можете скористатися пошуком, щоб швидко перейти до міста, яке вас цікавить, або відкривати детальну інформацію про об’єкти на карті за допомогою мишки. Сині точки на карті — це лікарні. Розмір точок залежить від кількості пацієнтів кожної лікарні. Червоні точки — аптеки. Натискайте на точки, щоб побачити детальну інформацію.
+      </p>
+
     </div>
 
-    <Map
+    <Map class="mapContainer"
     ref="mapObject"
-    :style="{ 'margin-left': leftHeaderMargin, 'margin-bottom': '50px','width': leftHeaderWidth }" 
+    :style="`height: 900px; width: 95%`"
     :apteky="apteky" :hospitals="network" :location="currentLocation"></Map>
 
 
@@ -260,6 +289,7 @@ export default {
       leftHeaderWidth: "", // *Женя: додала зміну
       apteky: null,
       network: null,
+      isBusy: true,
       currentLocation: [50.31322, 30.319482],
       // rows: tableData,
       // cpv: cpv,
@@ -273,7 +303,8 @@ export default {
         },
         {
           key: "division_residence_addresses",
-          label: "Адреса"
+          label: "Адреса",
+          tdClass: "leftaligned"
           // thStyle: { width: "35%", maxWidth: "300px" }
         },
         {
@@ -335,10 +366,19 @@ export default {
     // maxSumValue() {
     //   return d3.max(this.rows.map(d => d.sum));
     // },
+    width: function() {
+      return window.innerWidth
+    },
+    height: function() {
+      return window.innerHeight
+    },
     filtered() {
       if (!this.apteky) {
+        this.isBusy = true;
         return [];
       }
+
+      this.isBusy = true;
 
       let filtered = this.apteky.filter(item => {
         var keys = Object.keys(this.filters);
@@ -358,14 +398,17 @@ export default {
       /* here we changed number of pages in pagination according to number of elements filtered */
       this.onFiltered(filtered);
 
+      this.isBusy = false;
+
       return filtered.length > 0
         ? filtered
-        : [
-            Object.keys(this.names[0]).reduce(function(obj, value) {
-              obj[value] = "";
-              return obj;
-            }, {})
-          ];
+        : []
+        // [
+        //     Object.keys(this.names[0]).reduce(function(obj, value) {
+        //       obj[value] = "";
+        //       return obj;
+        //     }, {})
+        //   ];
     },
     // getCPV: function() {
     //   let a = d3
@@ -435,7 +478,7 @@ export default {
       // bus.$emit('zoom-map', [x.nszu_geocoding_google_api_lat, x.nszu_geocoding_google_api_lng])
       // console.log(this.$refs.myMap.mapObject.getCenter())
       
-      
+
       this.currentLocation = [x.nszu_geocoding_google_api_lat, x.nszu_geocoding_google_api_lng]
     },
     formatNumber() {
@@ -487,6 +530,22 @@ export default {
 // @import "~leaflet/dist/leaflet.css";
 
 $blue: #184a77;
+
+.mapContainer {
+  margin: auto;
+}
+
+.spinner {
+  color: $blue;
+}
+
+table#table-transition-example .flip-list-move {
+  transition: transform 1s;
+}
+
+able.b-table[aria-busy='true'] {
+  opacity: 0.6;
+}
 
 .mainTable {
   max-width: 1400px;
