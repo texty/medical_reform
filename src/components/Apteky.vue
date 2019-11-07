@@ -136,7 +136,36 @@
             </td>
           </template>-->
 
-          <template v-slot:cell(sum)="data">
+          <template v-slot:cell(division_name)="data">
+            <div
+            v-tooltip:top="`<p>Назва мережі: 
+              ${data.item.legal_entity_name}</p><p>Грошей компенсовано мережі: 
+                ${formatNumber().format(data.item.total_sum)} грн.</p>`"
+            > 
+            <p>{{ `${data.item.division_name}` }} </p>
+            </div>
+          </template>
+
+
+          <template v-slot:cell(division_residence_addresses)="data">
+            <div @click="clickOnAddress(data.item)">
+              {{ data.item.division_residence_addresses.split(', ').slice(2).join(', ') }}
+            </div>           
+          </template>
+
+          <template v-slot:cell(division_settlement)="data">
+            {{
+              capitalizeFirstLetter(data.item.division_settlement.toLowerCase())
+            }}
+          </template>
+
+          <template v-slot:cell(division_area)="data">
+            {{
+              capitalizeFirstLetter(data.item.division_area.toLowerCase())
+            }}
+          </template>
+
+          <!-- <template v-slot:cell(sum)="data">
             {{
             formatNumber().format(data.item.sum)
             }}
@@ -152,7 +181,7 @@
             <div
               v-tooltip:top="data.item.hospital_name + ', ' + data.item.hospital_edrpou"
             >{{ data.item.hospital_name.substring(0,40) + "..." }}</div>
-          </template>
+          </template> -->
 
           <template v-slot:cell()="data">{{ data.value }}</template>
 
@@ -192,8 +221,9 @@
     </div>
 
     <Map
+    ref="mapObject"
     :style="{ 'margin-left': leftHeaderMargin, 'margin-bottom': '50px','width': leftHeaderWidth }" 
-    :apteky="apteky" :hospitals="network"></Map>
+    :apteky="apteky" :hospitals="network" :location="currentLocation"></Map>
 
 
 
@@ -207,12 +237,12 @@ import VueSlider from "vue-slider-component";
 import tooltip from "vue-simple-tooltip";
 import Navigation from "@/components/Navigation.vue";
 import Footer from "@/components/Footer.vue";
-import Map from "@/components/Map.vue"
+//import Map from "@/components/Map.vue"
 import { bus } from "../main";
 
-import cpv from "@/assets/cpv.json";
-import hospitalNames from "@/assets/hospital_names.json";
-import tableData from "@/assets/top_100_per_category_update.json";
+// import cpv from "@/assets/cpv.json";
+// import hospitalNames from "@/assets/hospital_names.json";
+// import tableData from "@/assets/top_100_per_category_update.json";
 
 /* import 'vue-slider-component/theme/antd.css'; */
 
@@ -230,9 +260,10 @@ export default {
       leftHeaderWidth: "", // *Женя: додала зміну
       apteky: null,
       network: null,
-      rows: tableData,
-      cpv: cpv,
-      hospitals: hospitalNames,
+      currentLocation: [50.31322, 30.319482],
+      // rows: tableData,
+      // cpv: cpv,
+      // hospitals: hospitalNames,
       fields: [
         {
           key: "division_name",
@@ -295,15 +326,15 @@ export default {
     VueSlider,
     Navigation,
     Footer,
-    Map
+    Map: () => import("@/components/AptekyMap.vue")
   },
   created() {
     /* this.filters.oblast_name = this.$route.params.oblast */
   },
   computed: {
-    maxSumValue() {
-      return d3.max(this.rows.map(d => d.sum));
-    },
+    // maxSumValue() {
+    //   return d3.max(this.rows.map(d => d.sum));
+    // },
     filtered() {
       if (!this.apteky) {
         return [];
@@ -336,26 +367,26 @@ export default {
             }, {})
           ];
     },
-    getCPV: function() {
-      let a = d3
-        .nest()
-        .key(d => d.id_item_short)
-        .map(this.cpv);
-      return a;
-    },
-    names: function() {
-      let getCPV = this.getCPV;
-      return this.rows.map(d => {
-        return {
-          hospital_name: d.hospital_name,
-          hospital_edrpou: d.hospital_edrpou,
-          overal_title: d.overal_title,
-          oblast_name: d.oblast_name,
-          sum: d.sum,
-          description: getCPV.get(d.id_item_short)[0].description
-        };
-      });
-    },
+    // getCPV: function() {
+    //   let a = d3
+    //     .nest()
+    //     .key(d => d.id_item_short)
+    //     .map(this.cpv);
+    //   return a;
+    // },
+    // names: function() {
+    //   let getCPV = this.getCPV;
+    //   return this.rows.map(d => {
+    //     return {
+    //       hospital_name: d.hospital_name,
+    //       hospital_edrpou: d.hospital_edrpou,
+    //       overal_title: d.overal_title,
+    //       oblast_name: d.oblast_name,
+    //       sum: d.sum,
+    //       description: getCPV.get(d.id_item_short)[0].description
+    //     };
+    //   });
+    // },
     sortOptions() {
       // Create an options list from our fields
       return this.fields
@@ -370,8 +401,8 @@ export default {
 
     const files = await Promise.all([
       // d3.csv("data/pmd_all_contracted_legal_entities.csv"),
-      d3.csv("data/pharmacy_all_contracted_legal_entities.csv"),
-      d3.json("data/hospitals_and_pharmacies.json")
+      d3.csv("data/apteky_data.csv"),
+      d3.csv("data/hospitals_for_map.csv")
     ]);
 
     this.apteky = files[0];
@@ -379,12 +410,12 @@ export default {
   },
   mounted() {
     // Set the initial number of items
-    this.totalRows = this.rows.length;
+    // this.totalRows = this.rows.length;
     // this.filters.sum[1] = this.maxSumValue;
 
-    this.rows.map(d => {
-      d["full_name"] = d.hospital_name + ", " + d.hospital_edrpou;
-    });
+    // this.rows.map(d => {
+    //   d["full_name"] = d.hospital_name + ", " + d.hospital_edrpou;
+    // });
 
     this.getPos();
     this.$nextTick(function() {
@@ -400,6 +431,20 @@ export default {
     // }
   },
   methods: {
+    clickOnAddress(x) {
+      // bus.$emit('zoom-map', [x.nszu_geocoding_google_api_lat, x.nszu_geocoding_google_api_lng])
+      // console.log(this.$refs.myMap.mapObject.getCenter())
+      
+      
+      this.currentLocation = [x.nszu_geocoding_google_api_lat, x.nszu_geocoding_google_api_lng]
+    },
+    formatNumber() {
+      let format = d3.format(",");
+      return { format };
+    },
+    capitalizeFirstLetter: function (string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    },
     getPos: function() {
       //*Женя: додала фунцію
       var that = this;
