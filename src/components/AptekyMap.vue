@@ -2,7 +2,7 @@
   <div>
     <v-map :options="{preferCanvas: true}" :zoom="zoom" :center="location" ref="myMap" :style="`height: ${900}; width: 100%`">
       <!-- <v-protobuf url="http://127.0.0.1:8080/tiles/{z}/{x}/{y}.pbf" :options="opts"></v-protobuf> -->
-       <v-geosearch :options="geosearchOptions"></v-geosearch> 
+       <!-- <v-geosearch :options="geosearchOptions"></v-geosearch>  -->
        <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer> 
       <l-circle
         v-for="(d,i) in apteky"
@@ -45,7 +45,11 @@
         @click="clickOnCircle(d)"
         :style="{'fillColor': '#184a77'}"
       >
-        <l-popup class="hospitalPopUp" :content="`<div><span class='hospitalPopUp'>Лікарня</span><span>: ${d.division_name}</span><p>Пацієнтів підписали декларації: <b>${Math.trunc(d.division_decl_sum)}</b></p></div>`"></l-popup>
+        <l-popup class="hospitalPopUp" 
+        :content="`<div><span class='hospitalPopUp'>Лікарня</span><span>: 
+          ${d.division_name}</span><p>Пацієнтів підписали декларації: 
+            <b>${Math.trunc(d.division_decl_sum)}</b></p> 
+            <p>Адреса: ${d.division_residence_addresses}</p> </div>`"></l-popup>
       </l-circle> 
     </v-map>
 
