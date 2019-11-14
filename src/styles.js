@@ -13,6 +13,14 @@ var vectorTileStyling = {
 		fillOpacity: 0.2,
 		opacity: 0.4,
 	},
+	simplified_4326: {
+		fill: true,
+		weight: 1,
+		fillColor: '#e30712',
+		color: '#e30712',
+		fillOpacity: 0.2,
+		opacity: 0.4,
+	},
 	admin: {
 		weight: 1,
 		fillColor: 'pink',

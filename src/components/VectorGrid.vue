@@ -37,7 +37,6 @@ export default {
   },
   mounted () {
     this.mapObject = L.vectorGrid.protobuf(this.url, this.options).on('click', function(e) {
-        console.log(e);
         L.DomEvent.stop(e);
 
     })

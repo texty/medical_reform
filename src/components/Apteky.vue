@@ -165,45 +165,45 @@
               ${data.item.legal_entity_name}</p><p>Грошей компенсовано мережі: 
                 ${formatNumber().format(data.item.total_sum)} грн.</p>`"
             > 
-            <p>{{ `${data.item.division_name}` }} </p>
+            <p class="divisionName">{{ `${data.item.division_name}` }} </p>
             </div>
           </template>
 
 
           <template v-slot:cell(division_residence_addresses)="data">
-            <div @click="clickOnAddress(data.item)">
+            <div class="textInTable" @click="clickOnAddress(data.item)">
               {{ data.item.division_residence_addresses.split(', ').slice(2).join(', ') }}
-            </div>           
+            </div>   
+            <button 
+            @click="centerMapOnSelected(data.item.nszu_geocoding_google_api_lat,
+             data.item.nszu_geocoding_google_api_lng)" 
+             class="tableButton"
+             name="button">КАРТА
+             </button>        
           </template>
 
           <template v-slot:cell(division_settlement)="data">
-            {{
+            <div class="textInTable">
+              {{
               capitalizeFirstLetter(data.item.division_settlement.toLowerCase())
             }}
+            </div>
           </template>
 
           <template v-slot:cell(division_area)="data">
-            {{
-              capitalizeFirstLetter(data.item.division_area.toLowerCase())
-            }}
+            <div class="textInTable">
+              {{
+                capitalizeFirstLetter(data.item.division_area.toLowerCase())
+              }}
+            </div>
           </template>
 
-          <!-- <template v-slot:cell(sum)="data">
-            {{
-            formatNumber().format(data.item.sum)
-            }}
-          </template>
-
-          <template v-slot:cell(overal_title)="data">
-            <div
-              v-tooltip:top="data.item.overal_title"
-            >{{ data.item.overal_title.substring(0,80) + "..." }}</div>
-          </template>
-
-          <template v-slot:cell(hospital_name)="data">
-            <div
-              v-tooltip:top="data.item.hospital_name + ', ' + data.item.hospital_edrpou"
-            >{{ data.item.hospital_name.substring(0,40) + "..." }}</div>
+          <!-- <template v-slot:cell(division_region)="data">
+            <button 
+            @click="centerMapOnSelected(data.item.nszu_geocoding_google_api_lat,
+             data.item.nszu_geocoding_google_api_lng)" 
+             
+             name="button">На карті</button>
           </template> -->
 
           <template v-slot:cell()="data">{{ data.value }}</template>
@@ -251,6 +251,7 @@
 
     <Map class="mapContainer"
     ref="mapObject"
+    id="map"
     :style="`height: 900px; width: 95%`"
     :apteky="apteky" :hospitals="network" :location="currentLocation"></Map>
 
@@ -268,6 +269,7 @@ import Navigation from "@/components/Navigation.vue";
 import Footer from "@/components/Footer.vue";
 //import Map from "@/components/Map.vue"
 import { bus } from "../main";
+var VueScrollTo = require('vue-scrollto');
 
 // import cpv from "@/assets/cpv.json";
 // import hospitalNames from "@/assets/hospital_names.json";
@@ -318,7 +320,13 @@ export default {
           label: "Область",
           thStyle: { width: "200px", maxWidth: "200px" },
           tdClass: "centered"
-        }
+        },
+        // {
+        //   key: "division_region",
+        //   label: "",
+        //   thStyle: { width: "200px", maxWidth: "200px" },
+        //   tdClass: "centered"
+        // }
         // {
         //   key: "sum",
         //   label: "Вартість, грн.",
@@ -474,11 +482,11 @@ export default {
     // }
   },
   methods: {
+    centerMapOnSelected(lat,lng){
+      bus.$emit('select-apteka', [lat, lng])
+      VueScrollTo.scrollTo('#map')
+    },
     clickOnAddress(x) {
-      // bus.$emit('zoom-map', [x.nszu_geocoding_google_api_lat, x.nszu_geocoding_google_api_lng])
-      // console.log(this.$refs.myMap.mapObject.getCenter())
-      
-
       this.currentLocation = [x.nszu_geocoding_google_api_lat, x.nszu_geocoding_google_api_lng]
     },
     formatNumber() {
@@ -531,8 +539,26 @@ export default {
 
 $blue: #184a77;
 
+.tableButton {
+  background-color: #184a77;
+  color: white;
+  border: none;
+  font-size: 0.65em;
+  letter-spacing: 1.1px;
+  padding: 0 4px;
+}
+
+.textInTable {
+  font-weight: 300;
+}
+
 .mapContainer {
   margin: auto;
+}
+
+p.divisionName{
+  cursor: pointer;
+  font-weight: 420;
 }
 
 .spinner {

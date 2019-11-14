@@ -157,7 +157,7 @@ body {
 h4.subtitle {
   color:$blue;
   text-align: left;
-  margin: 0 0 20px 0;
+  margin: 50px 0 20px 0;
   font-weight: bold;
   text-transform: uppercase;
   letter-spacing: 1px;

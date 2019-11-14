@@ -26,6 +26,7 @@ import Nagivation from "@/components/Navigation.vue"
 
 import Footer from "./components/Footer.vue"
 // import RoseChart from "./components/RoseChart.vue"
+var VueScrollTo = require('vue-scrollto');
 
 
 
@@ -41,6 +42,7 @@ import { RoughEase } from 'gsap';
 
 Vue.use(VueRouter)
 Vue.use(BootstrapVue)
+Vue.use(VueScrollTo)
 // Vue.use(SvgTransition);
 // Vue.use(VueAxios, axios)
 
@@ -78,11 +80,11 @@ const router = new VueRouter({
       name: 'apteky',
       component: () => import("@/components/Apteky.vue")
     },
-    {
-      path: '/pharmacy',
-      name: 'rose-chart',
-      component: () => import("./components/RoseChart.vue"),
-    },
+    // {
+    //   path: '/pharmacy',
+    //   name: 'rose-chart',
+    //   component: () => import("./components/RoseChart.vue"),
+    // },
     // {
     //   path: '/header',
     //   name: 'header',
