@@ -1,34 +1,10 @@
 <template>
   <div>
-    <v-map :options="{preferCanvas: true}" :zoom="zoom" :center="location" ref="myMap" :style="`height: ${900}; width: 100%`">
+    <v-map :minZoom="8" @update:zoom="catchZoom" :options="{preferCanvas: true}" :zoom="zoomInit" :center="location" ref="myMap" :style="`height: ${900}; width: 100%`">
       <!-- <v-protobuf url="http://127.0.0.1:8080/tiles/{z}/{x}/{y}.pbf" :options="opts"></v-protobuf> -->
-       <!-- <v-geosearch :options="geosearchOptions"></v-geosearch>  -->
+       <v-geosearch :options="geosearchOptions"></v-geosearch> 
        <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer> 
-      <l-circle
-        v-for="(d,i) in apteky"
-        v-bind:key="i"
-        :lat-lng="[d.nszu_geocoding_google_api_lat, d.nszu_geocoding_google_api_lng]"
-        :radius="60"
-        :color="'#77184a'"
-        :weight='0'
-        :fill="true"
-        :fillOpacity="0.8"
-        :fillColor="'#f54275'"
-        :style="{'fillColor': '#77184a'}"
-      > 
-      <l-popup :content="`<span class='aptekyPopUp'>Назва мережі</span><span>: ${d.legal_entity_name}</span><p>Відділення: ${d.division_name}</p></p><p>Адреса: ${d.division_residence_addresses.split(', ').slice(2).join(', ')}</p> <p>Виплати мережі: ${formatNumber().format(d.total_sum)} грн.</p>`"></l-popup>
-      </l-circle>
-      <l-circle 
-        ref="BufferCircle"
-        :lat-lng="[0,1]"
-        :radius="7000"
-        :weight="0"
-        :color="'#184a77'"
-        :fill="true"
-        :fillColor="'#184a77'"
-      >
-      </l-circle>
-
+      
       <l-circle
         ref="hospitalsLayer"
         v-for="(d,i) in hospitals"
@@ -37,7 +13,7 @@
         :radius="sizeScale(d.division_decl_sum)"
         :color="'#184a77'"
         :stroke="true"
-        :weight="0.6"
+        :weight="5"
         :wight="0.00005"
         :fill="true"
         :fillColor="'#184a77'"
@@ -51,21 +27,50 @@
             <b>${Math.trunc(d.division_decl_sum)}</b></p> 
             <p>Адреса: ${d.division_residence_addresses}</p> </div>`"></l-popup>
       </l-circle> 
+      
+
+        <l-circle
+        v-for="(d,i) in apteky"
+        v-bind:key="i"
+        :lat-lng="[d.nszu_geocoding_google_api_lat, d.nszu_geocoding_google_api_lng]"
+        :radius="60"
+        :stroke="true"
+        :color="'#f54275'"
+        :opacity="0.8"
+        :weight='10'
+        :fill="true"
+        :fillOpacity="0.9"
+        :fillColor="'#f54275'"
+        :style="{'fillColor': '#77184a'}"
+      > 
+      <l-popup :content="`<span class='aptekyPopUp'>Назва мережі</span><span>: ${d.legal_entity_name}</span><p>Відділення: ${d.division_name}</p></p><p>Адреса: ${d.division_residence_addresses.split(', ').slice(2).join(', ')}</p> <p>Виплати мережі: ${formatNumber().format(d.total_sum)} грн.</p>`"></l-popup>
+      </l-circle> 
+
+            <l-circle 
+        ref="BufferCircle"
+        :lat-lng="[0,1]"
+        :radius="7000"
+        :weight="0"
+        :color="'#184a77'"
+        :fill="true"
+        :fillColor="'#184a77'"
+      >
+      </l-circle>
+
+      <!-- <l-circle 
+        ref="selectedApteka"
+        :lat-lng="[0,1]"
+        :radius="200"
+        :weight="0"
+        :color="'#184a77'"
+        :fillOpacity="1"
+        :fill="true"
+        :fillColor="'green'"
+      >
+      </l-circle> -->
+
     </v-map>
 
-    <!-- <p>{{hospitals[0]}}</p> -->
-
-    <!-- <multiselect
-      :hide-selected="true"
-      placeholder="Шукати"
-      deselect-label
-      select-label
-      :allow-empty="false"
-      @search-change="searchResult"
-      v-model="search"
-      :options="names"
-    ></multiselect>
-    <p>{{ result }}</p> -->
   </div>
 </template>
 
@@ -77,7 +82,7 @@ import Multiselect from "vue-multiselect";
 // import Vue2Leaflet from 'vue2-leaflet'
 import * as Vue2Leaflet from "vue2-leaflet"; // VALID
 import MapComponent from "@/components/MapComponent.vue";
-import { canvas } from 'leaflet';
+import { canvas, popup } from 'leaflet';
 // import Vue2LeafletVectorGridProtobuf from "@/components/VectorGrid.vue";
 import vectorStyle from "../styles";
 import VGeosearch from "vue2-leaflet-geosearch";
@@ -101,6 +106,7 @@ export default {
   },
   data() {
     return {
+      selectedApt: {},
       // width: 1000,
       canvas: canvas,
       // height: 500,
@@ -119,9 +125,10 @@ export default {
         position: 'topright',
       },
       zoom: 13,
+      zoomInit:13,
       // location: [50.31322, 30.319482],
       url:
-        "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}{r}.png",
+        "https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png",
       attribution:
         '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
     };
@@ -134,7 +141,8 @@ export default {
     legend.onAdd = function(map) {
       var div = L.DomUtil.create("div", "legend");
       // div.innerHTML += "<h5>Легенда</h5>";
-      div.innerHTML += '<i style="background: #184a77"></i><span>Лікарні</span><br>';
+      
+      div.innerHTML += '<i style="border: 2px solid #184a77"></i><span>Лікарні</span><br>';
       div.innerHTML += '<i style="background: #f54275"></i><span>Аптеки</span><br>';
       
       
@@ -143,7 +151,22 @@ export default {
     };
 
     bus.$on('select-apteka', function(coords){
-      that.$refs.myMap.mapObject.setView(new L.LatLng(coords[0], coords[1]), 12);
+      console.log(coords[2]);
+      that.$refs.myMap.mapObject.setView(new L.LatLng(coords[0], coords[1]), 14);
+      // that.$refs.selectedApteka.mapObject.setLatLng([coords[0], coords[1]])
+      // that.selectedApt = coords[2]
+
+      // console.log(coords[1][2])
+
+      popup()
+        .setLatLng([coords[0], coords[1]])
+        .setContent(`<span class='aptekyPopUp'>Назва мережі</span><span>:
+         ${coords[2].legal_entity_name}</span><p>Відділення: 
+         ${coords[2].division_name}</p></p><p>Адреса: 
+         ${coords[2].division_residence_addresses.split(', ').slice(2).join(', ')}
+         </p> <p>Виплати мережі: 
+         ${that.formatNumber().format(coords[2].total_sum)} грн.</p>`)
+        .openOn(that.$refs.myMap.mapObject);
     })
 
     // that.$refs.hospitalsLayer.on('click', () => alert('gdfgdg'))
@@ -152,6 +175,9 @@ export default {
 
   },
   computed: {
+    // zoomLevel: function() {
+    //   return this.$refs.myMap.mapObject.getZoom()
+    // },
     width: function() {
       return window.innerWidth
     },
@@ -166,6 +192,9 @@ export default {
     }
   },
   methods: {
+    catchZoom(x) {
+      this.zoom = this.$refs.myMap.mapObject.getZoom();
+    },
     clickOnCircle(circle){
       // this.selectedElement = [circle.nszu_geocoding_google_api_lat, circle.nszu_geocoding_google_api_lng];
       this.$refs.BufferCircle.mapObject.setLatLng([circle.nszu_geocoding_google_api_lat, circle.nszu_geocoding_google_api_lng])
