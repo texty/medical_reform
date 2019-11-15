@@ -1,5 +1,6 @@
-<template  v-model="oblastModel" >
+<template  v-model="oblastModel">
   <div>
+    <!-- <loading :active="isLoading"></loading> -->
     <Navigation></Navigation>
     <div
       class="description"
@@ -31,6 +32,11 @@
 
       <!-- <p> {{ apteky[0] }} </p>   -->
     </div>
+
+    <!-- <div id="placeholder">
+      <img src="img/loading.gif">
+    </div> -->
+
     <b-container fluid>
       <!-- User Interface controls -->
 
@@ -271,6 +277,8 @@ import Navigation from "@/components/Navigation.vue";
 import Footer from "@/components/Footer.vue";
 //import Map from "@/components/Map.vue"
 import { bus } from "../main";
+import Loading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 var VueScrollTo = require('vue-scrollto');
 
 // import cpv from "@/assets/cpv.json";
@@ -289,6 +297,7 @@ export default {
   },
   data() {
     return {
+      isLoading: true,
       leftHeaderMargin: "", // *Женя: додала зміну
       leftHeaderWidth: "", // *Женя: додала зміну
       apteky: null,
@@ -367,6 +376,7 @@ export default {
     VueSlider,
     Navigation,
     Footer,
+    Loading,
     Map: () => import("@/components/AptekyMap.vue")
   },
   created() {
@@ -476,6 +486,12 @@ export default {
       window.addEventListener("resize", this.getPos);
       window.addEventListener("load", this.getPos);
     });
+
+    bus.$on('map-is-ready', function() {
+      console.log('smgh')
+      this.isLoading = false;
+      console.log(this.isLoading)
+    })
   },
   watch: {
     // oblast() {
@@ -540,6 +556,15 @@ export default {
 // @import "~leaflet/dist/leaflet.css";
 
 $blue: #184a77;
+
+// #placeholder {
+//   position: sticky;
+//   top: 0;
+//   background: white;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+// }
 
 .tableButton {
   background-color: #184a77;

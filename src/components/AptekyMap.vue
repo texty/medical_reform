@@ -6,6 +6,7 @@
        <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer> 
       
       <l-circle
+        @ready="mapIsReady"
         ref="hospitalsLayer"
         v-for="(d,i) in hospitals"
         v-bind:key="i+'b'"
@@ -33,7 +34,7 @@
         v-for="(d,i) in apteky"
         v-bind:key="i"
         :lat-lng="[d.nszu_geocoding_google_api_lat, d.nszu_geocoding_google_api_lng]"
-        :radius="60"
+        :radius="80"
         :stroke="true"
         :color="'#f54275'"
         :opacity="0.8"
@@ -192,6 +193,9 @@ export default {
     }
   },
   methods: {
+    mapIsReady() {
+      bus.$emit('map-is-ready')
+    },
     catchZoom(x) {
       this.zoom = this.$refs.myMap.mapObject.getZoom();
     },
