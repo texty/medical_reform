@@ -495,12 +495,12 @@ export default {
 
     const files = await Promise.all([
       // d3.csv("data/pmd_all_contracted_legal_entities.csv"),
-      d3.csv("data/apteky_data.csv"),
+      d3.csv("data/apteky_data_new.csv"),
       d3.csv("data/hospitals_for_map_new.csv")
     ]);
 
-    this.apteky = files[0].slice(0,100);
-    this.network = files[1].slice(0,100);
+    this.apteky = files[0];
+    this.network = files[1];
   },
   mounted() {
     // Set the initial number of items

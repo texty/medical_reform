@@ -40,13 +40,21 @@
         :stroke="true"
         :color="'#f54275'"
         :opacity="0.8"
-        :weight='10'
+        :weight='8'
         :fill="true"
         :fillOpacity="0.9"
         :fillColor="'#f54275'"
         :style="{'fillColor': '#77184a'}"
       > 
-      <l-popup :content="`<span class='aptekyPopUp'>Назва мережі</span><span>: ${d.legal_entity_name}</span><p>Відділення: ${d.division_name}</p></p><p>Адреса: ${d.division_residence_addresses}</p> <p>Виплати мережі: ${formatNumber().format(d.total_sum)} грн.</p>`"></l-popup>
+      <l-popup :content="`<span class='aptekyPopUp'>Назва мережі</span>
+      <span>: ${d.legal_entity_edrpou}, ${d.legal_entity_name}</span>
+      <p>Відділення: ${d.division_name}</p></p>
+      <p>Адреса: ${d.division_residence_addresses}</p> 
+      <p>Виплати мережі: ${formatNumber().format(d.total_sum)} грн.</p>
+      <p>Кількість аптек в мережі: ${d.number_of_divisions}</p>
+      <p>Отримано ліків за програмою: ${d.count_prescription}</p>
+      `">
+      </l-popup>
       </l-circle> 
 
             <l-circle 
@@ -163,12 +171,14 @@ export default {
 
       popup()
         .setLatLng([coords[0], coords[1]])
-        .setContent(`<span class='aptekyPopUp'>Назва мережі</span><span>:
-         ${coords[2].legal_entity_name}</span><p>Відділення: 
-         ${coords[2].division_name}</p></p><p>Адреса: 
-         ${coords[2].division_residence_addresses}
-         </p> <p>Виплати мережі: 
-         ${that.formatNumber().format(coords[2].total_sum)} грн.</p>`)
+        .setContent(`<span class='aptekyPopUp'>Назва мережі</span>
+      <span>: ${d.legal_entity_edrpou}, ${d.legal_entity_name}</span>
+      <p>Відділення: ${d.division_name}</p></p>
+      <p>Адреса: ${d.division_residence_addresses}</p> 
+      <p>Виплати мережі: ${formatNumber().format(d.total_sum)} грн.</p>
+      <p>Кількість аптек в мережі: ${d.number_of_divisions}</p>
+      <p>Отримано ліків за програмою: ${d.count_prescription}</p>
+      `)
         .openOn(that.$refs.myMap.mapObject);
     })
 
