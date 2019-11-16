@@ -67,6 +67,21 @@
       <div class="links">
         <router-link
           tag="img"
+          src="img/blue/pills.png"
+          :to="{ name: 'apteky', params: { oblast: 'Київська' } }"
+        >Doctors Table</router-link>
+        <div class="icon-description">
+          <router-link
+            tag="p"
+            :to="{ name: 'apteky', params: { oblast: 'Київська' } }"
+          >Доступні Ліки</router-link>
+        </div>
+      </div>
+      
+
+      <div class="links">
+        <router-link
+          tag="img"
           src="img/blue/hospitals_tab.png"
           :to="{ name: 'med-table', params: { oblast: 'Київська' } }"
         >Med Table</router-link>

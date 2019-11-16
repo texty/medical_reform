@@ -43,6 +43,16 @@
                 >Med Table</router-link>
              </div>
 
+             <div class="links navicon">
+                <router-link
+                  title = "ТАБЛИЦЯ ЗАКУПІВЕЛЬ ЛІКАРЕНЬ"
+                  tag="img"
+                  src="img/white/pills.png"
+                  :to="{ name: 'apteky', params: { oblast: 'Київська' } }"
+                >Med Table</router-link>
+             </div>
+             
+
               <div class="links navicon" >
                 <router-link
                   title = "Лікарні вкладають гроші у свій розвиток"

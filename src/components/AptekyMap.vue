@@ -23,8 +23,10 @@
         :style="{'fillColor': '#184a77'}"
       >
         <l-popup class="hospitalPopUp" 
-        :content="`<div><span class='hospitalPopUp'>Лікарня</span><span>: 
-          ${d.division_name}</span><p>Пацієнтів підписали декларації: 
+        :content="`<div><span class='hospitalPopUp'>Медичний заклад</span><span>: 
+          ${d.legal_entity_edrpou}, ${d.legal_entity_name}</span>
+          <p>Відділення: ${d.division_name}</p>
+          <p>Пацієнтів підписали декларації: 
             <b>${Math.trunc(d.division_decl_sum)}</b></p> 
             <p>Адреса: ${d.division_residence_addresses}</p> </div>`"></l-popup>
       </l-circle> 
@@ -44,7 +46,7 @@
         :fillColor="'#f54275'"
         :style="{'fillColor': '#77184a'}"
       > 
-      <l-popup :content="`<span class='aptekyPopUp'>Назва мережі</span><span>: ${d.legal_entity_name}</span><p>Відділення: ${d.division_name}</p></p><p>Адреса: ${d.division_residence_addresses.split(', ').slice(2).join(', ')}</p> <p>Виплати мережі: ${formatNumber().format(d.total_sum)} грн.</p>`"></l-popup>
+      <l-popup :content="`<span class='aptekyPopUp'>Назва мережі</span><span>: ${d.legal_entity_name}</span><p>Відділення: ${d.division_name}</p></p><p>Адреса: ${d.division_residence_addresses}</p> <p>Виплати мережі: ${formatNumber().format(d.total_sum)} грн.</p>`"></l-popup>
       </l-circle> 
 
             <l-circle 
@@ -164,7 +166,7 @@ export default {
         .setContent(`<span class='aptekyPopUp'>Назва мережі</span><span>:
          ${coords[2].legal_entity_name}</span><p>Відділення: 
          ${coords[2].division_name}</p></p><p>Адреса: 
-         ${coords[2].division_residence_addresses.split(', ').slice(2).join(', ')}
+         ${coords[2].division_residence_addresses}
          </p> <p>Виплати мережі: 
          ${that.formatNumber().format(coords[2].total_sum)} грн.</p>`)
         .openOn(that.$refs.myMap.mapObject);
@@ -216,7 +218,7 @@ export default {
     sizeScale(x) {
       const that = this
       var scale = d3.scaleLinear().domain([1, that.maxPeople])
-        .range([60, 250]);
+        .range([90, 130]);
 
       return scale(x)  
     },
