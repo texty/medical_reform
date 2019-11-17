@@ -4,6 +4,17 @@
       <!-- <v-protobuf url="http://127.0.0.1:8080/tiles/{z}/{x}/{y}.pbf" :options="opts"></v-protobuf> -->
        <v-geosearch :options="geosearchOptions"></v-geosearch> 
        <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer> 
+
+             <l-circle 
+        ref="BufferCircle"
+        :lat-lng="[0,1]"
+        :radius="7000"
+        :weight="0"
+        :color="'#184a77'"
+        :fill="true"
+        :fillColor="'#184a77'"
+      >
+      </l-circle>
       
       <l-circle
         @ready="mapIsReady"
@@ -47,26 +58,16 @@
         :style="{'fillColor': '#77184a'}"
       > 
       <l-popup :content="`<span class='aptekyPopUp'>Назва мережі</span>
-      <span>: ${d.legal_entity_edrpou}, ${d.legal_entity_name}</span>
       <p>Відділення: ${d.division_name}</p></p>
-      <p>Адреса: ${d.division_residence_addresses}</p> 
+      <p>Адреса: ${d.division_residence_addresses}</p>
+      <p>Відпущено ліків за програмою: ${Math.round(d.count_prescription)}</p> 
+      <span>Назва мережі: ${d.legal_entity_edrpou}, ${d.legal_entity_name}</span>
       <p>Виплати мережі: ${formatNumber().format(d.total_sum)} грн.</p>
       <p>Кількість аптек в мережі: ${d.number_of_divisions}</p>
-      <p>Отримано ліків за програмою: ${d.count_prescription}</p>
       `">
       </l-popup>
       </l-circle> 
 
-            <l-circle 
-        ref="BufferCircle"
-        :lat-lng="[0,1]"
-        :radius="7000"
-        :weight="0"
-        :color="'#184a77'"
-        :fill="true"
-        :fillColor="'#184a77'"
-      >
-      </l-circle>
 
       <!-- <l-circle 
         ref="selectedApteka"
@@ -163,21 +164,25 @@ export default {
 
     bus.$on('select-apteka', function(coords){
       console.log(coords[2]);
+
+      const d = coords[2];
       that.$refs.myMap.mapObject.setView(new L.LatLng(coords[0], coords[1]), 14);
       // that.$refs.selectedApteka.mapObject.setLatLng([coords[0], coords[1]])
       // that.selectedApt = coords[2]
 
       // console.log(coords[1][2])
 
+      let format = d3.format(",")
+
       popup()
         .setLatLng([coords[0], coords[1]])
         .setContent(`<span class='aptekyPopUp'>Назва мережі</span>
-      <span>: ${d.legal_entity_edrpou}, ${d.legal_entity_name}</span>
       <p>Відділення: ${d.division_name}</p></p>
-      <p>Адреса: ${d.division_residence_addresses}</p> 
-      <p>Виплати мережі: ${formatNumber().format(d.total_sum)} грн.</p>
+      <p>Адреса: ${d.division_residence_addresses}</p>
+      <p>Відпущено ліків за програмою: ${Math.round(d.count_prescription)}</p> 
+      <span>Назва мережі: ${d.legal_entity_edrpou}, ${d.legal_entity_name}</span>
+      <p>Виплати мережі: ${format(d.total_sum)} грн.</p>
       <p>Кількість аптек в мережі: ${d.number_of_divisions}</p>
-      <p>Отримано ліків за програмою: ${d.count_prescription}</p>
       `)
         .openOn(that.$refs.myMap.mapObject);
     })
@@ -228,7 +233,7 @@ export default {
     sizeScale(x) {
       const that = this
       var scale = d3.scaleLinear().domain([1, that.maxPeople])
-        .range([90, 130]);
+        .range([60, 90]);
 
       return scale(x)  
     },
