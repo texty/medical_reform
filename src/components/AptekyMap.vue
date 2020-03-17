@@ -66,10 +66,10 @@
       <p>Кількість аптек в мережі: ${d.number_of_divisions}</p>
       `">
       </l-popup>
-      </l-circle> 
+      </l-circle>  -->
 
-
-      <!-- <l-circle 
+<!-- 
+       <l-circle 
         ref="selectedApteka"
         :lat-lng="[0,1]"
         :radius="200"
@@ -79,7 +79,7 @@
         :fill="true"
         :fillColor="'green'"
       >
-      </l-circle> -->
+      </l-circle>  -->
 
     </v-map>
 
@@ -232,8 +232,8 @@ export default {
     },
     sizeScale(x) {
       const that = this
-      var scale = d3.scaleLinear().domain([1, that.maxPeople])
-        .range([60, 90]);
+      var scale = d3.scaleLinear().domain([1, parseFloat(that.maxPeople)])
+        .range([60, 320]);
 
       return scale(x)  
     },
