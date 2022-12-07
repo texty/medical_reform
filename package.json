@@ -62,7 +62,7 @@
     "chai": "^4.1.2",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.2.3",
-    "lint-staged": "^8.2.1",
+    "lint-staged": "^13.1.0",
     "mutationobserver-shim": "^0.3.3",
     "node-sass": "^4.13.1",
     "popper.js": "^1.15.0",
